@@ -131,3 +131,8 @@ Slide B0 = clickable index of all backups. Initial list (I'll add more):
 - Real data for the thread SKU (actuals, 6 model forecasts, RMSEs, weights, band, scenario line) → `data/`
 - UI screenshots and short screen recordings → `public/img`, `public/video`
 - Logos (FCT NOVA, Tecnicamente) → `public/img/logos`
+## 11. Bridges and continuity
+
+- **Bridges:** every main slide's speaker notes start with `Bridge in:` (the sentence that leads into this slide) and end with `Bridge out:` (the question the next slide answers). Draft them from the slide plan; I'll rewrite them.
+- **Draft, don't polish:** any on-screen text you write gets a `<!-- TODO(João): review wording -->` marker. I'll refine wording and layout myself.
+- **Continuity rules:** a shared component (e.g. `ForecastChart`) keeps the same position and size across consecutive slides so a fade looks like only the new layer appeared. Changes between slides are highlighted with the amber warning token.

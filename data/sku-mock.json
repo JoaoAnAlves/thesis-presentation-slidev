@@ -1,0 +1,44 @@
+{
+  "_mock": true,
+  "_note": "MOCK DATA. Invented values shaped like the real thread-SKU data. Replace with the real export before the defense; nothing here comes from the thesis.",
+  "unit": "units / month",
+  "yDomain": [250, 650],
+  "yTicks": [300, 400, 500, 600],
+  "series": {
+    "baseline2025": {
+      "label": "2025",
+      "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      "actual": [410, 430, 470, 455, 500, 520, 540, 458, 436, 420, 410, 445],
+      "forecast": [420, 440, 460, 470, 495, 510, 525, 520, 505, 490, 480, 505],
+      "lower": [354, 374, 394, 404, 429, 444, 459, 454, 439, 424, 414, 439],
+      "upper": [486, 506, 526, 536, 561, 576, 591, 586, 571, 556, 546, 571],
+      "scenario": [420, 440, 470, 500, 540, 560, 575, 560, 540, 520, 505, 530],
+      "deviation": { "from": 7, "to": 11, "label": "Aug–Dec: near the lower bound" }
+    },
+    "live2026": {
+      "label": "2026–27",
+      "months": ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"],
+      "actual": [405, 385, 350, 330, 305, null, null, null, null, null, null, null],
+      "forecast": [430, 440, 455, 470, 480, 475, 460, 450, 445, 440, 450, 445],
+      "lower": [364, 374, 389, 404, 414, 409, 394, 384, 379, 374, 384, 379],
+      "upper": [496, 506, 521, 536, 546, 541, 526, 516, 511, 506, 516, 511]
+    }
+  },
+  "models": [
+    { "id": "rf", "name": "Random Forest", "rmse": 48, "ranLive": false },
+    { "id": "xgb", "name": "XGBoost", "rmse": 40, "ranLive": true },
+    { "id": "lgbm", "name": "LightGBM", "rmse": 44, "ranLive": false },
+    { "id": "prophet", "name": "Prophet", "rmse": 60, "ranLive": false },
+    { "id": "chronos", "name": "Chronos", "rmse": 36, "ranLive": true },
+    { "id": "granite", "name": "Granite", "rmse": 52, "ranLive": true }
+  ],
+  "planGrid": {
+    "unit": "kg",
+    "months": ["Mar", "Apr", "May"],
+    "rows": [
+      { "item": "Material A", "baseline": [120, 130, 140], "scenario": [120, 170, 205] },
+      { "item": "Material B", "baseline": [60, 64, 70], "scenario": [60, 84, 102] },
+      { "item": "Material C", "baseline": [15, 15, 16], "scenario": [15, 15, 16] }
+    ]
+  }
+}

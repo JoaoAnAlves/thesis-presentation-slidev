@@ -99,8 +99,10 @@ body,
   color: var(--c-muted);
 }
 
+/* Amber = a warning, or what changed on this click / slide. */
 .warn {
   color: var(--c-warn);
+  font-weight: 600;
 }
 
 /* Marks a slide whose real content arrives in a later phase. */
@@ -113,4 +115,46 @@ body,
   color: var(--c-muted);
   font-family: var(--font-mono);
   font-size: 15px;
+}
+
+/* ---------- Continuity stage ----------
+   Fixed slots shared by consecutive slides. A component placed in `.stage-chart`
+   sits at exactly the same position and size on every slide that uses it, so a
+   slide change looks like only the new layer appeared. */
+.stage-chart {
+  position: absolute;
+  left: var(--slide-pad-x);
+  top: 112px;
+  width: 590px;
+}
+
+.stage-side {
+  position: absolute;
+  left: 672px;
+  top: 118px;
+  width: 252px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.stage-side p {
+  margin: 0;
+}
+
+.ref-chip {
+  padding: 8px 12px;
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  background: var(--c-surface);
+  font-size: 15px;
+}
+
+.callout {
+  padding: 10px 12px;
+  border-left: 3px solid var(--c-warn);
+  background: var(--c-surface);
+  font-weight: 600;
 }
