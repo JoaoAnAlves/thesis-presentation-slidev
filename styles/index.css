@@ -1,0 +1,116 @@
+/* Fonts: bundled from node_modules by Vite, so nothing is fetched at runtime. */
+@import '@fontsource-variable/unbounded/index.css';
+@import '@fontsource-variable/geist/index.css';
+@import '@fontsource-variable/geist-mono/index.css';
+
+/* ---------- Design tokens: every component reads these, never raw hex ---------- */
+:root {
+  /* Surfaces and text */
+  --c-bg: #0b0d10;
+  --c-surface: #14181d;
+  --c-line: #252c35;
+  --c-text: #ffffff;
+  --c-muted: #8b96a3;
+
+  /* Accents */
+  --c-accent: #1e9bf0;
+  --c-warn: #f5a524;
+  --c-danger: #ef4444;
+
+  /* Chart colours (CLAUDE.md section 4, matching the thesis figures) */
+  --chart-actual: #f28c28; /* orange = actual demand */
+  --chart-forecast: #1e9bf0; /* blue = combined (master) forecast */
+  --chart-band: rgba(30, 155, 240, 0.18); /* shaded blue = 90% prediction interval */
+  --chart-scenario: #7cc4f8; /* dotted = scenario impact (draw with stroke-dasharray) */
+  --chart-model: #a78bfa; /* purple = individual model output */
+  --chart-grid: #252c35;
+  --chart-axis: #8b96a3;
+
+  /* Typography */
+  --font-display: 'Unbounded Variable', sans-serif;
+  --font-body: 'Geist Variable', sans-serif;
+  --font-mono: 'Geist Mono Variable', monospace;
+
+  /* Layout */
+  --slide-pad-x: 56px;
+  --footer-h: 36px;
+
+  /* Slidev's own variables, pointed at our tokens */
+  --slidev-theme-primary: var(--c-accent);
+  --slidev-code-font-family: var(--font-mono);
+}
+
+html,
+body,
+#app,
+#page-root {
+  background: var(--c-bg);
+}
+
+/* ---------- Base slide ---------- */
+.slidev-layout {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1.45;
+  padding: 44px var(--slide-pad-x) calc(var(--footer-h) + 28px);
+}
+
+.slidev-layout h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--c-text);
+  margin-bottom: 24px;
+}
+
+.slidev-layout h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--c-accent);
+}
+
+.slidev-layout p {
+  margin: 0.5em 0;
+}
+
+.slidev-layout a {
+  color: var(--c-accent);
+  border-bottom: none;
+}
+
+.slidev-layout strong {
+  color: var(--c-accent);
+  font-weight: 600;
+}
+
+.slidev-layout code,
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Small helpers ---------- */
+.muted {
+  color: var(--c-muted);
+}
+
+.warn {
+  color: var(--c-warn);
+}
+
+/* Marks a slide whose real content arrives in a later phase. */
+.placeholder {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px dashed var(--c-line);
+  border-radius: 6px;
+  color: var(--c-muted);
+  font-family: var(--font-mono);
+  font-size: 15px;
+}
