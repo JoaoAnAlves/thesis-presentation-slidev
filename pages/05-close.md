@@ -1,9 +1,19 @@
 ---
 layout: section
-act: Act 5
+act: 5
+title: Close
+question: What did it achieve, and what comes next?
+covers: [Scorecard, Lessons, Future work]
+loopMode: live
+labeled: true
+labelOpacity: 0.4
 ---
 
-# Close
+<!-- TODO(João): review wording (text is in the frontmatter above) -->
+
+<!--
+Bridge in: What did it achieve, and what comes next?
+-->
 
 ---
 
@@ -38,15 +48,20 @@ Target time: 0:50
 
 ---
 layout: cover
+variant: closing
 ---
 
-# Thank you
+# AI-Enhanced MRP for Food Manufacturing
 
-Questions welcome
+<p class="thanks">Thank you</p>
 
-João Alves · Supervisor: Prof. Filipa Ferrada · Industrial partner: Tecnicamente
+<p class="questions">Questions?</p>
+
+<!-- TODO(João): review wording -->
 
 <!--
+Bridge in: That is the work, what it showed, and what comes next.
+
 Key points:
 - Thank the jury, the supervisor and the partner.
 - Hand over to questions.

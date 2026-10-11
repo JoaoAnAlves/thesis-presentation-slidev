@@ -107,7 +107,7 @@ const clipId = `scenario-clip-${useId()}`
     <!-- Grid and axes -->
     <g class="axis">
       <g v-for="t in data.yTicks" :key="t">
-        <line :x1="M.left" :x2="M.left + PW" :y1="y(t)" :y2="y(t)" class="grid" />
+        <line :x1="M.left" :x2="M.left + PW" :y1="y(t)" :y2="y(t)" class="grid-line" />
         <text :x="M.left - 8" :y="y(t) + 4" text-anchor="end">{{ t }}</text>
       </g>
       <text
@@ -166,8 +166,6 @@ const clipId = `scenario-clip-${useId()}`
   display: block;
   width: 100%;
   height: auto;
-  /* Lets `transition: view-transition` treat the chart as one shared element. */
-  view-transition-name: forecast-chart;
 }
 
 .axis text,
@@ -176,7 +174,7 @@ const clipId = `scenario-clip-${useId()}`
   font-family: var(--font-mono);
   font-size: 11px;
 }
-.grid {
+.grid-line {
   stroke: var(--chart-grid);
   stroke-width: 1;
 }
@@ -188,13 +186,13 @@ const clipId = `scenario-clip-${useId()}`
 .forecast {
   fill: none;
   stroke: var(--chart-forecast);
-  stroke-width: 2.5;
+  stroke-width: 3;
   stroke-linejoin: round;
 }
 .actual {
   fill: none;
   stroke: var(--chart-actual);
-  stroke-width: 2.5;
+  stroke-width: 3;
   stroke-linejoin: round;
 }
 

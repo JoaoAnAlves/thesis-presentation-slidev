@@ -6,7 +6,7 @@ author: João Alves
 info: |
   Master's thesis defense, FCT NOVA (Electrical & Computer Engineering).
   Intelligent Production Planning in Food Manufacturing: Enhancing MRP System with AI
-colorSchema: dark
+colorSchema: light
 aspectRatio: 16/9
 canvasWidth: 980
 transition: fade
@@ -24,18 +24,26 @@ htmlAttrs:
   lang: en
 # Footer text, read by slide-bottom.vue. Change the date here, once.
 themeConfig:
-  date: TBD
+  date: October 2026
   shortTitle: AI-Enhanced MRP for Food Manufacturing
-  footerAuthor: João Alves | Tecnicamente
+  footerAuthor: João Alves | Tecnic@mente
+  # email: joao.antonio.alves.oficial@gmail.com
 # ===== Frontmatter for slide 1 only =====
 layout: cover
+variant: opening
 ---
 
 # AI-Enhanced MRP for Food Manufacturing
 
 Intelligent Production Planning in Food Manufacturing: Enhancing MRP System with AI
 
-João Alves · Supervisor: Prof. Filipa Ferrada · Industrial partner: Tecnicamente
+<div class="credits">
+<p><strong>João Alves</strong></p>
+<p>Supervisor: Prof. Filipa Ferrada</p>
+<p>Industrial partner: Tecnic@mente</p>
+</div>
+
+<!-- TODO(João): review wording -->
 
 <!--
 Key points:
@@ -43,6 +51,8 @@ Key points:
 - One sentence on what the talk covers: the development work and the results.
 
 Target time: 0:20
+
+Bridge out: Why does production planning in food manufacturing need help in the first place?
 -->
 
 ---

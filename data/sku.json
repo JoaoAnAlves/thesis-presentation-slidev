@@ -1,0 +1,9 @@
+{
+  "_mock": true,
+  "_note": "MOCK DATA. Invented values, not from the thesis. Provisional shape (CLAUDE.md has no section 12 yet): replace this file with the real export and adjust DemandGapChart.vue if the field names differ.",
+  "sku": "MOCK-SKU",
+  "unit": "units / month",
+  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "actual": [410, 430, 470, 455, 500, 520, 540, 458, 436, 420, 410, 445],
+  "mrpPlan": 465
+}

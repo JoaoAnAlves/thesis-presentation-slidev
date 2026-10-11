@@ -129,6 +129,10 @@ The algorithm and its limits
 
 <span class="placeholder">B9 · placeholder · content in Phase 5</span>
 
+<img src="/img/recipe_builder_white.png" alt="Recipe Builder screen" class="backup-shot">
+
+<!-- TODO(João): review wording; the Recipe Builder screenshot is parked here from slide 6 -->
+
 ---
 routeAlias: b10
 ---

@@ -1,11 +1,18 @@
 ---
 layout: section
-act: Act 3
+act: 3
+title: How it works
+question: How does one product's history become a purchase plan?
+covers: [Data, Models, Weighting, Planning]
+loopMode: live
+focus: [data, models, forecast, plan]
 ---
 
-# How it works
+<!-- TODO(João): review wording (text is in the frontmatter above) -->
 
-Following one SKU through the pipeline
+<!--
+Bridge in: How does one product's history become a purchase plan?
+-->
 
 ---
 

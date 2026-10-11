@@ -3,28 +3,41 @@
 @import '@fontsource-variable/geist/index.css';
 @import '@fontsource-variable/geist-mono/index.css';
 
-/* ---------- Design tokens: every component reads these, never raw hex ---------- */
+/* ---------- Design tokens: every component reads these, never raw hex ----------
+   Two palettes define the same variable names. `:root` holds the light one, so
+   it is the default everywhere. `.theme-dark` redefines the colours for
+   whatever element carries the class and everything inside it.
+   To switch the whole deck back to dark, set `colorSchema: dark` in slides.md:
+   Slidev then puts `dark` on <html>, which the second selector below matches. */
 :root {
   /* Surfaces and text */
-  --c-bg: #0b0d10;
-  --c-surface: #14181d;
-  --c-line: #252c35;
-  --c-text: #ffffff;
-  --c-muted: #8b96a3;
+  --c-bg: #f4f5f7;
+  --c-surface: #ffffff;
+  --c-line: #d5dae1;
+  --c-text: #14181f;
+  --c-muted: #5b6472;
 
   /* Accents */
-  --c-accent: #1e9bf0;
-  --c-warn: #f5a524;
-  --c-danger: #ef4444;
+  --c-accent: #1565c0;
+  --c-warn: #d97706;
+  --c-danger: #dc2626;
+  --c-ok: #15803d; /* green = done / success */
+  --c-plan: #0f766e; /* teal = planning (requirement groups, not charts) */
+  --c-slate: #475569; /* slate = data quality */
+
+  /* Chips (small capability / tag pills). Use the .deck-chip class below. */
+  --chip-bg: #dce6f5; /* solid, so a projector cannot wash it out */
+  --chip-border: rgba(21, 101, 192, 0.4);
+  --chip-text: #0d4a8f;
 
   /* Chart colours (CLAUDE.md section 4, matching the thesis figures) */
-  --chart-actual: #f28c28; /* orange = actual demand */
-  --chart-forecast: #1e9bf0; /* blue = combined (master) forecast */
-  --chart-band: rgba(30, 155, 240, 0.18); /* shaded blue = 90% prediction interval */
-  --chart-scenario: #7cc4f8; /* dotted = scenario impact (draw with stroke-dasharray) */
-  --chart-model: #a78bfa; /* purple = individual model output */
-  --chart-grid: #252c35;
-  --chart-axis: #8b96a3;
+  --chart-actual: #e8710a; /* orange = actual demand */
+  --chart-forecast: #1565c0; /* blue = combined (master) forecast */
+  --chart-band: rgba(21, 101, 192, 0.15); /* shaded blue = 90% prediction interval */
+  --chart-scenario: #0d3b7a; /* dotted dark blue = scenario impact */
+  --chart-model: #7c3aed; /* purple = individual model output */
+  --chart-grid: #d5dae1;
+  --chart-axis: #5b6472;
 
   /* Typography */
   --font-display: 'Unbounded Variable', sans-serif;
@@ -38,6 +51,36 @@
   /* Slidev's own variables, pointed at our tokens */
   --slidev-theme-primary: var(--c-accent);
   --slidev-code-font-family: var(--font-mono);
+}
+
+/* Dark palette (the February look). Used by the cover and section layouts,
+   and by the whole deck when <html> has the `dark` class. */
+.theme-dark,
+html.dark {
+  --c-bg: #0b0d10;
+  --c-surface: #14181d;
+  --c-line: #252c35;
+  --c-text: #ffffff;
+  --c-muted: #8b96a3;
+
+  --c-accent: #1e9bf0;
+  --c-warn: #f5a524;
+  --c-danger: #ef4444;
+  --c-ok: #4ade80;
+  --c-plan: #2dd4bf;
+  --c-slate: #94a3b8;
+
+  --chip-bg: #14304a;
+  --chip-border: rgba(30, 155, 240, 0.5);
+  --chip-text: #bfe0fb;
+
+  --chart-actual: #f28c28;
+  --chart-forecast: #1e9bf0;
+  --chart-band: rgba(30, 155, 240, 0.18);
+  --chart-scenario: #7cc4f8;
+  --chart-model: #a78bfa;
+  --chart-grid: #252c35;
+  --chart-axis: #8b96a3;
 }
 
 html,
@@ -76,6 +119,13 @@ body,
 
 .slidev-layout p {
   margin: 0.5em 0;
+}
+
+/* The default theme fades the paragraph right after a title to 50% and pulls it
+   up. Undo that everywhere, so text is only as faint as we choose. */
+.slidev-layout h1 + p {
+  margin-top: 0.5em;
+  opacity: 1;
 }
 
 .slidev-layout a {
@@ -157,4 +207,88 @@ body,
   border-left: 3px solid var(--c-warn);
   background: var(--c-surface);
   font-weight: 600;
+}
+
+/* ---------- `transition: layer` ----------
+   A fade for consecutive slides that share a component. The incoming slide
+   fades in on top while the outgoing one stays fully opaque underneath, so
+   anything identical on both slides (the chart) never changes brightness.
+   Slidev's built-in `fade` makes both slides semi-transparent at once, which
+   dims shared content mid-way. */
+.layer-enter-active {
+  z-index: 1;
+  transition: opacity var(--slidev-transition-duration) ease;
+}
+.layer-enter-from {
+  opacity: 0;
+}
+/* Outgoing slide: hold at full opacity for the whole duration, then drop. */
+.layer-leave-active {
+  transition: opacity 0s linear var(--slidev-transition-duration);
+}
+.layer-leave-to {
+  opacity: 0;
+}
+
+/* ---------- Act 1 helpers ---------- */
+.tile-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+  align-items: stretch;
+}
+
+.plain-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.plain-list li {
+  margin: 0;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--c-line);
+  list-style: none;
+}
+
+.lead {
+  margin: 0 0 30px;
+  font-size: 24px;
+}
+
+/* ---------- Act 2 helpers ---------- */
+.req-footnote {
+  margin: 10px 0 0;
+  color: var(--c-muted);
+  font-size: 15px;
+}
+
+/* ---------- Chips ----------
+   One look for every chip in the deck, driven by the --chip-* tokens.
+   The .slidev-layout prefix lets it win over the theme's list-item styles
+   when a chip is an <li>. */
+.slidev-layout .deck-chip {
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid var(--chip-border);
+  border-radius: 999px;
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Screenshot on a backup slide: right-hand side, whole image visible. */
+.backup-shot {
+  position: absolute;
+  top: 100px;
+  right: var(--slide-pad-x);
+  height: 380px;
+  width: auto;
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  background: #fff;
+  object-fit: contain;
 }

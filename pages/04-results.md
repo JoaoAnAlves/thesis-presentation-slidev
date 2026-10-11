@@ -1,16 +1,22 @@
 ---
 layout: section
-act: Act 4
+act: 4
+title: Results
+question: Does it hold up on real data?
+covers: [Baseline, Shock, Live 2026, Partner view]
+loopMode: stress
 ---
 
-# Results
+<!-- TODO(João): review wording (text is in the frontmatter above) -->
 
-Three scenarios on real factory data
+<!--
+Bridge in: Does it hold up on real data?
+-->
 
 ---
 clicks: 1
-# Chart stays steady going into slide 17 (measured: plain fade dims it mid-way).
-transition: view-transition
+# `layer` (styles/index.css): slide 17 fades in on top, so the shared chart never dims.
+transition: layer
 ---
 
 # Scenario 1: 2025 baseline
@@ -48,6 +54,7 @@ Bridge out: That is a normal year. What does the plan look like if a shock hits 
 
 ---
 clicks: 3
+transition: layer
 ---
 
 # Scenario 2: war shock
@@ -125,7 +132,7 @@ Bridge out: The mechanisms held up. What did the people who would use it think?
 
 <!--
 Key points:
-- Label it as the industrial partner's view (Tecnicamente's two managers).
+- Label it as the industrial partner's view (Tecnic@mente's two managers).
 - Gains: automated purchase quantities, explicit purchase-timing windows, less manual analysis.
 - Figures considered operationally credible.
 - Requested next: planned-vs-spent comparison, linking re-coded items.

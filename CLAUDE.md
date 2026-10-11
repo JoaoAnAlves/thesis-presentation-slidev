@@ -5,7 +5,7 @@
 A Slidev presentation for my Master's thesis defense at FCT NOVA (Electrical & Computer Engineering).
 
 - **Thesis:** "Intelligent Production Planning in Food Manufacturing: Enhancing MRP System with AI"
-- **Author:** João Alves (supervisor: Prof. Filipa Ferrada; industrial partner: Tecnicamente)
+- **Author:** João Alves (supervisor: Prof. Filipa Ferrada; industrial partner: Tecnic@mente)
 - **Format:** ~20 min talk + ~1 h jury Q&A
 - **Mentor's brief:** present the core of the development work and the results.
 - **Deck = two parts:** (1) a ~23-slide main talk, (2) a backup appendix used only during Q&A.
@@ -40,7 +40,7 @@ Reference material lives in `reference/` (thesis PDF, thesis figures, old Februa
 Continue the look of the February deck (the jury saw it):
 - Dark background (near-black `#0B0D10`), white primary text, electric-blue accent (around `#1E9BF0`), one warm accent for warnings/alerts (amber/red), muted grey for secondary text.
 - Circuit/hexagon line motif used sparingly (title + section dividers only).
-- Footer on main slides: date · short title · "João Alves | Tecnicamente" · slide number.
+- Footer on main slides: date · short title · "João Alves | Tecnic@mente" · slide number.
 - One idea per slide. Large type. Max ~25 words of on-screen text per slide outside charts.
 - Consistent chart colors everywhere, matching the thesis figures: **orange = actual demand**, **blue = combined (master) forecast**, **shaded blue = 90% prediction interval**, **dotted = scenario impact**, **purple = individual model output**.
 
@@ -53,7 +53,7 @@ Continue the look of the February deck (the jury saw it):
   - The combined forecast's error was **not** measured across the catalog; Scenario 1 accuracy is assessed visually for one representative SKU.
   - BOM quantities are **reconstructed** from production records (not validated by the company); scrap is a fixed 2%; lead times are **simulated** (random 2–7 days); inventory lots are **synthetic**.
   - The band is ±1.65·RMSE = **90% prediction interval** (upper bound = one-sided 95%). Never call it 95%.
-  - Partner feedback came from Tecnicamente's two managers (my superiors), not independent planners. Label it as the industrial partner's view.
+  - Partner feedback came from Tecnic@mente's two managers (my superiors), not independent planners. Label it as the industrial partner's view.
   - Do not claim MES integration, real-time lead-time adjustment, R² evaluation, or measured waste reduction.
 
 ## 6. The storytelling spine
@@ -130,9 +130,10 @@ Slide B0 = clickable index of all backups. Initial list (I'll add more):
 - Thesis PDF + exported figures → `reference/`
 - Real data for the thread SKU (actuals, 6 model forecasts, RMSEs, weights, band, scenario line) → `data/`
 - UI screenshots and short screen recordings → `public/img`, `public/video`
-- Logos (FCT NOVA, Tecnicamente) → `public/img/logos`
+- Logos (FCT NOVA, Tecnic@mente) → `public/img/logos`
 ## 11. Bridges and continuity
 
 - **Bridges:** every main slide's speaker notes start with `Bridge in:` (the sentence that leads into this slide) and end with `Bridge out:` (the question the next slide answers). Draft them from the slide plan; I'll rewrite them.
 - **Draft, don't polish:** any on-screen text you write gets a `<!-- TODO(João): review wording -->` marker. I'll refine wording and layout myself.
 - **Continuity rules:** a shared component (e.g. `ForecastChart`) keeps the same position and size across consecutive slides so a fade looks like only the new layer appeared. Changes between slides are highlighted with the amber warning token.
+- **Tracker clearance:** on Act 3–4 slides the `PipelineTracker` sits in the top-right corner, so slide titles there must leave about 260 px clear on the right. Shorten or wrap a title that would reach it.

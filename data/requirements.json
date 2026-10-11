@@ -1,0 +1,30 @@
+{
+  "_note": "Content for RequirementMap (slide 5). Short names follow thesis Tables 3.1 and 3.2. `step` is the click on which a group appears.",
+  "groups": {
+    "forecast": { "label": "Forecast", "step": 1 },
+    "quality": { "label": "Data quality", "step": 2 },
+    "human": { "label": "Human", "step": 3 },
+    "plan": { "label": "Plan", "step": 4 },
+    "views": { "label": "Views", "step": 5 }
+  },
+  "problems": [
+    { "n": 1, "text": "Demand is seasonal and shock-driven" },
+    { "n": 2, "text": "Factory data is incomplete and noisy", "tag": "found in the data" },
+    { "n": 3, "text": "Planners know things the data doesn't", "tag": "Industry 5.0" },
+    { "n": 4, "text": "Demand must become raw materials" },
+    { "n": 5, "text": "Stock expires" },
+    { "n": 6, "text": "Disruptions change demand and lead times" },
+    { "n": 7, "text": "Different people need different information", "tag": "factory roles" }
+  ],
+  "requirements": [
+    { "id": "01", "name": "History aggregation", "group": "forecast", "problem": 1 },
+    { "id": "03", "name": "Ensemble of models", "group": "forecast", "problem": 1 },
+    { "id": "04", "name": "Safety margin", "group": "forecast", "problem": 1 },
+    { "id": "02", "name": "Data quality audit", "group": "quality", "problem": 2 },
+    { "id": "05", "name": "Human-in-the-loop override", "group": "human", "problem": 3 },
+    { "id": "06", "name": "Recipe (BOM) explosion", "group": "plan", "problem": 4 },
+    { "id": "07", "name": "Waste-aware stock (FEFO)", "group": "plan", "problem": 5 },
+    { "id": "08", "name": "Scenario simulation", "group": "plan", "problem": 6 },
+    { "id": "09", "name": "Role-based views", "group": "views", "problem": 7 }
+  ]
+}
