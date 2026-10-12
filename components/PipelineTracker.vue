@@ -6,6 +6,9 @@ Usage:
   <PipelineTracker stage="refine" />    in the corner, Refine highlighted
   <PipelineTracker />                   in the corner, nothing highlighted
   <PipelineTracker stage="plan" inline />   placed by you, in the text flow
+  <PipelineTracker stage="refine" :pulse="$clicks >= 3 ? 'plan' : undefined" />
+      the Plan dot pulses once (scale + glow, PULSE_MS) when `pulse` is set;
+      the highlighted stage does not change
 
 Each stage has a fixed column width (PITCH), so the dots are always in the
 same place on every slide. Slide 8 relies on this: its big flow shrinks onto
@@ -14,7 +17,9 @@ these dots.
 <script setup lang="ts">
 import type { Stage } from './StageIcon.vue'
 
-withDefaults(defineProps<{ stage?: Stage, inline?: boolean }>(), { inline: false })
+withDefaults(defineProps<{ stage?: Stage, inline?: boolean, pulse?: Stage }>(), { inline: false })
+
+const PULSE_MS = 800
 
 const PITCH = 62 // px between two dots
 const stages: { id: Stage, label: string }[] = [
@@ -26,8 +31,8 @@ const stages: { id: Stage, label: string }[] = [
 </script>
 
 <template>
-  <ol class="pipeline-tracker" :class="{ corner: !inline }" :style="{ '--pitch': `${PITCH}px` }">
-    <li v-for="s in stages" :key="s.id" :class="[s.id, { current: s.id === stage }]">
+  <ol class="pipeline-tracker" :class="{ corner: !inline }" :style="{ '--pitch': `${PITCH}px`, '--pulse': `${PULSE_MS}ms` }">
+    <li v-for="s in stages" :key="s.id" :class="[s.id, { current: s.id === stage, pulsing: s.id === pulse }]">
       <i class="pt-dot" />
       <span class="pt-label">{{ s.label }}</span>
     </li>
@@ -87,6 +92,23 @@ const stages: { id: Stage, label: string }[] = [
   border-color: var(--c-accent);
   background: var(--c-accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-accent) 25%, transparent);
+}
+/* One pulse in the planning colour: "this is where it goes next". */
+.pulsing .pt-dot {
+  animation: pt-pulse var(--pulse) ease-out;
+}
+@keyframes pt-pulse {
+  30% {
+    scale: 1.9;
+    border-color: var(--c-plan);
+    background: var(--c-plan);
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--c-plan) 35%, transparent);
+  }
+}
+@media print, (prefers-reduced-motion: reduce) {
+  .pulsing .pt-dot {
+    animation: none;
+  }
 }
 .current .pt-label {
   color: var(--c-text);

@@ -3,10 +3,10 @@ Walk-forward validation as a schematic: no data, only the mechanism.
 
   step 0   a month timeline with fold 1: train bar, cut-off line, test window
   step 1   folds 2–6 stack downward; in each one the cut-off moves one month
-           right and the train bar grows; every fold drops an error dot into
-           the column on the right
-  step 2   the dots merge into one RMSE chip, and the chips of the other five
-           models appear under it
+           right and the train bar grows; every fold drops a row of six error
+           dots (one per model) into the column on the right
+  step 2   the dots flow, one model column at a time, into a box that holds
+           one RMSE chip per model (the average over all folds)
 
 Usage:  <WalkForward :step="$clicks" />
 
@@ -26,31 +26,51 @@ const FOLD_GAP = 0.55 // seconds between two folds at click 1
 // ----- Geometry (px) -----
 const W = 868
 const H = 336
-const LABEL_W = 70 // "fold 1" column
-const MONTH = 28 // width of one month
-const MONTHS = 20 // months on the timeline; the last one is the target month
+const LABEL_W = 62 // "fold 1" column
+const BREAK = 36 // axis break at the left: the history is longer than drawn
+const MONTH = 23 // width of one month
+const MONTHS = 20 // months drawn after the break; the last one is the target month
 const TL_X = LABEL_W // timeline starts here
-const TL_W = MONTHS * MONTH
+const TL_W = BREAK + MONTHS * MONTH
 const FIRST_CUT = MONTHS - 12 // the cut-off starts twelve months before the target
 const ROW_Y = 48
 const ROW_PITCH = 40
 const BAR_H = 26
 const SHOWN = 6 // folds drawn; the label below says there are 12
-const DOT_X = TL_X + TL_W + 26 // centre of the error-dot column
-const CHIP_X = DOT_X + 34
-const CHIP_W = W - CHIP_X
-const CHIP_H = 30
+// Error dots: one per model in every fold
+const DOT = 8
+const DOT_PITCH = 12
+const DOTS_X = TL_X + TL_W + 16
+// Box with one RMSE chip per model. Centred vertically on purpose, with its
+// own chip spacing, so a chip never lines up with a fold row.
+const BOX_X = DOTS_X + 6 * DOT_PITCH + 20
+const BOX_W = W - BOX_X
+const BOX_PAD = 10
+const BOX_HEAD = 26
+const CHIP_H = 26
+const CHIP_PITCH = 31
+const BOX_H = BOX_PAD + BOX_HEAD + 6 * CHIP_PITCH - (CHIP_PITCH - CHIP_H) + BOX_PAD
+const NEXT_H = 26 // "→ weights" line under the box
+const BOX_Y = Math.round((H - BOX_H - NEXT_H) / 2)
+const chipY = (j: number) => BOX_Y + BOX_PAD + BOX_HEAD + j * CHIP_PITCH
 const px = (n: number) => `${n}px`
 
 const folds = Array.from({ length: SHOWN }, (_, i) => {
-  const cut = FIRST_CUT + i // months of training data in this fold
+  const cut = FIRST_CUT + i // months of training data drawn in this fold
+  const y = ROW_Y + i * ROW_PITCH
   return {
     n: i + 1,
-    y: ROW_Y + i * ROW_PITCH,
-    trainW: cut * MONTH,
-    cutX: TL_X + cut * MONTH,
+    y,
+    trainW: BREAK + cut * MONTH,
+    cutX: TL_X + BREAK + cut * MONTH,
     testW: (MONTHS - cut) * MONTH,
     delay: `${i * FOLD_GAP}s`,
+    // Where each of the six dots has to travel at click 2: to the dot of its model's chip.
+    dots: Array.from({ length: 6 }, (_, j) => ({
+      x: DOTS_X + j * DOT_PITCH,
+      toX: BOX_X + BOX_PAD + 17 - (DOTS_X + j * DOT_PITCH + DOT / 2),
+      toY: chipY(j) + CHIP_H / 2 - (y + BAR_H / 2),
+    })),
   }
 })
 
@@ -60,11 +80,12 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
 
 <template>
   <div class="wf" :class="{ run: step >= 1, done: step >= 2 }" :style="{ width: px(W), height: px(H) }">
-    <!-- Month axis -->
-    <div class="wf-axis" :style="{ left: px(TL_X), width: px(TL_W), top: px(ROW_Y - 14) }">
-      <i v-for="m in MONTHS + 1" :key="m" :style="{ left: px((m - 1) * MONTH) }" />
-    </div>
-    <span class="wf-axis-label" :style="{ left: px(TL_X) }">months →</span>
+    <!-- Month axis, with a break at the left -->
+    <svg class="wf-axis" :width="TL_W" height="20" :style="{ left: px(TL_X), top: px(ROW_Y - 26) }" aria-hidden="true">
+      <path :d="`M0 14H13M25 14H${TL_W}M10 19l6 -10M19 19l6 -10`" />
+      <path v-for="m in MONTHS + 1" :key="m" :d="`M${Math.min(BREAK + (m - 1) * MONTH, TL_W - 0.75)} 14v-6`" />
+    </svg>
+    <span class="wf-axis-label" :style="{ left: px(TL_X) }">2014 ⋯</span>
     <span class="wf-axis-label cut" :style="{ left: px(folds[0].cutX) }">cut-off</span>
     <span class="wf-axis-label target" :style="{ left: px(TL_X + TL_W) }">target month</span>
 
@@ -85,22 +106,27 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
         </template>
       </div>
       <i class="wf-cut" :style="{ 'left': px(f.cutX), '--shift': px(-MONTH) }" />
-      <!-- This fold's error. At click 2 every dot moves to the first chip. -->
-      <i class="wf-dot" :style="{ 'left': px(DOT_X - 6), '--to-x': px(CHIP_X + 17 - DOT_X), '--to-y': px(-(f.n - 1) * ROW_PITCH) }" />
+      <!-- This fold's errors, one dot per model. At click 2 each dot moves to its model's chip. -->
+      <div class="wf-dots">
+        <i
+          v-for="(d, j) in f.dots" :key="j" class="wf-dot"
+          :style="{ 'left': px(d.x), '--to-x': px(d.toX), '--to-y': px(d.toY), '--col': `${j * 0.12}s` }"
+        />
+      </div>
     </div>
     <span class="wf-more" :style="{ left: px(TL_X), top: px(ROW_Y + SHOWN * ROW_PITCH) }">… 12 folds</span>
-    <span class="wf-dot-head" :style="{ left: px(DOT_X) }">error</span>
+    <span class="wf-dot-head" :style="{ left: px(DOTS_X) }">error · 6 models</span>
 
     <!-- One RMSE per model (click 2) -->
-    <ul class="wf-chips" :style="{ left: px(CHIP_X), width: px(CHIP_W) }">
-      <li
-        v-for="(m, i) in models" :key="m"
-        :style="{ 'top': px(ROW_Y + i * ROW_PITCH + (BAR_H - CHIP_H) / 2), 'height': px(CHIP_H), '--d': `${i ? 0.5 + i * 0.1 : 0.3}s` }"
-      >
+    <div class="wf-box" :style="{ left: px(BOX_X), top: px(BOX_Y), width: px(BOX_W), height: px(BOX_H) }">
+      average over 12 folds
+    </div>
+    <ul class="wf-chips" :style="{ left: px(BOX_X + BOX_PAD), width: px(BOX_W - 2 * BOX_PAD) }">
+      <li v-for="(m, j) in models" :key="m" :style="{ 'top': px(chipY(j)), 'height': px(CHIP_H), '--d': `${0.4 + j * 0.12}s` }">
         <i />RMSE · {{ m }}
       </li>
     </ul>
-    <span class="wf-next" :style="{ top: px(ROW_Y + SHOWN * ROW_PITCH) }">→ weights (next slide)</span>
+    <span class="wf-next" :style="{ top: px(BOX_Y + BOX_H + 6) }">→ weights (next slide)</span>
   </div>
 </template>
 
@@ -116,16 +142,10 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
 }
 
 /* ---------- Month axis ---------- */
-.wf-axis {
-  height: 8px;
-  border-bottom: 1.5px solid var(--chart-axis);
-}
-.wf-axis i {
-  position: absolute;
-  bottom: 0;
-  width: 0;
-  height: 6px;
-  border-left: 1.5px solid var(--chart-axis);
+.wf-axis path {
+  fill: none;
+  stroke: var(--chart-axis);
+  stroke-width: 1.5;
 }
 .wf-axis-label {
   top: 0;
@@ -185,12 +205,21 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
 .wf-fold.first .wf-cut {
   top: -26px;
 }
+.wf-dots {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
 .wf-dot {
-  top: 7px;
-  width: 12px;
-  height: 12px;
+  position: absolute;
+  top: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--chart-model);
+}
+.wf-dots {
   opacity: 0;
 }
 .wf-dot-head,
@@ -202,7 +231,6 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
 }
 .wf-dot-head {
   top: 0;
-  translate: -50% 0;
 }
 
 /* ---------- Step 1: folds 2–6 stack, each drops its error dot ---------- */
@@ -223,7 +251,7 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
 .run .wf-fold:not(.first) .wf-cut {
   animation: wf-slide 0.45s ease var(--d) backwards;
 }
-.run .wf-dot {
+.run .wf-dots {
   opacity: 1;
   animation: wf-drop 0.4s ease calc(var(--d) + 0.3s) backwards;
 }
@@ -251,13 +279,30 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
 }
 
 /* ---------- Step 2: the dots become one RMSE per model ---------- */
+/* Each dot travels to its model's chip; the columns leave one after the other. */
 .wf .wf-dot {
-  transition: translate 0.45s ease, opacity 0.2s ease 0.35s;
+  transition: translate 0.5s ease, opacity 0.2s ease 0.4s;
+}
+.done .wf-dots {
+  animation: none;
 }
 .done .wf-dot {
   translate: var(--to-x) var(--to-y);
   opacity: 0;
-  animation: none;
+  transition-delay: var(--col), calc(var(--col) + 0.4s);
+}
+.wf-box {
+  padding: 8px 10px 0;
+  border: 1.5px solid var(--c-line);
+  border-radius: 10px;
+  background: var(--c-surface);
+  color: var(--c-muted);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.done .wf-box {
+  opacity: 1;
 }
 .wf-chips {
   top: 0;
@@ -273,7 +318,7 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
   align-items: center;
   gap: 8px;
   margin: 0;
-  padding: 0 11px;
+  padding: 0 10px;
   border: 1.5px solid var(--chart-model);
   border-radius: 999px;
   background: color-mix(in srgb, var(--chart-model) 12%, var(--c-surface));
@@ -284,8 +329,8 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
   transition: opacity 0.3s ease;
 }
 .wf-chips i {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   flex: none;
   border-radius: 50%;
   background: var(--chart-model);
@@ -304,7 +349,7 @@ const models = ['RF', 'XGBoost', 'LightGBM', 'Prophet', 'Chronos', 'Granite']
 }
 .done .wf-next {
   opacity: 1;
-  transition-delay: 1.3s;
+  transition-delay: 1.4s;
 }
 
 @media print, (prefers-reduced-motion: reduce) {

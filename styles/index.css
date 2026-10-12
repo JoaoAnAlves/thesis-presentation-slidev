@@ -292,3 +292,61 @@ body,
   background: #fff;
   object-fit: contain;
 }
+
+/* ---------- Chart frame (slide 13 onward) ----------
+   One fixed place for the main chart: about 55% of the slide width, centred
+   between the title block and the footer. Put a chart in `.chart-frame` and it
+   sits on the same pixels on every slide that uses it.
+   Positions are in slide pixels (the slide is 980 x 552). */
+:root {
+  --frame-left: 385px;
+  --frame-top: 142px;
+  --frame-width: 539px; /* a compact ForecastChart (372 x 232) becomes 539 x 336 */
+  /* Where slide 12 draws the same chart (WeightBlend): used by the entry move. */
+  --from-12-left: 552px;
+  --from-12-top: 104px;
+  --from-12-width: 372px;
+  /* Entry move: tune here. The delay lets the slide fade finish first. */
+  --frame-enter-ms: 500ms;
+  --frame-enter-delay: 450ms;
+}
+.chart-frame {
+  position: absolute;
+  left: var(--frame-left);
+  top: var(--frame-top);
+  width: var(--frame-width);
+  transform-origin: 0 0;
+}
+/* Entry move: the chart starts on slide 12's box and grows into the frame.
+   Only `transform` is animated; the layout is the final frame from the start. */
+.chart-frame.enter-from-12 {
+  animation: chart-frame-enter var(--frame-enter-ms) ease-in-out var(--frame-enter-delay) backwards;
+}
+@keyframes chart-frame-enter {
+  from {
+    transform: translate(calc(var(--from-12-left) - var(--frame-left)), calc(var(--from-12-top) - var(--frame-top)))
+      scale(calc(372 / 539));
+  }
+}
+/* Text column to the left of the frame, centred against it. */
+.chart-frame-side {
+  position: absolute;
+  left: var(--slide-pad-x);
+  top: var(--frame-top);
+  width: calc(var(--frame-left) - var(--slide-pad-x) - 24px);
+  height: 336px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+.chart-frame-side p {
+  margin: 0;
+}
+@media print, (prefers-reduced-motion: reduce) {
+  .chart-frame.enter-from-12 {
+    animation: none;
+  }
+}

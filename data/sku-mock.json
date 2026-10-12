@@ -13,7 +13,11 @@
       "lower": [354, 374, 394, 404, 429, 444, 459, 454, 439, 424, 414, 439],
       "upper": [486, 506, 526, 536, 561, 576, 591, 586, 571, 556, 546, 571],
       "scenario": [420, 440, 470, 500, 540, 560, 575, 560, 540, 520, 505, 530],
-      "deviation": { "from": 7, "to": 11, "label": "Aug–Dec: near the lower bound" }
+      "deviation": {
+        "from": 7,
+        "to": 11,
+        "label": "Aug–Dec: near the lower bound"
+      }
     },
     "live2026": {
       "label": "2026–27",
@@ -25,20 +29,62 @@
     }
   },
   "models": [
-    { "id": "rf", "name": "Random Forest", "rmse": 48, "ranLive": false },
-    { "id": "xgb", "name": "XGBoost", "rmse": 40, "ranLive": true },
-    { "id": "lgbm", "name": "LightGBM", "rmse": 44, "ranLive": false },
-    { "id": "prophet", "name": "Prophet", "rmse": 60, "ranLive": false },
-    { "id": "chronos", "name": "Chronos", "rmse": 36, "ranLive": true },
-    { "id": "granite", "name": "Granite", "rmse": 52, "ranLive": true }
+    {
+      "id": "rf",
+      "name": "Random Forest",
+      "rmse": 48,
+      "ranLive": false
+    },
+    {
+      "id": "xgb",
+      "name": "XGBoost",
+      "rmse": 40,
+      "ranLive": true
+    },
+    {
+      "id": "lgbm",
+      "name": "LightGBM",
+      "rmse": 44,
+      "ranLive": false
+    },
+    {
+      "id": "prophet",
+      "name": "Prophet",
+      "rmse": 60,
+      "ranLive": false
+    },
+    {
+      "id": "chronos",
+      "name": "Chronos",
+      "rmse": 36,
+      "ranLive": true
+    },
+    {
+      "id": "granite",
+      "name": "Granite",
+      "rmse": 52,
+      "ranLive": true
+    }
   ],
   "planGrid": {
     "unit": "kg",
     "months": ["Mar", "Apr", "May"],
     "rows": [
-      { "item": "Material A", "baseline": [120, 130, 140], "scenario": [120, 170, 205] },
-      { "item": "Material B", "baseline": [60, 64, 70], "scenario": [60, 84, 102] },
-      { "item": "Material C", "baseline": [15, 15, 16], "scenario": [15, 15, 16] }
+      {
+        "item": "Material A",
+        "baseline": [120, 130, 140],
+        "scenario": [120, 170, 205]
+      },
+      {
+        "item": "Material B",
+        "baseline": [60, 64, 70],
+        "scenario": [60, 84, 102]
+      },
+      {
+        "item": "Material C",
+        "baseline": [15, 15, 16],
+        "scenario": [15, 15, 16]
+      }
     ]
   }
 }

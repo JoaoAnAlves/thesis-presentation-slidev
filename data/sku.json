@@ -1,9 +1,90 @@
 {
   "_mock": true,
-  "_note": "MOCK DATA. Invented values, not from the thesis. Provisional shape (CLAUDE.md has no section 12 yet): replace this file with the real export and adjust DemandGapChart.vue if the field names differ.",
+  "_note": "MOCK DATA. Invented values, not from the thesis. Replace this file with the real export. Top-level fields feed DemandGapChart (slide 3); `scenario1` feeds WeightBlend (slide 12) and ForecastChart series=\"scenario1\" (slide 13).",
   "sku": "MOCK-SKU",
   "unit": "units / month",
   "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
   "actual": [410, 430, 470, 455, 500, 520, 540, 458, 436, 420, 410, 445],
-  "mrpPlan": 465
+  "mrpPlan": 465,
+  "scenario1": {
+    "_mock": true,
+    "_note": "MOCK. Shape: trainEnd = last month of training data (YYYY-MM). actual[] = monthly demand, history and 2025 together; charts cut it at trainEnd unless told otherwise. models[].forecast has one value per entry of blended[]. blended[].qty = combined forecast; rangeUp / rangeDown = 90% band as stored by the system (rangeDown already floored at 0). In this mock, qty is the inverse-RMSE blend of the six model lines and the band uses a different invented error for every month.",
+    "trainEnd": "2025-01",
+    "actual": [
+      { "month": "2024-02", "qty": 388 },
+      { "month": "2024-03", "qty": 402 },
+      { "month": "2024-04", "qty": 431 },
+      { "month": "2024-05", "qty": 446 },
+      { "month": "2024-06", "qty": 472 },
+      { "month": "2024-07", "qty": 497 },
+      { "month": "2024-08", "qty": 512 },
+      { "month": "2024-09", "qty": 468 },
+      { "month": "2024-10", "qty": 441 },
+      { "month": "2024-11", "qty": 418 },
+      { "month": "2024-12", "qty": 404 },
+      { "month": "2025-01", "qty": 423 },
+      { "month": "2025-02", "qty": 436 },
+      { "month": "2025-03", "qty": 468 },
+      { "month": "2025-04", "qty": 452 },
+      { "month": "2025-05", "qty": 498 },
+      { "month": "2025-06", "qty": 517 },
+      { "month": "2025-07", "qty": 538 },
+      { "month": "2025-08", "qty": 455 },
+      { "month": "2025-09", "qty": 431 },
+      { "month": "2025-10", "qty": 417 },
+      { "month": "2025-11", "qty": 406 },
+      { "month": "2025-12", "qty": 440 }
+    ],
+    "models": [
+      {
+        "id": "rf",
+        "short": "RF",
+        "rmse": 48,
+        "forecast": [442, 459, 458, 464, 467, 480, 488, 488, 480, 465, 471]
+      },
+      {
+        "id": "xgb",
+        "short": "XGBoost",
+        "rmse": 40,
+        "forecast": [457, 476, 476, 493, 507, 532, 538, 529, 509, 486, 503]
+      },
+      {
+        "id": "lgbm",
+        "short": "LightGBM",
+        "rmse": 44,
+        "forecast": [447, 456, 453, 470, 489, 514, 519, 506, 483, 462, 479]
+      },
+      {
+        "id": "prophet",
+        "short": "Prophet",
+        "rmse": 60,
+        "forecast": [455, 473, 483, 525, 560, 592, 584, 552, 518, 498, 540]
+      },
+      {
+        "id": "chronos",
+        "short": "Chronos",
+        "rmse": 36,
+        "forecast": [458, 469, 482, 514, 536, 548, 534, 510, 493, 490, 522]
+      },
+      {
+        "id": "granite",
+        "short": "Granite",
+        "rmse": 52,
+        "forecast": [377, 407, 431, 474, 495, 505, 487, 461, 446, 444, 487]
+      }
+    ],
+    "blended": [
+      { "month": "2025-02", "qty": 441.2, "rangeUp": 480.8, "rangeDown": 401.6 },
+      { "month": "2025-03", "qty": 458.0, "rangeUp": 509.1, "rangeDown": 406.9 },
+      { "month": "2025-04", "qty": 464.8, "rangeUp": 537.4, "rangeDown": 392.2 },
+      { "month": "2025-05", "qty": 490.2, "rangeUp": 549.6, "rangeDown": 430.8 },
+      { "month": "2025-06", "qty": 508.6, "rangeUp": 553.1, "rangeDown": 464.1 },
+      { "month": "2025-07", "qty": 527.7, "rangeUp": 608.6, "rangeDown": 446.9 },
+      { "month": "2025-08", "qty": 524.4, "rangeUp": 620.1, "rangeDown": 428.7 },
+      { "month": "2025-09", "qty": 507.6, "rangeUp": 573.6, "rangeDown": 441.6 },
+      { "month": "2025-10", "qty": 488.6, "rangeUp": 536.5, "rangeDown": 440.8 },
+      { "month": "2025-11", "qty": 474.8, "rangeUp": 550.7, "rangeDown": 398.9 },
+      { "month": "2025-12", "qty": 500.2, "rangeUp": 556.3, "rangeDown": 444.1 }
+    ]
+  }
 }

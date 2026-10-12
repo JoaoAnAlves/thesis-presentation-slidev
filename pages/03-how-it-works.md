@@ -68,6 +68,7 @@ Chronos and Granite are foundation models. They were pre-trained on large collec
 [click] (let the three diagrams play: table → next month; trend and season → one series; sampled paths → P70)
 [click] Why three families? Because they make different assumptions, they fail in different places. A weakness of one family, for example the foundation models with long runs of zero sales, is diluted in the combined forecast instead of going straight to the planner.
 
+Validation uses P70; predict_service uses the median (P50). Inconsistency, on the errata list.
 If asked (why P70 and not the median?): the thesis only states the effect: taking the 70th percentile of Chronos' sampled paths biases its forecast upward. TODO(João): write your reason for choosing it here.
 If asked (why one tree model for all items?): each of the three is trained once across all items, and the item ID is left out of the features, so the model learns how demand relates to its recent history in general instead of memorizing individual items.
 If asked (the P95 cap): demand is capped at each item's 95th percentile, and that threshold is computed over the full series, evaluation months included, which makes the tree models' RMSE optimistic → backup b8.
@@ -97,12 +98,15 @@ Bridge in: Six forecasts for the same item. How do I know which ones to trust?
 
 Script draft (TODO(João): no script came with the request; this is Claude's draft from the thesis text, replace with your own):
 To weight the models I first need to know how wrong each one usually is, and I want that measured on data the model has not seen. This is walk-forward validation. I pick a cut-off date. The model is trained only on the months before it, and tested on the months after it.
-[click] Then the cut-off moves one month to the right, the model is retrained on a slightly longer history, and tested again. The cut-off starts twelve months before the target month, so this gives twelve folds, and each fold gives one error.
-[click] The average error across the folds is the model's RMSE. The same procedure runs for all six models, so each one ends with its own score. Those six scores are what the next step turns into weights.
+[click] Then the cut-off moves one month to the right, the models are retrained on a slightly longer history, and tested again. The cut-off starts twelve months before the target month, so this gives twelve folds, and every fold scores all six models.
+[click] For each model, the average error over the folds is its RMSE. So each model ends with one score, and those six scores are what the next step turns into weights.
+
+Key point: Each fold scores all six models over the whole catalog (one pooled RMSE per model per fold). RMSEᵢ = average of those fold RMSEs (walk_forward_validation_service._compute_average_metrics). Weights are per model, the same for every product. The per-calendar-month fold error is reused later for the band (slide 13).
 
 If asked (what if walk-forward results are missing for a model?): the RMSE of its single date-based hold-out split is used instead → backup b6.
 If asked (is the fold error used anywhere else?): yes. The band on the combined forecast uses, when available, the error of the fold whose cut-off falls in the same calendar month as the forecast (slide 13).
 If asked (is the comparison between models fair?): not fully. The tree models forecast one month ahead from observed lag values, while Prophet, Chronos and Granite forecast the whole evaluation window from the end of the training data, so the tree models are scored on an easier task and tend to get larger weights → backup b8.
+If asked (why not one weight per product?): weights are per model, the same for every product, because each fold's RMSE is pooled over the whole catalog. Per-product weights = possible improvement.
 If asked (the RMSE in the formula): it is the average walk-forward error across all folds, bounded below by 0.001 to avoid division by zero.
 TODO(João): the drawing shows each test window running from the cut-off to the target month. The thesis only says "the months after it"; check that this matches the code.
 
@@ -112,33 +116,128 @@ Bridge out: Six error scores. How do they become one forecast?
 -->
 
 ---
+clicks: 3
+---
 
-# Inverse Error Weighting
+# From errors to weights
 
-<span class="placeholder">Slide 12 · placeholder · WeightBars in Phase 2</span>
+<PipelineTracker stage="refine" />
+
+<WeightBlend :step="$clicks">
+
+$$
+w_{i,t} = \dfrac{1/\mathrm{RMSE}_i}{\sum_{j\in M_t} 1/\mathrm{RMSE}_j}
+\qquad
+\hat y_t = \sum_{i\in M_t} w_{i,t}\,\hat y_{i,t}
+$$
+
+</WeightBlend>
+
+<!-- TODO(João): review wording -->
 
 <!--
-Key points:
-- Weight of each model = inverse of its RMSE, normalized over the models that ran.
-- RMSE bars morph into weight bars, then into the blended line.
-- Renormalizing over the models that ran is what lets it survive failures.
+Bridge in: Six error scores. How do they become one forecast?
+
+Script draft (TODO(João): no script came with the request; this is Claude's draft, replace with your own):
+These are the six scores from the previous slide: the average walk-forward RMSE of each model. (The numbers on screen are mock values for now.)
+[click] Each model gets a weight that is the inverse of its error, divided by the sum of all the inverses. So the bars flip: the model with the lowest error gets the tallest bar. No model is thrown away; a weaker one just counts for less. Two details: the RMSE has a floor of 0.001, so nothing divides by zero, and the weights are renormalised over the models that are available in each month, the set M_t in the formula.
+[click] With the weights, the six forecasts become one: for each month, the blended forecast is the weighted sum of the six. This blue line is what the rest of the system works with.
+[click] And these weights are a starting point. The manager can replace them, which I show in two slides.
+
+If asked (are the weights different per product?): no. The weights are per model, computed over the whole catalog, so in practice they are the same for every product. Per-item weights are future work.
+If asked (why not just the best model?): No single model is best for every product or month; the mix is more stable; and it survives model failures (Scenario 3).
+If asked (why keep the weak models?): the thesis frames it as down-weighting rather than discarding, so the system favours the more accurate models without manual model selection.
+If asked (what happens when a model fails?): the weights are renormalised over the models that produced a forecast for that month, so the combined forecast stays valid. That is what happened in Scenario 3 (slide 18).
+If asked (manual weights): when the manager supplies weights, they replace the computed ones and are normalised in the same way.
+On-screen numbers: MOCK until the real values are in the data file.
 
 Target time: 1:00
+
+Bridge out: One line is still a single guess. How sure is it?
 -->
 
 ---
+clicks: 3
+---
 
-# Prediction interval → safety stock
+# How wrong could it be?
 
-<span class="placeholder">Slide 13 · placeholder · content in Phase 4</span>
+<p class="band-sub">From error to safety stock</p>
+
+<PipelineTracker stage="refine" :pulse="$clicks >= 3 ? 'plan' : undefined" />
+
+<!-- The chart starts on slide 12's box, then moves into the shared frame
+     (styles/index.css, "Chart frame"). The move only plays when arriving forwards. -->
+<div class="chart-frame" :class="{ 'enter-from-12': $nav.navDirection > 0 }">
+  <ForecastChart
+    series="scenario1" compact
+    :show-band="$clicks >= 1"
+    :highlight-month="$clicks >= 2 ? '2025-07' : null"
+    :show-safety-bracket="$clicks >= 3"
+  />
+</div>
+
+<div class="chart-frame-side">
+<div v-click="1" class="band-formula">
+
+$$
+\hat y_t \pm 1.65\,\mathrm{RMSE}_t
+$$
+
+<p class="band-label">90% prediction interval</p>
+</div>
+
+<p v-click="2">Each month uses the error from the same calendar month in walk-forward.</p>
+
+<ToPlanningBox month="2025-07" :show="$clicks >= 3" />
+</div>
+
+<!-- TODO(João): review wording (title, subtitle, formula label, caption; chart labels are in ForecastChart.vue, the box in ToPlanningBox.vue) -->
+
+<style>
+.band-sub {
+  position: absolute;
+  left: var(--slide-pad-x);
+  top: 80px;
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 18px;
+}
+.band-formula {
+  font-size: 30px;
+}
+.band-formula .katex-display {
+  margin: 0 0 4px;
+  text-align: left;
+}
+.band-formula .katex-display > .katex {
+  text-align: left;
+}
+.band-formula .band-label {
+  color: var(--chart-forecast);
+  font-size: 18px;
+  font-weight: 600;
+}
+</style>
 
 <!--
-Key points:
-- Band = forecast ± 1.65·RMSE = 90% prediction interval. Never call it 95%.
-- Distance to the upper bound = safety stock passed to planning.
-- Band grows on click.
+Bridge in: One line is still a single guess. How sure is it?
 
-Target time: 0:50
+Script draft (TODO(João)):
+One line isn't enough to plan with. The question is how wrong it could be.
+[click] The answer comes from walk-forward validation: for every month, I already know how far each model was off in that same calendar month, and I combine those errors with the same weights. That error, times 1.65, gives this band. It's a 90% prediction interval, so the upper bound is exceeded only about 5% of the time.
+[click] (point at the highlighted month: its band uses the error from that calendar month)
+[click] The distance from the forecast to that upper bound is the safety stock. For July, that's 528 plus 81, so planning receives 609. (MOCK numbers: read the real ones off the box once data/sku.json is real.) This is what goes to planning: not just the forecast, but forecast plus safety stock. Before that, though, the manager can still step in.
+
+Q&A:
+- Why 1.65? → backup b7 (90% prediction interval; the upper bound is a one-sided 95% limit; assumes approximately normal forecast errors). Never call the band 95%.
+- Was the coverage checked? Coverage was not measured catalog-wide.
+- The RMSE is pooled over the catalog (see Fig 5.14) → per-item error scaling is the first fix.
+On-screen numbers: MOCK until the real values are in data/sku.json (scenario1).
+
+Target time: 0:45
+
+Bridge out: Before the forecast goes to planning, can a person correct the model?
 -->
 
 ---

@@ -125,7 +125,7 @@ const seriesPath = line(xs.map(u => [2 + u * (DW - 4), 156 - trendAt(u) * (1 + 0
 
 // ---------- 3 · Foundation: sampled paths → P70 ----------
 const NOW_X = 96
-const NOW_Y = 52
+const NOW_Y = 58
 const END_X = 186
 const STEPS = 9
 // Small repeatable pseudo-random numbers, so the drawing is the same on every load.
@@ -134,7 +134,7 @@ function noise(i: number, k: number) {
   return (s - Math.floor(s)) * 2 - 1
 }
 const historyPath = line(Array.from({ length: 14 }, (_, k) => [2 + k * 7, NOW_Y + 6 + noise(40, k) * 11]).concat([[NOW_X, NOW_Y]]))
-const DRIFTS = [-46, -34, -23, -12, -1, 10, 22, 36] // where each path ends, relative to today
+const DRIFTS = [-40, -30, -21, -12, -2, 9, 20, 33] // where each path ends, relative to today
 const samples = DRIFTS.map((drift, i) =>
   Array.from({ length: STEPS }, (_, k) => {
     const u = k / (STEPS - 1)
@@ -156,9 +156,8 @@ const p70 = percentile(0.7)
 const median = percentile(0.5)
 const p70Path = line(p70)
 const medianPath = line(median)
-// The two labels at the right end are 16 px tall; keep them from overlapping.
-const p70LabelY = p70[STEPS - 1][1] + 2
-const medianLabelY = Math.max(median[STEPS - 1][1] + 6, p70LabelY + 17)
+// "median" sits at the end of its line; the longer P70 label goes above the fan.
+const medianLabelY = median[STEPS - 1][1] + 6
 const ghostPaths = samples.map(line)
 // The bright copies of the paths move from their own shape onto the P70 line.
 const livePaths = computed(() => {
@@ -227,7 +226,7 @@ const liveOpacity = (i: number) => p(T.paths + i * T.pathGap, 0.3) * (1 - p(T.co
             <path class="d-median" :d="medianPath" />
             <text class="d-label" :x="END_X + 5" :y="medianLabelY">median</text>
             <path class="d-model" :d="p70Path" />
-            <text class="d-label model" :x="END_X + 5" :y="p70LabelY">P70</text>
+            <text class="d-label model" :x="DW" y="15" text-anchor="end">P70 (validation)</text>
           </g>
           <text class="d-label" x="0" y="136">Chronos: sampled paths → P70</text>
           <text class="d-label" x="0" y="155">Granite: one forecast</text>
