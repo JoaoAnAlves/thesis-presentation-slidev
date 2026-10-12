@@ -42,6 +42,7 @@ Continue the look of the February deck (the jury saw it):
 - Circuit/hexagon line motif used sparingly (title + section dividers only).
 - Footer on main slides: date · short title · "João Alves | Tecnic@mente" · slide number.
 - One idea per slide. Large type. Max ~25 words of on-screen text per slide outside charts.
+- **Minimum text size:** minimum 16 px for any text on a slide, including chart labels.
 - Consistent chart colors everywhere, matching the thesis figures: **orange = actual demand**, **blue = combined (master) forecast**, **shaded blue = 90% prediction interval**, **dotted = scenario impact**, **purple = individual model output**.
 
 ## 5. Writing rules for on-screen text and notes
