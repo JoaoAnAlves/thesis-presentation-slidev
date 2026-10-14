@@ -70,12 +70,13 @@ Bridge out: Three stations, one system behind them.
 -->
 
 ---
-clicks: 2
+clicks: 1
 ---
 
 # Three tiers behind the stations
 
-<ArchitectureTiers :step="$clicks" />
+<!-- One click plays both: the request path (component step 1) and the "why" chips (step 2). -->
+<ArchitectureTiers :step="$clicks >= 1 ? 2 : 0" />
 
 <!-- TODO(João): review wording -->
 
@@ -85,7 +86,7 @@ Bridge in: Three stations, one system behind them.
 Script draft (TODO(João): adapted by Claude from reference/act2-design-spec.md to the vertical layout; replace with your own):
 Behind the three stations is a three-tier architecture. At the top, the Angular screens. Their only job is to show results and send actions. In the middle, two separate services. The Central Webservice, in Java with Quarkus, is the single entry point: it handles requests, access control and business logic. The Analytical Engine, in Python with FastAPI, does the heavy work: preparing data, running six models, combining them and building the plan. They talk over an internal REST interface. At the bottom, one central database is the single source of truth.
 [click] Follow one request. The manager asks for a training run. Quarkus checks the role, loads the sales history from the database and hands the job to the engine. While the engine is busy, the dock asks for its schedule and gets an answer straight away. When training ends, the results are written to the database and the office screen shows them.
-[click] Quarkus was the partner's choice, to build internal knowledge with it. Python was the natural choice for the ML side.
+Quarkus was the partner's choice, to build internal knowledge with it. Python was the natural choice for the ML side.
 
 If asked (live progress): progress, warnings and results are written to the database and the interface reads them from there. There is no websocket streaming yet. That was a deliberate trade-off (thesis section 4.1.3) and it is listed as future work. Backups: b14 Tech stack, b5 Conceptual architecture.
 
