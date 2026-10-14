@@ -31,6 +31,8 @@ DATA: `data/sku.json` → scenario1 is MOCK for now. The component needs
 <script setup lang="ts">
 import { useNav } from '@slidev/client'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { automaticWeights } from '../composables/useBlend'
+import { baseUnit, fmtInt, fmtPct } from '../composables/useFormat'
 import sku from '../data/sku.json'
 
 const props = withDefaults(defineProps<{ step?: number }>(), { step: 0 })
@@ -42,9 +44,8 @@ const MERGE_SECONDS = 1 // then how long the six lines take to merge
 // ----- Inverse Error Weighting, computed from the data file -----
 const models = sku.scenario1.models
 const blended = sku.scenario1.blended.map(b => b.qty) // the combined forecast, from the data
-const inverse = models.map(m => 1 / Math.max(m.rmse, 0.001)) // RMSE floored at 0.001
-const total = inverse.reduce((a, b) => a + b, 0)
-const weights = inverse.map(v => v / total)
+const weights = automaticWeights() // shared with slides 13–14 (composables/useBlend.ts)
+const unit = baseUnit(sku.unit) // 'kg / month' → 'kg'
 
 // ----- Geometry (px) -----
 const W = 868
@@ -78,8 +79,8 @@ const bars = computed(() => models.map((m, i) => ({
   tagged: i === worst || i === best,
   x: i * BAR_PITCH + (BAR_PITCH - BAR_W) / 2,
   h: BAR_MAX * (props.step >= 1 ? weights[i] / maxWeight : m.rmse / maxRmse),
-  rmse: m.rmse,
-  weight: `${Math.round(weights[i] * 100)}%`,
+  rmse: fmtInt(m.rmse),
+  weight: fmtPct(weights[i]),
 })))
 // Rows under the bars
 const FORMULA_Y = 240
@@ -124,7 +125,7 @@ const liveValues = computed(() => models.map(m => m.forecast.map((v, t) => v + (
   <!-- TODO(João): review wording (all labels on this slide) -->
   <div class="wb" :class="{ weighted: step >= 1, merged: step >= 2, manager: step >= 3 }" :style="{ width: px(W), height: px(H) }">
     <!-- Bars: RMSE at click 0, weights from click 1 -->
-    <span class="wb-title before">average walk-forward RMSE</span>
+    <span class="wb-title before">average walk-forward RMSE ({{ unit }})</span>
     <span class="wb-title after">weight · taller = lower error</span>
     <div v-for="b in bars" :key="b.id" class="wb-bar" :class="{ tagged: b.tagged }" :style="{ left: px(b.x), width: px(BAR_W), top: px(BASE_Y - BAR_MAX), height: px(BAR_MAX) }">
       <i :style="{ height: px(b.h) }" />

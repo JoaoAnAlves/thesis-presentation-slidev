@@ -1,0 +1,20 @@
+{
+  "_note": "Slide 22 (FutureWorkList). `because` is the small grey chip at the right of a row; `link` is a main-slide number (as shown in the footer), which turns the chip into a link to that slide. TODO(João): review wording against thesis Ch. 6.",
+  "groups": [
+    {
+      "title": "First: prove it",
+      "items": [
+        { "n": 1, "text": "Measure the combined forecast across the catalog", "because": "objective 1 only partly measured", "link": 20 },
+        { "n": 2, "text": "Item-ID history bridge for re-coded items", "because": "Scenario 3 · partner Q7", "link": 18 },
+        { "n": 3, "text": "Planned vs actually spent", "because": "partner Q7 · measures stock and waste effect", "link": 19 }
+      ]
+    },
+    {
+      "title": "Then: extend it",
+      "items": [
+        { "n": 4, "text": "Weekly data + Croston for irregular demand", "because": "long zero-sales periods" },
+        { "n": 5, "text": "Real-time progress · capacity and cost in the plan", "because": "polling today · no capacity limits", "link": 15 }
+      ]
+    }
+  ]
+}

@@ -21,7 +21,7 @@ withDefaults(defineProps<{ variant?: 'opening' | 'closing' }>(), { variant: 'ope
 // with the name is shown instead.
 const logos = [
   { name: 'FCT NOVA', src: '/img/logos/logo_nova_fct_en_v.png' },
-  { name: 'Tecnic@mente', src: '/img/logos/logo_app_256.png' },
+  { name: 'Tecnicamente', src: '/img/logos/logo_app_256.png' },
 ]
 const missing = reactive<Record<string, boolean>>({})
 </script>

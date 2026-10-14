@@ -1,0 +1,18 @@
+{
+  "_note": "Partner feedback for slide 19 (FeedbackColumns). Source: thesis §5.5 and Appendix A (10 open questions, meeting of August 2026). `q` = the question an item summarizes. TODO(João): verify wording against thesis questionnaire section; don't strengthen it. `ratings` is null because the questions were open, with no scores; if scores are ever collected, fill it as { \"Q3\": 4 } (1–5) and dots appear under the column that holds that question.",
+  "valued": [
+    { "text": "Automated purchase quantities", "q": "Q2" },
+    { "text": "Explicit purchase-timing windows", "q": "Q2" },
+    { "text": "Less manual analysis", "q": "Q2" }
+  ],
+  "judged": [
+    { "text": "Figures operationally credible", "q": "Q3" },
+    { "text": "Manual re-weighting: sensible for planners", "q": "Q4" },
+    { "text": "Crisis simulation: useful, not just a demo", "q": "Q5" }
+  ],
+  "next": [
+    { "text": "Planned vs actually spent", "q": "Q7" },
+    { "text": "Linking re-coded items", "q": "Q7", "note": "the Item-ID resets from Scenario 3" }
+  ],
+  "ratings": null
+}

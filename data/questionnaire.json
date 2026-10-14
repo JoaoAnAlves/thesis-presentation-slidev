@@ -1,0 +1,35 @@
+{
+  "_note": "Backup b13 (PartnerQuestionnaire). Questions shortened from thesis Appendix A; answers summarized from thesis §5.5, which itself summarizes the author's notes of the meeting (August 2026). TODO(João): check wording against the thesis, don't strengthen it.",
+  "groups": [
+    {
+      "title": "Q1–Q3 · problem & trust",
+      "items": [
+        { "q": "Q1", "question": "Does it address the planning challenges you described?", "answer": "For a first phase, it already plans and delivers in line with the objectives." },
+        { "q": "Q2", "question": "What does it change compared with planning today?", "answer": "Automated purchase quantities, explicit purchase-timing windows, less time on manual analysis." },
+        { "q": "Q3", "question": "Would you trust the numbers enough to act on them?", "answer": "The figures reflect the quantities actually required for those items." }
+      ]
+    },
+    {
+      "title": "Q4–Q5 · features",
+      "items": [
+        { "q": "Q4", "question": "Would planners use the manual model weights?", "answer": "A sensible capability, when the blend is off and some models are known to do better for an item." },
+        { "q": "Q5", "question": "Is the crisis simulation useful in practice?", "answer": "Described as useful under abrupt disruptions, not as a demonstration exercise." }
+      ]
+    },
+    {
+      "title": "Q6–Q9 · next phase",
+      "items": [
+        { "q": "Q6", "question": "Is it a credible starting point?", "answer": "A solid foundation for a second development phase." },
+        { "q": "Q7", "question": "What should a second phase prioritize?", "answer": "Comparing planned with actually spent; linking products that receive a new item code." },
+        { "q": "Q8", "question": "What is needed to pilot it on live data?", "answer": "Errors and bugs would likely surface, but it would still return usable values." },
+        { "q": "Q9", "question": "Who would own the tool?", "answer": "Purchasing and planning, rather than IT or floor operations." }
+      ]
+    },
+    {
+      "title": "Q10 · overall",
+      "items": [
+        { "q": "Q10", "question": "What surprised you?", "answer": "The quality of the output values, and how many further features could be added." }
+      ]
+    }
+  ]
+}

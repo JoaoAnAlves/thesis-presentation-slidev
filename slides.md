@@ -26,7 +26,7 @@ htmlAttrs:
 themeConfig:
   date: October 2026
   shortTitle: AI-Enhanced MRP for Food Manufacturing
-  footerAuthor: João Alves | Tecnic@mente
+  footerAuthor: João Alves | Tecnicamente
   # email: joao.antonio.alves.oficial@gmail.com
 # ===== Frontmatter for slide 1 only =====
 layout: cover
@@ -40,7 +40,7 @@ Intelligent Production Planning in Food Manufacturing: Enhancing MRP System with
 <div class="credits">
 <p><strong>João Alves</strong></p>
 <p>Supervisor: Prof. Filipa Ferrada</p>
-<p>Industrial partner: Tecnic@mente</p>
+<p>Industrial partner: Tecnicamente</p>
 </div>
 
 <!-- TODO(João): review wording -->

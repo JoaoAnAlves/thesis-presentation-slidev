@@ -199,7 +199,7 @@ body,
   border: 1px solid var(--c-line);
   border-radius: 8px;
   background: var(--c-surface);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .callout {
@@ -291,6 +291,16 @@ body,
   border-radius: 8px;
   background: #fff;
   object-fit: contain;
+}
+
+/* Subtitle directly under the slide title (slides 13–14). */
+.slide-sub {
+  position: absolute;
+  left: var(--slide-pad-x);
+  top: 80px;
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 18px;
 }
 
 /* ---------- Chart frame (slide 13 onward) ----------

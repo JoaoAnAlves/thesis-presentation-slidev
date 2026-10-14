@@ -5,7 +5,7 @@
 A Slidev presentation for my Master's thesis defense at FCT NOVA (Electrical & Computer Engineering).
 
 - **Thesis:** "Intelligent Production Planning in Food Manufacturing: Enhancing MRP System with AI"
-- **Author:** João Alves (supervisor: Prof. Filipa Ferrada; industrial partner: Tecnic@mente)
+- **Author:** João Alves (supervisor: Prof. Filipa Ferrada; industrial partner: Tecnicamente)
 - **Format:** ~20 min talk + ~1 h jury Q&A
 - **Mentor's brief:** present the core of the development work and the results.
 - **Deck = two parts:** (1) a ~23-slide main talk, (2) a backup appendix used only during Q&A.
@@ -40,7 +40,7 @@ Reference material lives in `reference/` (thesis PDF, thesis figures, old Februa
 Continue the look of the February deck (the jury saw it):
 - Dark background (near-black `#0B0D10`), white primary text, electric-blue accent (around `#1E9BF0`), one warm accent for warnings/alerts (amber/red), muted grey for secondary text.
 - Circuit/hexagon line motif used sparingly (title + section dividers only).
-- Footer on main slides: date · short title · "João Alves | Tecnic@mente" · slide number.
+- Footer on main slides: date · short title · "João Alves | Tecnicamente" · slide number.
 - One idea per slide. Large type. Max ~25 words of on-screen text per slide outside charts.
 - **Minimum text size:** minimum 16 px for any text on a slide, including chart labels.
 - Consistent chart colors everywhere, matching the thesis figures: **orange = actual demand**, **blue = combined (master) forecast**, **shaded blue = 90% prediction interval**, **dotted = scenario impact**, **purple = individual model output**.
@@ -54,7 +54,8 @@ Continue the look of the February deck (the jury saw it):
   - The combined forecast's error was **not** measured across the catalog; Scenario 1 accuracy is assessed visually for one representative SKU.
   - BOM quantities are **reconstructed** from production records (not validated by the company); scrap is a fixed 2%; lead times are **simulated** (random 2–7 days); inventory lots are **synthetic**.
   - The band is ±1.65·RMSE = **90% prediction interval** (upper bound = one-sided 95%). Never call it 95%.
-  - Partner feedback came from Tecnic@mente's two managers (my superiors), not independent planners. Label it as the industrial partner's view.
+  - Partner feedback came from Tecnicamente's two managers (my superiors), not independent planners. Label it as the industrial partner's view.
+  - Never present March 2026 as a full month or as evidence of a sales decline.
   - Do not claim MES integration, real-time lead-time adjustment, R² evaluation, or measured waste reduction.
 
 ## 6. The storytelling spine
@@ -93,7 +94,7 @@ A small `PipelineTracker` component (Train → Refine → Plan → Scenario) app
 ### Act 4 — Results (~5 min)
 16. **Scenario 1 — 2025 baseline**: trained to Jan 2025, forecasts the rest of 2025; actuals mostly within/near the band; clearest deviation Aug–Dec near the lower bound. Alerts: inactive items, <1 year history ("low data").
 17. **Scenario 2 — war shock**: multiplier anchored on the 2022 Ukraine outbreak (e.g. +160.8% → ×2.61); grid shows the new value with the baseline in parentheses; Critical vs Information warnings. Framed as a what-if stress test, not a prediction.
-18. **Scenario 3 — live 2026, unsupervised**: only Chronos, Granite and XGBoost completed; the system did not crash; weights renormalized over the survivors; the plan was still produced. Animate three models dropping out. Honest finding: the forecast did not follow the real downward trend, linked to Item-ID resets fragmenting history.
+18. **Scenario 3 — live 2026, unsupervised**: only Chronos, Granite and XGBoost completed; the system did not crash; weights renormalized over the survivors; the plan was still produced. Animate three models dropping out. Honest finding: only two full months of 2026 sales (DB copied mid-March), so no accuracy conclusion; the finding is resilience.
 19. **Partner feedback**: gains = automated purchase quantities, explicit purchase-timing windows, less manual analysis; figures considered operationally credible; requested next = planned-vs-spent comparison, linking re-coded items. Labelled as the industrial partner's view.
 20. **Objectives scorecard**: reuse `ObjectivesCard` with a status per objective: Implemented ✓ / Demonstrated ✓ / Measured ✗ (Obj. 1 closest, since per-model error was measured).
 
@@ -131,7 +132,7 @@ Slide B0 = clickable index of all backups. Initial list (I'll add more):
 - Thesis PDF + exported figures → `reference/`
 - Real data for the thread SKU (actuals, 6 model forecasts, RMSEs, weights, band, scenario line) → `data/`
 - UI screenshots and short screen recordings → `public/img`, `public/video`
-- Logos (FCT NOVA, Tecnic@mente) → `public/img/logos`
+- Logos (FCT NOVA, Tecnicamente) → `public/img/logos`
 ## 11. Bridges and continuity
 
 - **Bridges:** every main slide's speaker notes start with `Bridge in:` (the sentence that leads into this slide) and end with `Bridge out:` (the question the next slide answers). Draft them from the slide plan; I'll rewrite them.

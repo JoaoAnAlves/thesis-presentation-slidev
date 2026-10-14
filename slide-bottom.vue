@@ -23,21 +23,29 @@ function kindOf(layout?: string): Kind {
 }
 
 // Every slide in the deck with its Slidev page number and kind.
+// A backup that is split over two slides keeps one number: give the first
+// slide `backupSuffix: a` and the second `backupSuffix: b` plus
+// `backupContinues: true` (= not counted), and they read B13a and B13b.
 const all = computed(() =>
-  $nav.value.slides.map(s => ({ no: s.no, kind: kindOf(s.meta.slide.frontmatter.layout) })),
+  $nav.value.slides.map((s) => {
+    const fm = s.meta.slide.frontmatter
+    return { no: s.no, kind: kindOf(fm.layout), suffix: (fm.backupSuffix ?? '') as string, counted: !fm.backupContinues }
+  }),
 )
 
 const kind = computed(() => all.value.find(s => s.no === $page.value)?.kind ?? 'main')
 
 // Position among slides of the same kind = how many of that kind come at or before this page.
 const position = computed(() =>
-  all.value.filter(s => s.kind === kind.value && s.no <= $page.value).length,
+  all.value.filter(s => s.kind === kind.value && s.counted && s.no <= $page.value).length,
 )
 const mainTotal = computed(() => all.value.filter(s => s.kind === 'main').length)
 
 // Backups start at B0 (the index), so their label is position - 1.
 const label = computed(() =>
-  kind.value === 'backup' ? `B${position.value - 1}` : `${position.value} / ${mainTotal.value}`,
+  kind.value === 'backup'
+    ? `B${position.value - 1}${all.value.find(s => s.no === $page.value)?.suffix ?? ''}`
+    : `${position.value} / ${mainTotal.value}`,
 )
 
 // Title and thank-you slides are counted but show no footer; dividers show none either.

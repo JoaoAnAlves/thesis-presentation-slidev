@@ -20,6 +20,7 @@ routeAlias: b0
 <Link to="b13"><span class="num">B13</span> Partner questionnaire</Link>
 <Link to="b14"><span class="num">B14</span> Tech stack details</Link>
 <Link to="b15"><span class="num">B15</span> Scope evolution</Link>
+<Link to="b16"><span class="num">B16</span> Scenario 3 + war what-if</Link>
 </div>
 
 <style>
@@ -165,13 +166,63 @@ What I know about the cause
 
 ---
 routeAlias: b13
+# B13 is split over two slides: this one reads B13a, the next B13b (see slide-bottom.vue).
+backupSuffix: a
 ---
 
-# Partner questionnaire
+# Partner questionnaire · Q1–Q5
 
-Q1–Q10
+<PartnerQuestionnaire :part="1" />
 
-<span class="placeholder">B13 · placeholder · content in Phase 5</span>
+<p class="pq-foot">Open questions, meeting of Aug 2026 · answers summarized from my notes · <Link to="partner">← back to slide 19</Link> · <Link to="b13b">Q6–Q10 →</Link></p>
+
+<!-- TODO(João): check wording against the thesis (§5.5, Appendix A), don't strengthen it. Text is in data/questionnaire.json. -->
+
+<style>
+.pq-foot {
+  position: absolute;
+  left: var(--slide-pad-x);
+  bottom: 44px;
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 16px;
+}
+</style>
+
+<!--
+Questions shortened from thesis Appendix A; answers summarized from §5.5.
+Respondents: Tecnicamente's two managers (my superiors, not planners at the client). Partner's view, not an independent evaluation.
+-->
+
+---
+routeAlias: b13b
+backupSuffix: b
+backupContinues: true
+---
+
+# Partner questionnaire · Q6–Q10
+
+<PartnerQuestionnaire :part="2" />
+
+<p class="pq-foot">Open questions, meeting of Aug 2026 · answers summarized from my notes · <Link to="partner">← back to slide 19</Link> · <Link to="b13">← Q1–Q5</Link></p>
+
+<!-- TODO(João): check wording against the thesis (§5.5, Appendix A), don't strengthen it. Text is in data/questionnaire.json. -->
+
+<style>
+.pq-foot {
+  position: absolute;
+  left: var(--slide-pad-x);
+  bottom: 44px;
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 16px;
+}
+</style>
+
+<!--
+Questions shortened from thesis Appendix A; answers summarized from §5.5.
+Q8 and Q10 are not on slide 19; Q9 (ownership: purchasing and planning) is in its Q&A notes.
+-->
 
 ---
 routeAlias: b14
@@ -190,3 +241,31 @@ routeAlias: b15
 Since the February presentation
 
 <span class="placeholder">B15 · placeholder · content in Phase 5</span>
+
+---
+routeAlias: b16
+---
+
+# Scenario 3 + war what-if
+
+<div class="stage-chart">
+  <ForecastChart series="scenario3" scenario />
+</div>
+
+<div class="stage-side">
+
+Same 2022 monthly pattern as in 2025.
+
+<p class="warn">A stress test: it is not compared with sales.</p>
+
+<p class="muted">Thesis Fig. 5.25 · reference: Ukraine war, 2022</p>
+
+</div>
+
+<!-- TODO(João): review wording -->
+
+<!--
+Real data, item 101703 (data/sku.json → scenario3 and scenario3.whatIf). Blue + band = the live 2026 forecast; dotted = the war what-if on that run; orange = actual sales for January and February 2026; the hollow point is March, a partial month (database copied mid-March).
+
+The dotted line applies the same 2022 month-by-month multipliers as Scenario 2 did on 2025. It falls in spring because 2022 sales fell in spring. March 2026 is a partial month, so there is no sales decline to compare it with: a what-if is never scored against sales. TODO(João): your caption said "closeness to the real drop is not accuracy"; I replaced it because there is no confirmed drop.
+-->

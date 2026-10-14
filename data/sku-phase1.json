@@ -1,0 +1,136 @@
+{
+  "_mock": true,
+  "_note": "MOCK DATA. Invented values, not from the thesis. Replace this file with the real export. Top-level fields feed DemandGapChart (slide 3); `scenario1` feeds WeightBlend (slide 12) and ForecastChart series=\"scenario1\" (slide 13).",
+  "sku": "MOCK-SKU",
+  "unit": "units / month",
+  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "actual": [410, 430, 470, 455, 500, 520, 540, 458, 436, 420, 410, 445],
+  "mrpPlan": 465,
+  "scenario1": {
+    "_mock": true,
+    "_note": "MOCK. Shape: trainEnd = last month of training data (YYYY-MM). actual[] = monthly demand, history and 2025 together; charts cut it at trainEnd unless told otherwise. models[]: rmse = average walk-forward RMSE; weight = automatic inverse-error weight (sums to 1); rmseByMonth = fold error for the calendar month of each forecast month; forecast = one value per entry of blended[]. blended[]: qty = combined forecast; rangeUp / rangeDown = 90% band as stored by the system (rangeDown floored at 0). In this mock the three agree by construction: qty = sum(weight x forecast), band = qty +- 1.65 x sum(weight x rmseByMonth). composables/useBlend.ts recomputes the same thing for other weights.",
+    "trainEnd": "2025-01",
+    "actual": [
+      { "month": "2024-02", "qty": 388 },
+      { "month": "2024-03", "qty": 402 },
+      { "month": "2024-04", "qty": 431 },
+      { "month": "2024-05", "qty": 446 },
+      { "month": "2024-06", "qty": 472 },
+      { "month": "2024-07", "qty": 497 },
+      { "month": "2024-08", "qty": 512 },
+      { "month": "2024-09", "qty": 468 },
+      { "month": "2024-10", "qty": 441 },
+      { "month": "2024-11", "qty": 418 },
+      { "month": "2024-12", "qty": 404 },
+      { "month": "2025-01", "qty": 423 },
+      { "month": "2025-02", "qty": 436 },
+      { "month": "2025-03", "qty": 468 },
+      { "month": "2025-04", "qty": 452 },
+      { "month": "2025-05", "qty": 498 },
+      { "month": "2025-06", "qty": 517 },
+      { "month": "2025-07", "qty": 538 },
+      { "month": "2025-08", "qty": 455 },
+      { "month": "2025-09", "qty": 431 },
+      { "month": "2025-10", "qty": 417 },
+      { "month": "2025-11", "qty": 406 },
+      { "month": "2025-12", "qty": 440 }
+    ],
+    "models": [
+      {
+        "id": "rf",
+        "short": "RF",
+        "rmse": 48,
+        "weight": 0.1575,
+        "rmseByMonth": [30.3, 39.2, 55.6, 45.5, 34.1, 61.9, 73.3, 50.5, 36.6, 58.1, 42.9],
+        "forecast": [442, 459, 458, 464, 467, 480, 488, 488, 480, 465, 471]
+      },
+      {
+        "id": "xgb",
+        "short": "XGBoost",
+        "rmse": 40,
+        "weight": 0.1891,
+        "rmseByMonth": [25.3, 32.6, 46.3, 37.9, 28.4, 51.6, 61.1, 42.1, 30.5, 48.4, 35.8],
+        "forecast": [457, 476, 476, 493, 507, 532, 538, 529, 509, 486, 503]
+      },
+      {
+        "id": "lgbm",
+        "short": "LightGBM",
+        "rmse": 44,
+        "weight": 0.1719,
+        "rmseByMonth": [27.8, 35.9, 50.9, 41.7, 31.3, 56.7, 67.2, 46.3, 33.6, 53.3, 39.4],
+        "forecast": [447, 456, 453, 470, 489, 514, 519, 506, 483, 462, 479]
+      },
+      {
+        "id": "prophet",
+        "short": "Prophet",
+        "rmse": 60,
+        "weight": 0.126,
+        "rmseByMonth": [37.9, 48.9, 69.5, 56.8, 42.6, 77.4, 91.6, 63.2, 45.8, 72.6, 53.7],
+        "forecast": [455, 473, 483, 525, 560, 592, 584, 552, 518, 498, 540]
+      },
+      {
+        "id": "chronos",
+        "short": "Chronos",
+        "rmse": 36,
+        "weight": 0.2101,
+        "rmseByMonth": [22.7, 29.4, 41.7, 34.1, 25.6, 46.4, 54.9, 37.9, 27.5, 43.6, 32.2],
+        "forecast": [458, 478, 506, 560, 611, 658, 668, 648, 631, 622, 653]
+      },
+      {
+        "id": "granite",
+        "short": "Granite",
+        "rmse": 52,
+        "weight": 0.1454,
+        "rmseByMonth": [32.8, 42.4, 60.2, 49.3, 36.9, 67.1, 79.4, 54.7, 39.7, 62.9, 46.5],
+        "forecast": [377, 407, 431, 474, 495, 505, 487, 461, 446, 444, 487]
+      }
+    ],
+    "blended": [
+      { "month": "2025-02", "qty": 441.2, "rangeUp": 488.5, "rangeDown": 394.0 },
+      { "month": "2025-03", "qty": 459.9, "rangeUp": 521.0, "rangeDown": 398.8 },
+      { "month": "2025-04", "qty": 469.9, "rangeUp": 556.5, "rangeDown": 383.2 },
+      { "month": "2025-05", "qty": 499.8, "rangeUp": 570.8, "rangeDown": 428.9 },
+      { "month": "2025-06", "qty": 524.4, "rangeUp": 577.6, "rangeDown": 471.2 },
+      { "month": "2025-07", "qty": 550.8, "rangeUp": 647.4, "rangeDown": 454.3 },
+      { "month": "2025-08", "qty": 552.6, "rangeUp": 666.9, "rangeDown": 438.3 },
+      { "month": "2025-09", "qty": 536.6, "rangeUp": 615.4, "rangeDown": 457.8 },
+      { "month": "2025-10", "qty": 517.6, "rangeUp": 574.7, "rangeDown": 460.4 },
+      { "month": "2025-11", "qty": 502.5, "rangeUp": 593.2, "rangeDown": 411.9 },
+      { "month": "2025-12", "qty": 527.7, "rangeUp": 594.7, "rangeDown": 460.7 }
+    ]
+  },
+  "planning": {
+    "_mock": true,
+    "_note": "MOCK. Invented recipe, lots and dates, not from the thesis or the factory. `plan` is only a fallback: the slide takes the plan from scenario1.blended for `month` (forecast + safety stock), the same source as the 'to planning' box on slides 13-14. Gross need = parent qty x qtyPerUnit x (1 + scrap), computed in composables/usePlanning.ts.",
+    "product": "101703",
+    "month": "2025-07",
+    "plan": 648,
+    "bom": [
+      { "id": "RM-01", "name": "Fish fillet", "qtyPerUnit": 0.45, "unit": "kg", "type": "raw" },
+      {
+        "id": "INT-01",
+        "name": "Sauce base",
+        "qtyPerUnit": 0.1,
+        "unit": "kg",
+        "type": "intermediate",
+        "children": [
+          { "id": "RM-02", "name": "Olive oil", "qtyPerUnit": 0.3, "unit": "L", "type": "raw" }
+        ]
+      },
+      { "id": "RM-03", "name": "Salt", "qtyPerUnit": 0.01, "unit": "kg", "type": "raw" }
+    ],
+    "scrap": 0.02,
+    "fefo": {
+      "item": "RM-01",
+      "lots": [
+        { "lot": "L-A", "qty": 40, "expires": "2025-06-20" },
+        { "lot": "L-B", "qty": 120, "expires": "2025-07-10" }
+      ]
+    },
+    "order": {
+      "needDate": "2025-07-01",
+      "leadTimeDays": 5,
+      "bufferDays": 3
+    }
+  }
+}

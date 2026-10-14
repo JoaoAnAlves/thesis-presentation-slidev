@@ -1,90 +1,782 @@
 {
   "_mock": true,
-  "_note": "MOCK DATA. Invented values, not from the thesis. Replace this file with the real export. Top-level fields feed DemandGapChart (slide 3); `scenario1` feeds WeightBlend (slide 12) and ForecastChart series=\"scenario1\" (slide 13).",
-  "sku": "MOCK-SKU",
-  "unit": "units / month",
-  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-  "actual": [410, 430, 470, 455, 500, 520, 540, 458, 436, 420, 410, 445],
-  "mrpPlan": 465,
+  "_note": "PARTLY REAL. scenario1 (actuals, models, weights, folds, blended band) is real data for item 101703; scenario2 (multipliers + scenario line) and scenario3 (blended band; models pending) are real; top-level actual (slide 3) = real 2024 monthly sales of 101703, mrpPlan intentionally null (no invented MRP line); planning is still MOCK. Top-level fields feed DemandGapChart (slide 3); `scenario1` feeds WeightBlend (slide 12) and ForecastChart series=\"scenario1\" (slide 13).",
+  "sku": "101703",
+  "unit": "kg / month",
+  "months": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ],
+  "actual": [
+    6479.134,
+    6873.956000000001,
+    6922.175999999999,
+    3987.92,
+    8144.568000000001,
+    7377.624,
+    8109.832,
+    8866.503,
+    7382.382,
+    8392.409999999998,
+    8276.155999999999,
+    7409.304000000001
+  ],
+  "mrpPlan": null,
   "scenario1": {
-    "_mock": true,
-    "_note": "MOCK. Shape: trainEnd = last month of training data (YYYY-MM). actual[] = monthly demand, history and 2025 together; charts cut it at trainEnd unless told otherwise. models[].forecast has one value per entry of blended[]. blended[].qty = combined forecast; rangeUp / rangeDown = 90% band as stored by the system (rangeDown already floored at 0). In this mock, qty is the inverse-RMSE blend of the six model lines and the band uses a different invented error for every month.",
+    "_mock": false,
+    "_note": "REAL DATA. actual = monthly sales 2024-01..2026-03 from the prototype's actuals export (item description removed). Item 101703. Training job job_v3_9ddb30ba_07_04_2026_11_04, refinement job bridge_v3_e45670c4_07_04_2026_11_14. rmse = walk-forward final_report.rmse; weight = (1/rmse)/sum(1/rmse); rmseByMonth = rmse of the walk-forward fold with the same calendar month (folds 2024-01..2024-12). forecast[i] and blended[i] share months 2025-02..2026-01. Verified: sum(weight x forecast) == blended.qty and 1.65 x sum(weight x rmseByMonth) == rangeUp - qty for all 12 months (0.00% difference). R2 and MAPE intentionally not included. The six weights also match the prototype UI ('Current Adjustment Factor') for this run to 4 decimals. actual 2026-03 is PARTIAL (database copied mid-March 2026): flagged partial:true; never read it as a full month.",
     "trainEnd": "2025-01",
     "actual": [
-      { "month": "2024-02", "qty": 388 },
-      { "month": "2024-03", "qty": 402 },
-      { "month": "2024-04", "qty": 431 },
-      { "month": "2024-05", "qty": 446 },
-      { "month": "2024-06", "qty": 472 },
-      { "month": "2024-07", "qty": 497 },
-      { "month": "2024-08", "qty": 512 },
-      { "month": "2024-09", "qty": 468 },
-      { "month": "2024-10", "qty": 441 },
-      { "month": "2024-11", "qty": 418 },
-      { "month": "2024-12", "qty": 404 },
-      { "month": "2025-01", "qty": 423 },
-      { "month": "2025-02", "qty": 436 },
-      { "month": "2025-03", "qty": 468 },
-      { "month": "2025-04", "qty": 452 },
-      { "month": "2025-05", "qty": 498 },
-      { "month": "2025-06", "qty": 517 },
-      { "month": "2025-07", "qty": 538 },
-      { "month": "2025-08", "qty": 455 },
-      { "month": "2025-09", "qty": 431 },
-      { "month": "2025-10", "qty": 417 },
-      { "month": "2025-11", "qty": 406 },
-      { "month": "2025-12", "qty": 440 }
+      {
+        "month": "2024-01",
+        "qty": 6479.134
+      },
+      {
+        "month": "2024-02",
+        "qty": 6873.956000000001
+      },
+      {
+        "month": "2024-03",
+        "qty": 6922.175999999999
+      },
+      {
+        "month": "2024-04",
+        "qty": 3987.92
+      },
+      {
+        "month": "2024-05",
+        "qty": 8144.568000000001
+      },
+      {
+        "month": "2024-06",
+        "qty": 7377.624
+      },
+      {
+        "month": "2024-07",
+        "qty": 8109.832
+      },
+      {
+        "month": "2024-08",
+        "qty": 8866.503
+      },
+      {
+        "month": "2024-09",
+        "qty": 7382.382
+      },
+      {
+        "month": "2024-10",
+        "qty": 8392.409999999998
+      },
+      {
+        "month": "2024-11",
+        "qty": 8276.155999999999
+      },
+      {
+        "month": "2024-12",
+        "qty": 7409.304000000001
+      },
+      {
+        "month": "2025-01",
+        "qty": 8520.268
+      },
+      {
+        "month": "2025-02",
+        "qty": 7012.872
+      },
+      {
+        "month": "2025-03",
+        "qty": 6775.019999999998
+      },
+      {
+        "month": "2025-04",
+        "qty": 6817.079
+      },
+      {
+        "month": "2025-05",
+        "qty": 8953.986999999997
+      },
+      {
+        "month": "2025-06",
+        "qty": 7723.543000000002
+      },
+      {
+        "month": "2025-07",
+        "qty": 8688.733
+      },
+      {
+        "month": "2025-08",
+        "qty": 5950.232000000001
+      },
+      {
+        "month": "2025-09",
+        "qty": 7695.285
+      },
+      {
+        "month": "2025-10",
+        "qty": 9517.323000000002
+      },
+      {
+        "month": "2025-11",
+        "qty": 6069.548999999999
+      },
+      {
+        "month": "2025-12",
+        "qty": 5650.763
+      },
+      {
+        "month": "2026-01",
+        "qty": 7151.567
+      },
+      {
+        "month": "2026-02",
+        "qty": 6176.175000000001
+      },
+      {
+        "month": "2026-03",
+        "qty": 4641.769000000001,
+        "partial": true
+      }
     ],
     "models": [
       {
         "id": "rf",
         "short": "RF",
-        "rmse": 48,
-        "forecast": [442, 459, 458, 464, 467, 480, 488, 488, 480, 465, 471]
+        "rmse": 2358.2152,
+        "weight": 0.2383282025673356,
+        "rmseByMonth": [
+          2542.3201,
+          2488.8401,
+          2341.1931,
+          2413.5425,
+          2397.3931,
+          2426.5984,
+          2409.7702,
+          2061.8049,
+          1882.4698,
+          2182.3331,
+          2662.8411,
+          2489.4759
+        ],
+        "forecast": [
+          7879.9199506666655,
+          7891.529874999999,
+          7849.147394000001,
+          8582.43447866666,
+          7923.626766999997,
+          8091.493438999994,
+          8399.524374333321,
+          7980.141111333328,
+          8340.86464683332,
+          8060.086596499988,
+          7890.08121116666,
+          8368.042110333323
+        ]
       },
       {
         "id": "xgb",
         "short": "XGBoost",
-        "rmse": 40,
-        "forecast": [457, 476, 476, 493, 507, 532, 538, 529, 509, 486, 503]
+        "rmse": 2180.4983,
+        "weight": 0.25775263841433393,
+        "rmseByMonth": [
+          2350.7223,
+          2427.0663,
+          2295.5205,
+          2077.6854,
+          2014.7084,
+          2010.7756,
+          2323.4116,
+          2022.6501,
+          1766.807,
+          2109.1656,
+          2419.9444,
+          2347.5224
+        ],
+        "forecast": [
+          7921.29541015625,
+          9086.1083984375,
+          7804.4990234375,
+          8406.2607421875,
+          7832.1376953125,
+          7954.62255859375,
+          8443.697265625,
+          7907.1845703125,
+          8466.263671875,
+          7893.43212890625,
+          7915.85595703125,
+          8484.458984375
+        ]
       },
       {
         "id": "lgbm",
         "short": "LightGBM",
-        "rmse": 44,
-        "forecast": [447, 456, 453, 470, 489, 514, 519, 506, 483, 462, 479]
+        "rmse": 2420.1152,
+        "weight": 0.23223241186327404,
+        "rmseByMonth": [
+          2422.4838,
+          2614.9141,
+          2483.5327,
+          2310.6189,
+          2322.5852,
+          2504.2088,
+          2413.1343,
+          2099.81,
+          2038.086,
+          2692.5933,
+          2589.2919,
+          2550.1234
+        ],
+        "forecast": [
+          7892.789142120572,
+          11066.806724966451,
+          8456.500290200474,
+          8846.575854097242,
+          7980.652345290347,
+          8258.239569689189,
+          8556.346941260203,
+          8029.336149195022,
+          8456.746218505528,
+          7944.764936301836,
+          7972.479998834552,
+          8729.895116822065
+        ]
       },
       {
         "id": "prophet",
         "short": "Prophet",
-        "rmse": 60,
-        "forecast": [455, 473, 483, 525, 560, 592, 584, 552, 518, 498, 540]
+        "rmse": 8956.0469,
+        "weight": 0.06275415885584185,
+        "rmseByMonth": [
+          9130.8769,
+          9040.1415,
+          8624.0154,
+          8833.7038,
+          9208.342,
+          9704.3147,
+          7352.5494,
+          6701.5796,
+          7676.404,
+          9672.7421,
+          11634.8627,
+          9893.0312
+        ],
+        "forecast": [
+          7452.08632506879,
+          8547.790890570714,
+          8255.173354730274,
+          8561.466695275745,
+          8406.61020824053,
+          8450.252759378875,
+          8670.063907173608,
+          8534.962838889584,
+          8762.418410961405,
+          8522.795376634638,
+          8282.270028374736,
+          8854.249096302427
+        ]
       },
       {
         "id": "chronos",
         "short": "Chronos",
-        "rmse": 36,
-        "forecast": [458, 469, 482, 514, 536, 548, 534, 510, 493, 490, 522]
+        "rmse": 5300.889,
+        "weight": 0.10602545910374087,
+        "rmseByMonth": [
+          6708.0519,
+          6299.0993,
+          5780.0062,
+          7382.0554,
+          5006.7504,
+          5289.105,
+          4678.6778,
+          4509.6239,
+          3766.6459,
+          3832.5736,
+          3179.4377,
+          7178.6405
+        ],
+        "forecast": [
+          8330.4482421875,
+          8277.556640625,
+          8374.525390625,
+          8207.0341796875,
+          8215.849609375,
+          8286.373046875,
+          8268.7421875,
+          8277.556640625,
+          8330.4482421875,
+          8286.37109375,
+          8242.294921875,
+          8180.5888671875
+        ]
       },
       {
         "id": "granite",
         "short": "Granite",
-        "rmse": 52,
-        "forecast": [377, 407, 431, 474, 495, 505, 487, 461, 446, 444, 487]
+        "rmse": 5461.5185,
+        "weight": 0.10290712919547372,
+        "rmseByMonth": [
+          6844.5845,
+          6372.3809,
+          8087.8202,
+          7758.5211,
+          5519.0432,
+          6506.7371,
+          3444.4244,
+          3743.5031,
+          3244.9173,
+          3248.1721,
+          3733.7236,
+          7034.3948
+        ],
+        "forecast": [
+          7870.08447265625,
+          7749.05810546875,
+          7607.86279296875,
+          7448.3876953125,
+          7294.12841796875,
+          7146.18603515625,
+          6998.08740234375,
+          6886.24462890625,
+          6791.384765625,
+          6706.6279296875,
+          6610.28759765625,
+          6537.87548828125
+        ]
       }
     ],
     "blended": [
-      { "month": "2025-02", "qty": 441.2, "rangeUp": 480.8, "rangeDown": 401.6 },
-      { "month": "2025-03", "qty": 458.0, "rangeUp": 509.1, "rangeDown": 406.9 },
-      { "month": "2025-04", "qty": 464.8, "rangeUp": 537.4, "rangeDown": 392.2 },
-      { "month": "2025-05", "qty": 490.2, "rangeUp": 549.6, "rangeDown": 430.8 },
-      { "month": "2025-06", "qty": 508.6, "rangeUp": 553.1, "rangeDown": 464.1 },
-      { "month": "2025-07", "qty": 527.7, "rangeUp": 608.6, "rangeDown": 446.9 },
-      { "month": "2025-08", "qty": 524.4, "rangeUp": 620.1, "rangeDown": 428.7 },
-      { "month": "2025-09", "qty": 507.6, "rangeUp": 573.6, "rangeDown": 441.6 },
-      { "month": "2025-10", "qty": 488.6, "rangeUp": 536.5, "rangeDown": 440.8 },
-      { "month": "2025-11", "qty": 474.8, "rangeUp": 550.7, "rangeDown": 398.9 },
-      { "month": "2025-12", "qty": 500.2, "rangeUp": 556.3, "rangeDown": 444.1 }
+      {
+        "month": "2025-02",
+        "qty": 7913.48,
+        "rangeUp": 14122.38,
+        "rangeDown": 1704.58
+      },
+      {
+        "month": "2025-03",
+        "qty": 9004.29,
+        "rangeUp": 15137.25,
+        "rangeDown": 2871.33
+      },
+      {
+        "month": "2025-04",
+        "qty": 8035.04,
+        "rangeUp": 14161.03,
+        "rangeDown": 1909.05
+      },
+      {
+        "month": "2025-05",
+        "qty": 8440.55,
+        "rangeUp": 14682.15,
+        "rangeDown": 2198.95
+      },
+      {
+        "month": "2025-06",
+        "qty": 7909.8,
+        "rangeUp": 13365.85,
+        "rangeDown": 2453.75
+      },
+      {
+        "month": "2025-07",
+        "qty": 8040.84,
+        "rangeUp": 13844.75,
+        "rangeDown": 2236.92
+      },
+      {
+        "month": "2025-08",
+        "qty": 8306.22,
+        "rangeUp": 13331.31,
+        "rangeDown": 3281.14
+      },
+      {
+        "month": "2025-09",
+        "qty": 7926.54,
+        "rangeUp": 12520.63,
+        "rangeDown": 3332.46
+      },
+      {
+        "month": "2025-10",
+        "qty": 8266.0,
+        "rangeUp": 12543.4,
+        "rangeDown": 3988.59
+      },
+      {
+        "month": "2025-11",
+        "qty": 7904.1,
+        "rangeUp": 12914.62,
+        "rangeDown": 2893.58
+      },
+      {
+        "month": "2025-12",
+        "qty": 7846.12,
+        "rangeUp": 13309.53,
+        "rangeDown": 2382.7
+      },
+      {
+        "month": "2026-01",
+        "qty": 8304.38,
+        "rangeUp": 14733.53,
+        "rangeDown": 1875.24
+      }
     ]
+  },
+  "planning": {
+    "_mock": true,
+    "_note": "MOCK. Invented recipe, lots and dates, not from the thesis or the factory. `plan` is only a fallback: the slide takes the plan from scenario1.blended for `month` (forecast + safety stock), the same source as the 'to planning' box on slides 13-14. Gross need = parent qty x qtyPerUnit x (1 + scrap), computed in composables/usePlanning.ts.",
+    "product": "101703",
+    "month": "2025-07",
+    "plan": 648,
+    "bom": [
+      {
+        "id": "RM-01",
+        "name": "Fish fillet",
+        "qtyPerUnit": 0.45,
+        "unit": "kg",
+        "type": "raw"
+      },
+      {
+        "id": "INT-01",
+        "name": "Sauce base",
+        "qtyPerUnit": 0.1,
+        "unit": "kg",
+        "type": "intermediate",
+        "children": [
+          {
+            "id": "RM-02",
+            "name": "Olive oil",
+            "qtyPerUnit": 0.3,
+            "unit": "L",
+            "type": "raw"
+          }
+        ]
+      },
+      {
+        "id": "RM-03",
+        "name": "Salt",
+        "qtyPerUnit": 0.01,
+        "unit": "kg",
+        "type": "raw"
+      }
+    ],
+    "scrap": 0.02,
+    "fefo": {
+      "item": "RM-01",
+      "lots": [
+        {
+          "lot": "L-A",
+          "qty": 40,
+          "expires": "2025-06-20"
+        },
+        {
+          "lot": "L-B",
+          "qty": 120,
+          "expires": "2025-07-10"
+        }
+      ]
+    },
+    "order": {
+      "needDate": "2025-07-01",
+      "leadTimeDays": 5,
+      "bufferDays": 3
+    }
+  },
+  "scenario2": {
+    "_mock": false,
+    "_note": "REAL DATA, item 101703. Table ml_mrp_scenario_results, baseline_planner_run_id plan_v3_93e37abe_07_04_2026_22_08, event GEOPOLITICAL_CRISIS, reference UKRAINE_WAR_2022. qty = forecast_quantity (scenario line); multiplier = qty / scenario1.blended.qty (DB shows it rounded to 2 decimals; all 12 months agree to that rounding, so this run used the Scenario 1 baseline). Typed from a DBeaver screenshot: replace with a JSON export when available. This is a what-if stress test, not a forecast: never score it against actual sales. Warnings and the material plan grid are still missing.",
+    "event": "GEOPOLITICAL_CRISIS",
+    "reference": "UKRAINE_WAR_2022",
+    "line": [
+      {
+        "month": "2025-02",
+        "qty": 7877.05,
+        "multiplier": 0.9953964627445827,
+        "baseline": 7913.48
+      },
+      {
+        "month": "2025-03",
+        "qty": 6910.59,
+        "multiplier": 0.7674775023905271,
+        "baseline": 9004.29
+      },
+      {
+        "month": "2025-04",
+        "qty": 5469.41,
+        "multiplier": 0.6806948067464506,
+        "baseline": 8035.04
+      },
+      {
+        "month": "2025-05",
+        "qty": 6414.75,
+        "multiplier": 0.7599919436529611,
+        "baseline": 8440.55
+      },
+      {
+        "month": "2025-06",
+        "qty": 5911.7,
+        "multiplier": 0.7473893145212268,
+        "baseline": 7909.8
+      },
+      {
+        "month": "2025-07",
+        "qty": 6258.11,
+        "multiplier": 0.7782905766064242,
+        "baseline": 8040.84
+      },
+      {
+        "month": "2025-08",
+        "qty": 8493.52,
+        "multiplier": 1.0225493666192325,
+        "baseline": 8306.22
+      },
+      {
+        "month": "2025-09",
+        "qty": 10972.98,
+        "multiplier": 1.38433414831692,
+        "baseline": 7926.54
+      },
+      {
+        "month": "2025-10",
+        "qty": 10613.35,
+        "multiplier": 1.283976530365352,
+        "baseline": 8266.0
+      },
+      {
+        "month": "2025-11",
+        "qty": 9199.21,
+        "multiplier": 1.1638529370832857,
+        "baseline": 7904.1
+      },
+      {
+        "month": "2025-12",
+        "qty": 8215.09,
+        "multiplier": 1.0470257910916478,
+        "baseline": 7846.12
+      },
+      {
+        "month": "2026-01",
+        "qty": 8582.21,
+        "multiplier": 1.0334558389669066,
+        "baseline": 8304.38
+      }
+    ]
+  },
+  "scenario3": {
+    "_mock": false,
+    "_note": "REAL DATA (blended + band), item 101703. Refinement job bridge_v3_76fae889_06_05_2026_11_41 (training job_v3_eba66628_07_04_2026_23_46; plan plan_v3_7ddb53c3_07_04_2026_23_53). Typed from DBeaver screenshots, band symmetric in all 13 months: replace with JSON exports. survivors per thesis §5.4; models[].weight = weights shown by the prototype UI ('Current Adjustment Factor') for the 2026 run, 2 decimals; replace with exact values from the training export. These come from the 2026 run's own walk-forward errors (inverse-error weighting over the 3 models that ran); they are NOT the 2025 weights renormalized (that would give about 0.23 / 0.22 / 0.55). Actual sales for 2026 come from scenario1.actual (shared series). whatIf = war scenario on this run (thesis Fig 5.25): BACKUP ONLY, not for the main slide; never present it as tracking the actual sales.",
+    "survivors": [
+      "chronos",
+      "granite",
+      "xgboost"
+    ],
+    "models": [
+      {
+        "id": "chronos",
+        "short": "Chronos",
+        "weight": 0.21,
+        "ran": true
+      },
+      {
+        "id": "granite",
+        "short": "Granite",
+        "weight": 0.22,
+        "ran": true
+      },
+      {
+        "id": "xgb",
+        "short": "XGBoost",
+        "weight": 0.57,
+        "ran": true
+      },
+      {
+        "id": "rf",
+        "short": "RF",
+        "weight": 0,
+        "ran": false
+      },
+      {
+        "id": "lgbm",
+        "short": "LightGBM",
+        "weight": 0,
+        "ran": false
+      },
+      {
+        "id": "prophet",
+        "short": "Prophet",
+        "weight": 0,
+        "ran": false
+      }
+    ],
+    "blended": [
+      {
+        "month": "2026-01",
+        "qty": 8024.93,
+        "rangeUp": 12173.87,
+        "rangeDown": 3876
+      },
+      {
+        "month": "2026-02",
+        "qty": 7797.55,
+        "rangeUp": 11946.49,
+        "rangeDown": 3648.62
+      },
+      {
+        "month": "2026-03",
+        "qty": 7872.61,
+        "rangeUp": 12202.72,
+        "rangeDown": 3542.5
+      },
+      {
+        "month": "2026-04",
+        "qty": 7639.9,
+        "rangeUp": 11670.01,
+        "rangeDown": 3609.8
+      },
+      {
+        "month": "2026-05",
+        "qty": 7784.14,
+        "rangeUp": 11870.73,
+        "rangeDown": 3697.54
+      },
+      {
+        "month": "2026-06",
+        "qty": 7796.06,
+        "rangeUp": 11944.99,
+        "rangeDown": 3647.12
+      },
+      {
+        "month": "2026-07",
+        "qty": 8014.39,
+        "rangeUp": 12163.32,
+        "rangeDown": 3865.45
+      },
+      {
+        "month": "2026-08",
+        "qty": 7790.84,
+        "rangeUp": 11939.78,
+        "rangeDown": 3641.91
+      },
+      {
+        "month": "2026-09",
+        "qty": 7730.66,
+        "rangeUp": 11879.59,
+        "rangeDown": 3581.72
+      },
+      {
+        "month": "2026-10",
+        "qty": 7822.4,
+        "rangeUp": 11971.34,
+        "rangeDown": 3673.46
+      },
+      {
+        "month": "2026-11",
+        "qty": 7707,
+        "rangeUp": 11855.94,
+        "rangeDown": 3558.07
+      },
+      {
+        "month": "2026-12",
+        "qty": 7678.68,
+        "rangeUp": 11827.62,
+        "rangeDown": 3529.75
+      },
+      {
+        "month": "2027-01",
+        "qty": 7814.36,
+        "rangeUp": 11963.3,
+        "rangeDown": 3665.42
+      }
+    ],
+    "whatIf": {
+      "reference": "UKRAINE_WAR_2022",
+      "line": [
+        {
+          "month": "2026-01",
+          "qty": 8291.97,
+          "multiplier": 1.0332763027216436,
+          "baseline": 8024.93
+        },
+        {
+          "month": "2026-02",
+          "qty": 7760.16,
+          "multiplier": 0.9952049041044944,
+          "baseline": 7797.55
+        },
+        {
+          "month": "2026-03",
+          "qty": 6040.98,
+          "multiplier": 0.767341453469688,
+          "baseline": 7872.61
+        },
+        {
+          "month": "2026-04",
+          "qty": 5199.3,
+          "multiplier": 0.6805455568790167,
+          "baseline": 7639.9
+        },
+        {
+          "month": "2026-05",
+          "qty": 5914.72,
+          "multiplier": 0.7598424488768187,
+          "baseline": 7784.14
+        },
+        {
+          "month": "2026-06",
+          "qty": 5825.42,
+          "multiplier": 0.7472261629592384,
+          "baseline": 7796.06
+        },
+        {
+          "month": "2026-07",
+          "qty": 6236.17,
+          "multiplier": 0.7781216037652273,
+          "baseline": 8014.39
+        },
+        {
+          "month": "2026-08",
+          "qty": 7964.76,
+          "multiplier": 1.0223236518783598,
+          "baseline": 7790.84
+        },
+        {
+          "month": "2026-09",
+          "qty": 10699.36,
+          "multiplier": 1.3840163711765878,
+          "baseline": 7730.66
+        },
+        {
+          "month": "2026-10",
+          "qty": 10041.54,
+          "multiplier": 1.2836904274902845,
+          "baseline": 7822.4
+        },
+        {
+          "month": "2026-11",
+          "qty": 8967.45,
+          "multiplier": 1.1635461268976257,
+          "baseline": 7707
+        },
+        {
+          "month": "2026-12",
+          "qty": 8037.65,
+          "multiplier": 1.0467489203873581,
+          "baseline": 7678.68
+        },
+        {
+          "month": "2027-01",
+          "qty": 8073.87,
+          "multiplier": 1.0332093735123542,
+          "baseline": 7814.36
+        }
+      ]
+    },
+    "partialLastMonth": true
   }
 }

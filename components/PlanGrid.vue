@@ -5,6 +5,7 @@ number, the baseline sits in parentheses, and a cell that changed is amber.
 Usage:  <PlanGrid v-click="3" />
 -->
 <script setup lang="ts">
+import { fmtInt } from '../composables/useFormat'
 import data from '../data/sku-mock.json'
 
 const grid = data.planGrid
@@ -31,8 +32,8 @@ const grid = data.planGrid
           :key="i"
           :class="{ changed: value !== row.baseline[i] }"
         >
-          <span class="value">{{ value }}</span>
-          <span class="base">({{ row.baseline[i] }})</span>
+          <span class="value">{{ fmtInt(value) }}</span>
+          <span class="base">({{ fmtInt(row.baseline[i]) }})</span>
         </td>
       </tr>
     </tbody>

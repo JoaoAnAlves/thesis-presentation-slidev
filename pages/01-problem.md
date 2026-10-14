@@ -56,11 +56,12 @@ clicks: 2
 <!--
 Bridge in: Planning systems already exist in these factories. Why are they not enough?
 
-Script draft (written by Claude from the slide plan; replace with your own):
-- A classic MRP works from static assumptions: demand is taken as given, lead times are fixed, and shelf life is not part of the calculation. Here that is the flat grey line.
-- [click] Real demand for a food product does not look like that. It moves with the season and with the market.
-- [click] Every gap between the two lines costs something. Where the plan is above demand, product sits and expires: waste and overstock. Where demand is above the plan, the factory runs short: a stock-out.
-- The chart is an illustration of the mechanism, not a measurement from the factory.
+Script draft (TODO(João)):
+- A classic MRP works from static assumptions: demand is taken as given, lead times are fixed, and shelf life is not part of the calculation.
+- [click] This is one real product in 2024: demand more than doubles between April and August.
+- [click] A plan that assumes stable demand will be wrong in both directions.
+
+On screen (data/sku.json, item 101703, real): lowest month April, 3,988 kg; highest August, 8,867 kg; ×2.2 within one year.
 
 Target time: 1:00
 

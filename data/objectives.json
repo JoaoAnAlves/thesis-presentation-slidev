@@ -1,0 +1,29 @@
+{
+  "_note": "The four thesis objectives. One source for slide 4 (ObjectivesCard: id, title, text) and slide 20 (ObjectivesScorecard: implemented, demonstrated, measured). measured.status is \"yes\", \"partial\" or \"no\". TODO(João): review wording; verify the scorecard against thesis Ch. 6 and don't strengthen it.",
+  "objectives": [
+    {
+      "id": 1, "title": "Prediction", "text": "Better demand and material prediction",
+      "implemented": "6-model ensemble + IEW",
+      "demonstrated": "Scenarios 1 & 3",
+      "measured": { "status": "partial", "text": "per-model error only" }
+    },
+    {
+      "id": 2, "title": "Inventory", "text": "Inventory optimization",
+      "implemented": "Safety stock + BOM explosion",
+      "demonstrated": "Prototype plan",
+      "measured": { "status": "no", "text": "not measured" }
+    },
+    {
+      "id": 3, "title": "Waste", "text": "Less waste",
+      "implemented": "FEFO + expiry alerts",
+      "demonstrated": "Synthetic lots",
+      "measured": { "status": "no", "text": "not measured" }
+    },
+    {
+      "id": 4, "title": "Resilience", "text": "Resilience to disruptions",
+      "implemented": "Scenario engine + fault tolerance",
+      "demonstrated": "Scenarios 2 & 3",
+      "measured": { "status": "no", "text": "qualitative only" }
+    }
+  ]
+}

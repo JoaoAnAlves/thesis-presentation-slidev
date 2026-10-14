@@ -139,7 +139,7 @@ $$
 Bridge in: Six error scores. How do they become one forecast?
 
 Script draft (TODO(João): no script came with the request; this is Claude's draft, replace with your own):
-These are the six scores from the previous slide: the average walk-forward RMSE of each model. (The numbers on screen are mock values for now.)
+These are the six scores from the previous slide: the average walk-forward RMSE of each model.
 [click] Each model gets a weight that is the inverse of its error, divided by the sum of all the inverses. So the bars flip: the model with the lowest error gets the tallest bar. No model is thrown away; a weaker one just counts for less. Two details: the RMSE has a floor of 0.001, so nothing divides by zero, and the weights are renormalised over the models that are available in each month, the set M_t in the formula.
 [click] With the weights, the six forecasts become one: for each month, the blended forecast is the weighted sum of the six. This blue line is what the rest of the system works with.
 [click] And these weights are a starting point. The manager can replace them, which I show in two slides.
@@ -149,7 +149,7 @@ If asked (why not just the best model?): No single model is best for every produ
 If asked (why keep the weak models?): the thesis frames it as down-weighting rather than discarding, so the system favours the more accurate models without manual model selection.
 If asked (what happens when a model fails?): the weights are renormalised over the models that produced a forecast for that month, so the combined forecast stays valid. That is what happened in Scenario 3 (slide 18).
 If asked (manual weights): when the manager supplies weights, they replace the computed ones and are normalised in the same way.
-On-screen numbers: MOCK until the real values are in the data file.
+On-screen numbers: real, item 101703 (data/sku.json → scenario1).
 
 Target time: 1:00
 
@@ -162,7 +162,7 @@ clicks: 3
 
 # How wrong could it be?
 
-<p class="band-sub">From error to safety stock</p>
+<p class="slide-sub">From error to safety stock</p>
 
 <PipelineTracker stage="refine" :pulse="$clicks >= 3 ? 'plan' : undefined" />
 
@@ -195,14 +195,6 @@ $$
 <!-- TODO(João): review wording (title, subtitle, formula label, caption; chart labels are in ForecastChart.vue, the box in ToPlanningBox.vue) -->
 
 <style>
-.band-sub {
-  position: absolute;
-  left: var(--slide-pad-x);
-  top: 80px;
-  margin: 0;
-  color: var(--c-muted);
-  font-size: 18px;
-}
 .band-formula {
   font-size: 30px;
 }
@@ -227,13 +219,13 @@ Script draft (TODO(João)):
 One line isn't enough to plan with. The question is how wrong it could be.
 [click] The answer comes from walk-forward validation: for every month, I already know how far each model was off in that same calendar month, and I combine those errors with the same weights. That error, times 1.65, gives this band. It's a 90% prediction interval, so the upper bound is exceeded only about 5% of the time.
 [click] (point at the highlighted month: its band uses the error from that calendar month)
-[click] The distance from the forecast to that upper bound is the safety stock. For July, that's 528 plus 81, so planning receives 609. (MOCK numbers: read the real ones off the box once data/sku.json is real.) This is what goes to planning: not just the forecast, but forecast plus safety stock. Before that, though, the manager can still step in.
+[click] The distance from the forecast to that upper bound is the safety stock. For July, that's 8,041 kilos plus 5,804, so planning receives 13,845. (Real numbers for item 101703, as printed in the box.) This is what goes to planning: not just the forecast, but forecast plus safety stock. Before that, though, the manager can still step in.
 
 Q&A:
 - Why 1.65? → backup b7 (90% prediction interval; the upper bound is a one-sided 95% limit; assumes approximately normal forecast errors). Never call the band 95%.
 - Was the coverage checked? Coverage was not measured catalog-wide.
 - The RMSE is pooled over the catalog (see Fig 5.14) → per-item error scaling is the first fix.
-On-screen numbers: MOCK until the real values are in data/sku.json (scenario1).
+On-screen numbers: real, item 101703 (data/sku.json → scenario1).
 
 Target time: 0:45
 
@@ -241,30 +233,109 @@ Bridge out: Before the forecast goes to planning, can a person correct the model
 -->
 
 ---
+clicks: 4
+---
 
 # Human-in-the-loop
 
-<span class="placeholder">Slide 14 · placeholder · needs /video/weights.mp4</span>
+<p class="slide-sub">The manager can re-weight the models</p>
+
+<PipelineTracker stage="refine" />
+
+<WeightOverride :step="$clicks" />
+
+<!-- TODO(João): review wording (title, subtitle; the rest is in WeightOverride.vue) -->
 
 <!--
-Key points:
-- The manager can override the model weights.
-- Short recorded clip of the real UI.
+Bridge in: Before the forecast goes to planning, can a person correct the model?
 
-Target time: 0:40
+Script draft (TODO(João)):
+Those weights are a default, not a final answer. The manager knows things the data doesn't: a supplier problem, a new client, or simply that one model behaves strangely for this product. So the manager can change the weights.
+[click] Behind the blue line are the six model forecasts. (Chronos is the purple one; its bar is the only one still purple.)
+[click] Here I give Chronos half of the weight, and the blue line moves toward it. The others are rescaled so the total stays at 100%, and everything after it is recalculated: the forecast, the band, and the safety stock that goes to planning. Giving more weight to a less accurate model also widens the band, so the safety stock goes up.
+[click] Notice the band changes too, because it uses the same weights.
+[click] And this is the same action in the prototype.
+
+Q&A:
+- Do overrides help? Not measured. The thesis shows the mechanism works, not that manual weights improve the forecast.
+- The default stays automatic: without an override the system uses the inverse-error weights.
+- TODO(João): check what the prototype does when all weights are set to 0 (division by zero in the normalization?) and write the answer here.
+- Thesis wording: manual weights replace the computed ones and are normalized in the same way.
+On-screen numbers: real forecasts and weights for item 101703 (data/sku.json → scenario1). The override shown (Chronos = 50%) is an illustration, not a result.
+
+Target time: 0:45
+
+Bridge out: With a forecast and a safety stock, what has to be bought, and when?
 -->
 
 ---
+clicks: 3
+---
 
-# Planning: BOM explosion + FEFO
+# Planning
 
-<span class="placeholder">Slide 15 · placeholder · BomTree and FefoLots in Phase 2</span>
+<p class="slide-sub">From product demand to raw-material orders</p>
+
+<PipelineTracker stage="plan" />
+
+<div class="plan-stage">
+  <BomTree :expanded="$clicks >= 1" :focus="$clicks >= 2" :dim-others="$clicks === 2" :show-routes="$clicks >= 3" />
+  <FefoLots class="plan-lots" :show="$clicks >= 2" />
+  <OrderTimeline class="plan-order" :show="$clicks >= 3" />
+  <p v-click="1" class="plan-foot">Recipes reconstructed from production records · lead times simulated · stock lots synthetic</p>
+</div>
+
+<!-- TODO(João): review wording (title, subtitle, footnote; the rest is in BomTree.vue, FefoLots.vue, OrderTimeline.vue) -->
+
+<style>
+/* Positions are in slide pixels (the slide is 980 × 552). Every block has its
+   place from the start and only fades in, so nothing moves between clicks. */
+.plan-stage {
+  position: absolute;
+  left: var(--slide-pad-x);
+  top: 116px;
+  width: 868px;
+}
+.plan-lots {
+  position: absolute;
+  left: 0;
+  top: 196px;
+  width: 100%;
+}
+.plan-order {
+  position: absolute !important;
+  left: 0;
+  top: 300px; /* the lot cards end at 281 */
+  width: 100%;
+}
+.plan-foot {
+  position: absolute;
+  left: 0;
+  top: 370px;
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 16px;
+  white-space: nowrap;
+}
+</style>
 
 <!--
-Key points:
-- Tree expands finished product → raw materials (net requirements).
-- Lots consumed earliest-expiry first; expiring lot flagged.
-- Honesty: scrap is a fixed 2%, lead times are simulated (random 2–7 days), lots are synthetic.
+Bridge in: With a forecast and a safety stock, what has to be bought, and when?
 
-Target time: 0:50
+Script draft (TODO(João)):
+Planning takes the 15,241 kilos and turns them into ingredients. (It is the "to planning" total slide 14 ends on, with the manager's override. The recipe, lots and dates below are still MOCK.)
+[click] The system uses the recipe, the bill of materials, to multiply the product demand by the quantity of each ingredient per unit, plus 2% for scrap. If a recipe contains an intermediate product, it's exploded again.
+[click] Then it looks at the stock. Lots are used first-expired, first-out: the one that expires earliest goes first. If a lot will expire before it's needed, the system raises a waste alert instead of counting on it. What's left is the net requirement.
+[click] Finally, working back from the date it's needed, minus the supplier lead time and a three-day buffer, it gives the order: 6,876 kilos of fish fillet by the 23rd of June. (MOCK recipe and lots: 6,996 − 120 = 6,876. TODO(João): the mock lots are far too small for a real plan of 15,241 kg; replace data/sku.json → planning.) If that date has already passed, the alert becomes critical.
+
+Q&A:
+- Are the recipes right? The BOM is reconstructed from production records, not validated by the company → backup b9.
+- Scrap is a fixed 2% and the buffer a fixed 3 days; neither is estimated from data.
+- TODO(João): verify the gross-need formula against intelligent_planner_service_final.py (scrap on the forecast only, or re-applied at each BOM level?). The slide currently applies it at each level (BomTree prop applyScrapPerLevel).
+- Lead times are simulated (random 2–7 days) and the stock lots are synthetic → backup b10.
+- Everything on this slide is MOCK (invented recipe, lots and dates in data/sku.json → planning). It shows the logic, not the factory's real stock.
+
+Target time: 1:00
+
+Bridge out: That's the full pipeline on one product. Now: what happened when I ran it on real data?
 -->
