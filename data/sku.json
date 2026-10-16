@@ -1,6 +1,6 @@
 {
   "_mock": true,
-  "_note": "PARTLY REAL. scenario1 (actuals, models, weights, folds, blended band) is real data for item 101703; scenario2 (multipliers + scenario line) and scenario3 (blended band; models pending) are real; top-level actual (slide 3) = real 2024 monthly sales of 101703, mrpPlan intentionally null (no invented MRP line); planning is still MOCK. Top-level fields feed DemandGapChart (slide 3); `scenario1` feeds WeightBlend (slide 12) and ForecastChart series=\"scenario1\" (slide 13).",
+  "_note": "PARTLY REAL. scenario1 (actuals, models, weights, folds, blended band) is real data for item 101703; scenario2 (multipliers + scenario line) and scenario3 (blended band; models pending) are real; top-level actual (slide 3) = real 2024 monthly sales of 101703, mrpPlan intentionally null (no invented MRP line); planning is an ILLUSTRATIVE example (own numbers, not company data). Top-level fields feed DemandGapChart (slide 3); `scenario1` feeds WeightBlend (slide 12) and ForecastChart series=\"scenario1\" (slide 13).",
   "sku": "101703",
   "unit": "kg / month",
   "months": [
@@ -429,55 +429,48 @@
     ]
   },
   "planning": {
-    "_mock": true,
-    "_note": "MOCK. Invented recipe, lots and dates, not from the thesis or the factory. `plan` is only a fallback: the slide takes the plan from scenario1.blended for `month` (forecast + safety stock), the same source as the 'to planning' box on slides 13-14. Gross need = parent qty x qtyPerUnit x (1 + scrap), computed in composables/usePlanning.ts.",
-    "product": "101703",
-    "month": "2025-07",
-    "plan": 648,
+    "_illustrative": true,
+    "_note": "ILLUSTRATIVE EXAMPLE, not company data and not item 101703 (a purchased item with no recipe). Own round plan of 1,000 units; recipe, lots and dates are invented to show the logic. Gross need = parent qty x qtyPerUnit x (1 + scrap), computed in composables/usePlanning.ts.",
+    "product": "Example product",
+    "plan": 1000,
+    "planUnit": "units",
     "bom": [
       {
-        "id": "RM-01",
-        "name": "Fish fillet",
+        "id": "RM-A",
+        "name": "Raw material A",
         "qtyPerUnit": 0.45,
         "unit": "kg",
         "type": "raw"
       },
       {
-        "id": "INT-01",
-        "name": "Sauce base",
+        "id": "INT-B",
+        "name": "Intermediate B",
         "qtyPerUnit": 0.1,
         "unit": "kg",
         "type": "intermediate",
         "children": [
           {
-            "id": "RM-02",
-            "name": "Olive oil",
+            "id": "RM-C",
+            "name": "Raw material C",
             "qtyPerUnit": 0.3,
             "unit": "L",
             "type": "raw"
           }
         ]
-      },
-      {
-        "id": "RM-03",
-        "name": "Salt",
-        "qtyPerUnit": 0.01,
-        "unit": "kg",
-        "type": "raw"
       }
     ],
     "scrap": 0.02,
     "fefo": {
-      "item": "RM-01",
+      "item": "RM-A",
       "lots": [
         {
-          "lot": "L-A",
-          "qty": 40,
+          "lot": "Lot 1",
+          "qty": 120,
           "expires": "2025-06-20"
         },
         {
-          "lot": "L-B",
-          "qty": 120,
+          "lot": "Lot 2",
+          "qty": 300,
           "expires": "2025-07-10"
         }
       ]

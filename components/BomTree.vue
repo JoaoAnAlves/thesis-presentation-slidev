@@ -23,11 +23,14 @@ parent to the left edge of the child. Nothing is positioned by hand, so a
 different recipe in the data file lays itself out.
 
 All quantities are computed (parent qty × qty per unit, plus scrap).
+
+DATA: data/sku.json → planning, an ILLUSTRATIVE example (own plan of 1,000
+units, invented recipe). The label in the top-right corner says so on screen;
+it sits in the free cell of row 0, level 2, so it never covers a node.
 -->
 <script setup lang="ts">
-import { baseUnit, fmtPct } from '../composables/useFormat'
-import { qty as fmt, month, usePlanning } from '../composables/usePlanning'
-import sku from '../data/sku.json'
+import { fmtPct } from '../composables/useFormat'
+import { qty as fmt, usePlanning } from '../composables/usePlanning'
 
 const props = withDefaults(defineProps<{
   expanded?: boolean
@@ -39,14 +42,14 @@ const props = withDefaults(defineProps<{
 
 const STAGGER_MS = 150
 
-const { product, month: planMonth, plan, scrap, tree, rows, fefo, isMock } = usePlanning({ applyScrapPerLevel: props.applyScrapPerLevel })
+const { product, plan, planUnit, scrap, tree, rows, fefo, isIllustrative } = usePlanning({ applyScrapPerLevel: props.applyScrapPerLevel })
 
 // ----- Geometry (px) -----
 const W = 868
-const ROOT_W = 140
+const ROOT_W = 160 // fits "Example product" (≈131 px bold) on one line
 const ROOT_H = 76
-const COL_X = [0, 164, 544] // left edge of the root, level 1, level 2
-const COL_W = [ROOT_W, 356, 324] // level 1 is wider: its lines carry the plan ("15,241 × …")
+const COL_X = [0, 184, 544] // left edge of the root, level 1, level 2
+const COL_W = [ROOT_W, 336, 324] // level 1 is wider: its lines carry the plan ("1,000 × …", ≈326 px with padding)
 const NODE_H = 50
 const ROW_PITCH = 58
 const TREE_H = (rows - 1) * ROW_PITCH + NODE_H
@@ -58,7 +61,6 @@ const rootY = (TREE_H - ROOT_H) / 2
 const nodeY = (row: number) => row * ROW_PITCH
 const factor = (1 + scrap).toFixed(2)
 const percent = fmtPct(scrap, 0) // '2%'
-const planUnit = baseUnit(sku.unit) // the product's unit: 'kg / month' → 'kg'
 
 const nodes = tree.map((n) => {
   const parent = tree.find(t => t.id === n.parentId)
@@ -83,21 +85,23 @@ const nodes = tree.map((n) => {
 </script>
 
 <template>
-  <!-- TODO(João): review wording (root label, scrap label, routes) -->
+  <!-- TODO(João): review wording (root label, illustrative label, scrap label, routes) -->
   <div
     class="bom" :class="{ expanded, focus, dim: dimOthers, routes: showRoutes }"
     :style="{ 'width': px(W), 'height': px(H), '--stagger': `${STAGGER_MS}ms` }"
   >
     <span class="bom-scrap" :style="{ left: px(COL_X[1]), top: px(TREE_H + 4) }">× {{ factor }} = {{ percent }} scrap</span>
-    <span v-if="isMock" class="bom-mock">MOCK</span>
+    <p v-if="isIllustrative" class="bom-label" :style="{ width: px(COL_W[2]), height: px(NODE_H) }">
+      <span>Illustrative example —</span>
+      <span>not company data</span>
+    </p>
 
     <svg class="bom-links" :width="W" :height="H" aria-hidden="true">
       <path v-for="n in nodes" :key="n.id" :d="n.link" :class="{ on: n.isFocus }" :style="{ '--i': n.order }" />
     </svg>
 
     <div class="bom-root" :style="{ top: px(rootY), width: px(ROOT_W), height: px(ROOT_H) }">
-      <b>Product {{ product }}</b>
-      <span>{{ month(planMonth) }}</span>
+      <b>{{ product }}</b>
       <span>plan <b>{{ fmt(plan) }} {{ planUnit }}</b></span>
     </div>
 
@@ -134,12 +138,16 @@ const nodes = tree.map((n) => {
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.bom-mock {
+.bom-label {
   top: 0;
   right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
   color: var(--c-muted);
-  font-family: var(--font-mono);
-  letter-spacing: 0.08em;
+  font-style: italic;
+  text-align: right;
 }
 
 /* ---------- Root ---------- */

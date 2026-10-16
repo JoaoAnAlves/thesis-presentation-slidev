@@ -1,15 +1,15 @@
 <!--
 The order that comes out of planning: how much, and by when.
 
-  [truck] Order 192 kg by 23 Jun          23 Jun ●── lead time ──●·· buffer ··● needed 1 Jul
+  [truck] Order 159 kg by 23 Jun          23 Jun ●── lead time ──●·· margin ··● needed 1 Jul
   order date already passed → critical alert
 
 Usage:  <OrderTimeline :show="$clicks >= 3" />
 
 quantity  = net requirement of the FEFO component (gross − usable stock)
-order by  = need date − lead time − buffer
+order by  = need date − lead time − margin (3 days)
 Both are computed in composables/usePlanning.ts from data/sku.json → planning
-(MOCK). The two segments are drawn to scale (same number of pixels per day).
+(illustrative example). The two segments are drawn to scale (same number of pixels per day).
 -->
 <script setup lang="ts">
 import { day, qty as fmt, usePlanning } from '../composables/usePlanning'
@@ -47,7 +47,7 @@ const px = (n: number) => `${n}px`
     <i class="otl-dot" :style="{ left: px(xArrival) }" />
     <i class="otl-dot" :style="{ left: px(X1) }" />
     <span class="otl-len" :style="{ left: px((X0 + xArrival) / 2) }">lead time {{ order.leadTimeDays }} d</span>
-    <span class="otl-len" :style="{ left: px((xArrival + X1) / 2) }">buffer {{ order.bufferDays }} d</span>
+    <span class="otl-len" :style="{ left: px((xArrival + X1) / 2) }">margin {{ order.bufferDays }} d</span>
   </div>
 </template>
 

@@ -8,7 +8,7 @@ amber and is not counted (waste alert). The others are consumed (grey + ✓)
 until the gross need is covered. What is left is the net requirement.
 
 All of it is computed in composables/usePlanning.ts from data/sku.json →
-planning (MOCK). The component only draws.
+planning (illustrative example). The component only draws.
 -->
 <script setup lang="ts">
 import { day, qty as fmt, usePlanning } from '../composables/usePlanning'

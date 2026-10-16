@@ -322,20 +322,23 @@ clicks: 3
 <!--
 Bridge in: With a forecast and a safety stock, what has to be bought, and when?
 
-Script draft (TODO(João)):
-Planning takes the 15,241 kilos and turns them into ingredients. (It is the "to planning" total slide 14 ends on, with the manager's override. The recipe, lots and dates below are still MOCK.)
-[click] The system uses the recipe, the bill of materials, to multiply the product demand by the quantity of each ingredient per unit, plus 2% for scrap. If a recipe contains an intermediate product, it's exploded again.
-[click] Then it looks at the stock. Lots are used first-expired, first-out: the one that expires earliest goes first. If a lot will expire before it's needed, the system raises a waste alert instead of counting on it. What's left is the net requirement.
-[click] Finally, working back from the date it's needed, minus the supplier lead time and a three-day buffer, it gives the order: 6,876 kilos of fish fillet by the 23rd of June. (MOCK recipe and lots: 6,996 − 120 = 6,876. TODO(João): the mock lots are far too small for a real plan of 15,241 kg; replace data/sku.json → planning.) If that date has already passed, the alert becomes critical.
+Script (from the Defense script doc, slide 15):
+Planning turns the forecast into what the factory has to buy and use. This slide is an illustrative example: the recipe and the stock lots are not real company data.
+[click] First, the recipe. There was no recipe table, so the system builds one from production records: for each product, how much of each raw material was consumed per unit produced, plus 2% scrap. The demand is multiplied through it into raw-material needs, and intermediate products are exploded again.
+[click] Then the stock. I simulated lots with expiry dates, and the system uses them first-expired, first-out: it tells production which lot to use first, and raises a waste alert when a lot will expire before it's needed. What usable stock doesn't cover is the net requirement.
+[click] Finally, timing. Working back from the date the material is needed, minus the supplier's lead time and a three-day margin, the system tells the manager when to place the order, and raises a critical alert if that date has already passed.
+
+On screen (illustrative, own numbers): plan 1,000 units → Raw material A 1,000 × 0.45 kg + 2% = 459 kg; Intermediate B 102 kg → Raw material C 31.2 L. Lot 1 (120 kg) expires before the need date → waste alert; Lot 2 (300 kg) is used; net 459 − 300 = 159 kg, ordered by 23 Jun (need 1 Jul − 5 d lead time − 3 d margin).
 
 Q&A:
+- Why not the thread product? Item 101703 is a purchased item with no recipe, and real recipes are confidential, so this slide uses an invented example. The plan of 1,000 units is not taken from slides 13–14.
 - Are the recipes right? The BOM is reconstructed from production records, not validated by the company → backup b9.
-- Scrap is a fixed 2% and the buffer a fixed 3 days; neither is estimated from data.
+- Scrap is a fixed 2% and the margin a fixed 3 days; neither is estimated from data.
+- TODO(João): confirm what the 3-day margin represents in the code (safety buffer or production time?).
 - TODO(João): verify the gross-need formula against intelligent_planner_service_final.py (scrap on the forecast only, or re-applied at each BOM level?). The slide currently applies it at each level (BomTree prop applyScrapPerLevel).
 - Lead times are simulated (random 2–7 days) and the stock lots are synthetic → backup b10.
-- Everything on this slide is MOCK (invented recipe, lots and dates in data/sku.json → planning). It shows the logic, not the factory's real stock.
 
-Target time: 1:00
+Target time: 1:10
 
-Bridge out: That's the full pipeline on one product. Now: what happened when I ran it on real data?
+Bridge out: That's the full pipeline. Now: what happened when I ran it on real data?
 -->

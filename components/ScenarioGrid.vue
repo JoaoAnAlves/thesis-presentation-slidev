@@ -15,7 +15,7 @@ import sku from '../data/sku.json'
 
 const props = defineProps<{ months: string[] }>()
 
-const item = sku.planning.product // the thread item, '101703'
+const item = sku.sku // the thread item, '101703'
 const unit = baseUnit(sku.unit)
 const cells = props.months.flatMap(m => sku.scenario2.line.filter(l => l.month === m))
 </script>

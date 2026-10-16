@@ -7,10 +7,11 @@
 // BomTree, FefoLots and OrderTimeline all read from here, so the numbers on
 // the slide always agree with each other.
 //
-// DATA: data/sku.json → planning (MOCK for now). Nothing is typed by hand.
+// DATA: data/sku.json → planning: an ILLUSTRATIVE example with its own plan of
+// 1,000 units, not company data and not taken from slides 13–14. Nothing is
+// typed by hand.
 import sku from '../data/sku.json'
 import { fmtAmount } from './useFormat'
-import { MANAGER_OVERRIDE, toPlanning, useBlend } from './useBlend'
 
 const p = sku.planning
 
@@ -44,8 +45,6 @@ export const qty = fmtAmount
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 /** '2025-06-23' → '23 Jun' */
 export const day = (iso: string) => `${+iso.slice(8, 10)} ${MONTHS[+iso.slice(5, 7) - 1]}`
-/** '2025-07' → 'Jul 2025' */
-export const month = (iso: string) => `${MONTHS[+iso.slice(5, 7) - 1]} ${iso.slice(0, 4)}`
 
 function addDays(iso: string, days: number) {
   const d = new Date(`${iso}T00:00:00Z`)
@@ -56,13 +55,9 @@ function addDays(iso: string, days: number) {
 export function usePlanning(options: { applyScrapPerLevel?: boolean } = {}) {
   const scrapPerLevel = options.applyScrapPerLevel ?? true
 
-  // The plan is the "to planning" total slide 14 ends on: forecast + safety
-  // stock for the month, with the manager's override applied. Same code, same
-  // rounding, so slides 14 and 15 cannot disagree. `planning.plan` in the file
-  // is only used if the month is not a forecast month.
-  const { months, withOverride } = useBlend()
-  const t = months.indexOf(p.month)
-  const plan = t >= 0 ? toPlanning(withOverride(MANAGER_OVERRIDE.model, MANAGER_OVERRIDE.weight), t).total : p.plan
+  // The plan is the example's own round number (1,000 units). It is not read
+  // from the forecast on slides 13–14: this slide only shows the logic.
+  const plan = p.plan
 
   // BOM explosion. The tree is flattened into a list; every node gets a column
   // (depth) and a row. Rule for rows: a first child sits on its parent's row,
@@ -100,8 +95,8 @@ export function usePlanning(options: { applyScrapPerLevel?: boolean } = {}) {
 
   return {
     product: p.product,
-    month: p.month,
     plan,
+    planUnit: p.planUnit,
     scrap: p.scrap,
     tree,
     rows: nextRow + 1,
@@ -113,6 +108,6 @@ export function usePlanning(options: { applyScrapPerLevel?: boolean } = {}) {
       /** need date − buffer: when the delivery should arrive */
       arrival: addDays(p.order.needDate, -p.order.bufferDays),
     },
-    isMock: p._mock,
+    isIllustrative: p._illustrative,
   }
 }
