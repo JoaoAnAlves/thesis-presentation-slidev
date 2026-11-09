@@ -1,5 +1,5 @@
 <!--
-Slide 22: future work as numbered rows in two groups.
+Slide 23: future work as numbered rows in two groups.
 
   step 1   group 1 (accent left border), rows STAGGER_MS apart
   step 2   group 2 (muted border)

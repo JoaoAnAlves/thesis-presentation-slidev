@@ -1,5 +1,5 @@
 <!--
-Slide 21: two columns, "Proud of" and "Would do differently".
+Slide 22: two columns, "Proud of" and "Would do differently".
 
   step 1   left column, items STAGGER_MS apart
   step 2   right column

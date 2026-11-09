@@ -147,7 +147,7 @@ These are the six scores from the previous slide: the average walk-forward RMSE 
 If asked (are the weights different per product?): no. The weights are per model, computed over the whole catalog, so in practice they are the same for every product. Per-item weights are future work.
 If asked (why not just the best model?): No single model is best for every product or month; the mix is more stable; and it survives model failures (Scenario 3).
 If asked (why keep the weak models?): the thesis frames it as down-weighting rather than discarding, so the system favours the more accurate models without manual model selection.
-If asked (what happens when a model fails?): the weights are renormalised over the models that produced a forecast for that month, so the combined forecast stays valid. That is what happened in Scenario 3 (slide 18).
+If asked (what happens when a model fails?): the weights are renormalised over the models that produced a forecast for that month, so the combined forecast stays valid. That is what happened in Scenario 3 (slide 19).
 If asked (manual weights): when the manager supplies weights, they replace the computed ones and are normalised in the same way.
 On-screen numbers: real, item 101703 (data/sku.json → scenario1).
 
@@ -340,5 +340,55 @@ Q&A:
 
 Target time: 1:10
 
-Bridge out: That's the full pipeline. Now: what happened when I ran it on real data?
+Bridge out: And on request, a crisis can be applied on top.
+-->
+
+---
+clicks: 3
+---
+
+# Scenarios
+
+<p class="slide-sub">What if a past crisis happened again?</p>
+
+<PipelineTracker stage="scenario" />
+
+<ScenarioFlow class="scn-flow" :step="$clicks" />
+
+<!-- TODO(João): review wording (title, subtitle; the rest is in ScenarioFlow.vue) -->
+
+<style>
+/* Position in slide pixels (the slide is 980 × 552). */
+.scn-flow {
+  position: absolute;
+  left: var(--slide-pad-x);
+  top: 124px;
+  width: 868px;
+}
+</style>
+
+<!--
+Bridge in: And on request, a crisis can be applied on top.
+
+Script draft (TODO(João)):
+The last stage is optional: scenarios.
+[click] The manager picks a past crisis, for example the start of the war in Ukraine in 2022.
+[click] For each product, the system compares each month in the year of the event with the same month the year before. For this product, April fell by about a third: a multiplier of 0.68.
+[click] That multiplier is applied to the forecast for the same month, so April 2025 goes from about 8,000 to about 5,500 kilos, and with a war reference the supplier lead times are tripled, so orders move earlier.
+[click] There is one multiplier per product and per month; if a month has no data, it gets zero and a warning, so a person decides. It's a what-if, not a prediction.
+
+On screen:
+- Apr 2025: 8,035 kg baseline (scenario1.blended) → 5,469 kg with the war reference (scenario2.line), ×0.68. Real, item 101703.
+- The twelve chips are the real multipliers from scenario2.line (Feb 2025 … Jan 2026).
+- The Apr 2021 / Apr 2022 bars are an INDEX (100 → 68), not kg (scenario2.reference, indexed=true). They are drawn so the ratio matches the real April multiplier. TODO(João): replace with real kg if you export them.
+
+Q&A:
+- Thesis wording (§5, Scenario 2): the engine compares month-by-month volumetric shifts between the pre-disruption baseline and the active shock period; with no records for a month it applies a 0.00× default "to flag the data visibility gap for human evaluation" → backup b11.
+- TODO(João): confirm in the code that "pre-disruption baseline" means the same month of the year before (that is what the slide now shows).
+- Critical = item with a usable reference (states the % impact, the multiplier and the extended lead times); Information = item with no reference, so no scenario demand.
+- TODO(João): "lead time ×3" is your figure; the thesis says "extending supplier lead times" (Req-09) but I did not find the factor. Confirm it against the code.
+
+Target time: 0:45
+
+Bridge out: Now: what happened when I ran all of this on real data?
 -->

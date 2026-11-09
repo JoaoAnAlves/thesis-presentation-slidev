@@ -174,7 +174,7 @@ backupSuffix: a
 
 <PartnerQuestionnaire :part="1" />
 
-<p class="pq-foot">Open questions, meeting of Aug 2026 · answers summarized from my notes · <Link to="partner">← back to slide 19</Link> · <Link to="b13b">Q6–Q10 →</Link></p>
+<p class="pq-foot">Open questions, meeting of Aug 2026 · answers summarized from my notes · <Link to="partner">← back to slide 20</Link> · <Link to="b13b">Q6–Q10 →</Link></p>
 
 <!-- TODO(João): check wording against the thesis (§5.5, Appendix A), don't strengthen it. Text is in data/questionnaire.json. -->
 
@@ -204,7 +204,7 @@ backupContinues: true
 
 <PartnerQuestionnaire :part="2" />
 
-<p class="pq-foot">Open questions, meeting of Aug 2026 · answers summarized from my notes · <Link to="partner">← back to slide 19</Link> · <Link to="b13">← Q1–Q5</Link></p>
+<p class="pq-foot">Open questions, meeting of Aug 2026 · answers summarized from my notes · <Link to="partner">← back to slide 20</Link> · <Link to="b13">← Q1–Q5</Link></p>
 
 <!-- TODO(João): check wording against the thesis (§5.5, Appendix A), don't strengthen it. Text is in data/questionnaire.json. -->
 
@@ -221,7 +221,7 @@ backupContinues: true
 
 <!--
 Questions shortened from thesis Appendix A; answers summarized from §5.5.
-Q8 and Q10 are not on slide 19; Q9 (ownership: purchasing and planning) is in its Q&A notes.
+Q8 and Q10 are not on slide 20; Q9 (ownership: purchasing and planning) is in its Q&A notes.
 -->
 
 ---

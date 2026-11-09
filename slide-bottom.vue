@@ -4,7 +4,7 @@ so this file never has to be referenced from a layout or a slide.
 
 Numbering: Slidev's own counter ($page) counts every slide, including act
 dividers and backups. The footer instead counts only "main" slides, so the
-talk reads 1..23 no matter how many dividers are inserted.
+talk reads 1..24 no matter how many dividers are inserted.
 -->
 <script setup lang="ts">
 import { useSlideContext } from '@slidev/client'

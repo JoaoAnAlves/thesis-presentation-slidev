@@ -5,7 +5,7 @@ plus optional layers switched on by props.
 Two sizes:
 
   full (default)  590 × 360, drawn at its real size inside `.stage-chart`
-                  (16 px labels), with y ticks and a legend. Slides 16–18.
+                  (16 px labels), with y ticks and a legend. Slides 17–19.
                   Put it inside `.stage-chart` (styles/index.css).
   compact         372 × 232, drawn at its real size (16 px labels, no y ticks).
                   Slides 12–13, which share one position so the blue line does
@@ -42,9 +42,9 @@ plot. Both slots receive `line(values, startIndex)`, `x`, `y` and
   default       above the band, under the blue line (slide 12: six model lines)
   #under        under the band as well (slide 14: six model lines)
 
-Props added for slides 16–17 (series "scenario1" only):
+Props added for slides 17–18 (series "scenario1" only):
   from, to            'YYYY-MM': draw only this window of months
-  showActual          false = no actual-demand line at all (slide 17: a what-if
+  showActual          false = no actual-demand line at all (slide 18: a what-if
                       is never compared with sales)
   scenario            dotted line from data/sku.json → scenario2.line
   regions             [{ from, to, label? }] periods, shown when `highlight` is
@@ -57,7 +57,7 @@ Props added for slides 16–17 (series "scenario1" only):
                       point labelled "partial month"
   draw                the blue line is drawn from left to right in DRAW_MS when
                       `showForecast` turns on (instead of fading in); the band
-                      then fades in after it (slide 18)
+                      then fades in after it (slide 19)
   markBelow           e.g. 0.8: an orange dot on every month whose actual sales
                       are under 0.8 × forecast, shown when `highlight` is on
 
@@ -67,7 +67,7 @@ DATA (data/sku.json, real, item 101703):
                        actual sales = scenario1.actual for the same months, where
                        they exist; dotted line = scenario3.whatIf, and only when
                        `scenario` is on (backup b16, never the main slide)
-Both use the same y scale, so slides 16–18 can be compared by eye. Nothing
+Both use the same y scale, so slides 17–19 can be compared by eye. Nothing
 here reads data/sku-mock.json any more. Band values (rangeUp / rangeDown)
 are read from the file, never computed here.
 -->
@@ -192,7 +192,7 @@ const s1Values = [
   ...s1.models.flatMap(m => m.forecast),
 ]
 const s1Domain = [Math.max(0, Math.min(...s1Values) - 15), Math.max(...s1Values) + 15]
-// Full size (slides 16–17): the axis starts at 0 and has round ticks.
+// Full size (slides 17–18): the axis starts at 0 and has round ticks.
 const s1Max = Math.max(...s1Values, ...s1.actual.map(a => a.qty), ...(s2?.line.map(l => l.qty) ?? []), ...sku.scenario3.blended.map(b => b.rangeUp))
 function roundStep(raw: number) {
   const pow = 10 ** Math.floor(Math.log10(raw))
@@ -241,8 +241,8 @@ const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 const G = computed(() => (props.compact
   ? { W: 372, H: 232, left: 4, right: 4, top: 34, bottom: 34 }
   : { W: 590, H: 360, left: 48, right: 22, top: 34, bottom: props.series.startsWith('scenario') ? 42 : 34 }))
-// (the real series have a deeper bottom margin on every slide: slide 17 draws
-// its period brackets there, and slide 16 must have the same plot area.)
+// (the real series have a deeper bottom margin on every slide: slide 18 draws
+// its period brackets there, and slide 17 must have the same plot area.)
 const PW = computed(() => G.value.W - G.value.left - G.value.right)
 const PH = computed(() => G.value.H - G.value.top - G.value.bottom)
 const domain = computed(() => (props.compact ? s1Domain : [0, s1Max * 1.02]))
@@ -346,7 +346,7 @@ const regionBoxes = computed(() => props.regions.map((r) => {
   return { a, b, x: x0, width: x1 - x0, label: r.label ?? range, above: mult.length > 0 && lo > 1 }
 }).filter(r => r.a >= 0 && r.b >= 0))
 
-// Months where sales were well below the forecast (slide 16): one dot each.
+// Months where sales were well below the forecast (slide 17): one dot each.
 const lowDots = computed(() => {
   if (props.markBelow == null)
     return []
@@ -647,7 +647,7 @@ const clipId = `scenario-clip-${useId()}`
   font-weight: 600;
 }
 
-/* ---------- Periods (slide 17) and low months (slide 16) ---------- */
+/* ---------- Periods (slide 18) and low months (slide 17) ---------- */
 .period,
 .low-dots {
   opacity: 0;

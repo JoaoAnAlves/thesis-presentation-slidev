@@ -1,5 +1,5 @@
 <!--
-Slide 20: the four objectives (same rows as slide 4's cards) with a status
+Slide 21: the four objectives (same rows as slide 4's cards) with a status
 grid to their right: Implemented · Demonstrated · Measured.
 
   step 0   only the four objective rows

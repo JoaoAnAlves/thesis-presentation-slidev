@@ -1,5 +1,5 @@
 <!--
-Slide 17: what the scenario does to the plan of the thread item, for a few
+Slide 18: what the scenario does to the plan of the thread item, for a few
 months. Scenario quantity in bold, baseline in parentheses under it (the same
 reading as the planning grid in thesis Fig. 5.17).
 

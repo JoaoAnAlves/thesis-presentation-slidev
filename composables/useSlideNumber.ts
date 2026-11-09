@@ -1,4 +1,4 @@
-// Slide numbers as the footer shows them (1–23) are not Slidev's page numbers:
+// Slide numbers as the footer shows them (1–24) are not Slidev's page numbers:
 // act dividers and backups are pages too. This turns a footer number into the
 // page to link to, so links keep working when dividers are added or removed.
 //

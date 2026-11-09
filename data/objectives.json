@@ -1,5 +1,5 @@
 {
-  "_note": "The four thesis objectives. One source for slide 4 (ObjectivesCard: id, title, text) and slide 20 (ObjectivesScorecard: implemented, demonstrated, measured). measured.status is \"yes\", \"partial\" or \"no\". TODO(João): review wording; verify the scorecard against thesis Ch. 6 and don't strengthen it.",
+  "_note": "The four thesis objectives. One source for slide 4 (ObjectivesCard: id, title, text) and slide 21 (ObjectivesScorecard: implemented, demonstrated, measured). measured.status is \"yes\", \"partial\" or \"no\". TODO(João): review wording; verify the scorecard against thesis Ch. 6 and don't strengthen it.",
   "objectives": [
     {
       "id": 1, "title": "Prediction", "text": "Better demand and material prediction",

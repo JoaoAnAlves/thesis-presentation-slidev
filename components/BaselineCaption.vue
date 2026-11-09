@@ -1,5 +1,5 @@
 <!--
-Slide 16: the sentence beside the chart, written from the data.
+Slide 17: the sentence beside the chart, written from the data.
 
   "All 12 months inside the band. Mar, Aug, Nov and Dec: well below the forecast."
 

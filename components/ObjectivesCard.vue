@@ -1,9 +1,9 @@
 <!--
 The four thesis objectives. Used on slide 4 (introduce them) and again on
-slide 20 (scorecard), so both slides show the same order and wording.
+slide 21 (scorecard), so both slides show the same order and wording.
 
   <ObjectivesCard :revealed="$clicks" />   slide 4: a row of four cards, one per click
-  <ObjectivesCard compact />               slide 20: four rows, one under the other
+  <ObjectivesCard compact />               slide 21: four rows, one under the other
 
 Compact rows have a fixed height, `--obj-row-h`, and gap, `--obj-row-gap`.
 ObjectivesScorecard sets both, so its status grid lines up with the rows.
@@ -80,7 +80,7 @@ const objectives = data.objectives
   color: var(--c-muted);
 }
 
-/* ---------- Compact: the same cards as rows (slide 20) ---------- */
+/* ---------- Compact: the same cards as rows (slide 21) ---------- */
 .compact {
   grid-template-columns: 1fr;
   gap: var(--obj-row-gap, 10px);

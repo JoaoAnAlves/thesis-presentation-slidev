@@ -485,7 +485,18 @@
     "_mock": false,
     "_note": "REAL DATA, item 101703. Table ml_mrp_scenario_results, baseline_planner_run_id plan_v3_93e37abe_07_04_2026_22_08, event GEOPOLITICAL_CRISIS, reference UKRAINE_WAR_2022. qty = forecast_quantity (scenario line); multiplier = qty / scenario1.blended.qty (DB shows it rounded to 2 decimals; all 12 months agree to that rounding, so this run used the Scenario 1 baseline). Typed from a DBeaver screenshot: replace with a JSON export when available. This is a what-if stress test, not a forecast: never score it against actual sales. Warnings and the material plan grid are still missing.",
     "event": "GEOPOLITICAL_CRISIS",
-    "reference": "UKRAINE_WAR_2022",
+    "referenceId": "UKRAINE_WAR_2022",
+    "reference": {
+      "_note": "Worked example for slide 16 (ScenarioFlow). indexed=true: preQty/duringQty are an index (year before = 100), not kg, chosen so duringQty/preQty matches the real April multiplier (x0.68). Replace with real kg for April 2021 / April 2022 when available and set indexed=false.",
+      "event": "Ukraine war",
+      "anchor": "2022-02",
+      "preWindow": "2021",
+      "duringWindow": "2022",
+      "exampleMonth": "04",
+      "preQty": 100,
+      "duringQty": 68,
+      "indexed": true
+    },
     "line": [
       {
         "month": "2025-02",

@@ -1,7 +1,7 @@
 <!--
 One row per model: name + weight bar + percentage.
 
-Slide 18 (`stage`): two runs, each with its own weights.
+Slide 19 (`stage`): two runs, each with its own weights.
 
   stage 0  six purple bars: the weights of the 2025 run
            label "2025 run · 6 models"
@@ -162,7 +162,7 @@ const width = (w: number) => `${Math.min(w / maxWeight, 1) * 100}%`
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Slide 18: two runs ---------- */
+/* ---------- Slide 19: two runs ---------- */
 .runs {
   gap: 5px;
 }

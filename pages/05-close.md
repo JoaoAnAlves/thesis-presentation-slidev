@@ -47,7 +47,7 @@ Looking back, two things I'm proud of.
 Drafts currently on the slide (Claude's, from your brief; replace them in data/close.json):
 - Proud 1: it held up live. In Scenario 3 only Chronos, Granite and XGBoost completed, the weights were renormalized over those three, and the plan was still produced.
 - Proud 2: the pipeline runs end to end, from the raw factory database (slide 9) to an order date (slide 15). There was no recipe table, so the recipes were mined from production records.
-- Differently 1: measure the combined forecast across the catalog from day one. Reason: only per-model error was measured; it is the missing measurement on the scorecard (slide 20). …which is why it's first on the next slide.
+- Differently 1: measure the combined forecast across the catalog from day one. Reason: only per-model error was measured; it is the missing measurement on the scorecard (slide 21). …which is why it's first on the next slide.
 - Differently 2: keep test settings separate from live settings. Reason on the slide: the Scenario 1 limits broke 3 models in Scenario 3. Thesis §5.4 says "most likely" (validation gates, data-density thresholds or filters tuned to the 2025 data, never fully removed): say it as the likely cause, not a confirmed one. TODO(João): say it in your own words.
 
 Target time: 0:50
@@ -86,7 +86,7 @@ So the next steps come in two groups.
 
 Q&A:
 - Thesis Ch. 6 also lists using credit notes and quality logs to raise return-risk warnings; it is not on the slide.
-- The grey chips say where each item comes from; the linked ones jump to that slide (20 scorecard, 18 Scenario 3, 19 partner, 15 planning).
+- The grey chips say where each item comes from; the linked ones jump to that slide (21 scorecard, 19 Scenario 3, 20 partner, 15 planning).
 - Two-stage model for irregular demand (thesis Ch. 6) is no longer named on the slide; only Croston is.
 - Croston's method forecasts both when a sale happens and how much is sold; the two-stage approach first checks whether a sale is likely.
 - "Polling today" (chip on item 5): TODO(João): I could not find polling described in the thesis text; confirm this is how the interface gets job progress today.

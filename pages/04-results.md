@@ -15,7 +15,7 @@ Bridge in: Does it hold up on real data?
 
 ---
 clicks: 1
-# `layer` (styles/index.css): slide 17 fades in on top; both show the same twelve months, so the blue line and band do not move.
+# `layer` (styles/index.css): slide 18 fades in on top; both show the same twelve months, so the blue line and band do not move.
 transition: layer
 ---
 
@@ -98,7 +98,7 @@ transition: layer
 Bridge in: Same product, same baseline forecast. Now I switch on the war scenario.
 
 Script draft (TODO(João)):
-The blue line and the band are the Scenario 1 forecast from the previous slide. There is no sales line here on purpose: this is a what-if stress test, not a prediction.
+Here is that scenario applied to our product, with the 2022 war as reference. The blue line and the band are the Scenario 1 forecast from the previous slide. There is no sales line here on purpose: this is a what-if stress test, not a prediction.
 [click] The reference is 2022, the year the war in Ukraine started.
 [click] In 2022, after the war started, sales of this product fell in spring and rose in autumn. The system replays that pattern on the 2025 forecast: about a third less from March to July, then up to 38% more in September. The dotted line is the result.
 [click] Those are the two periods that matter: between 0.68 and 0.78 times the baseline from March to July, and between 1.28 and 1.38 in September and October.

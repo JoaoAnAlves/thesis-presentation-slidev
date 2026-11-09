@@ -8,7 +8,7 @@ A Slidev presentation for my Master's thesis defense at FCT NOVA (Electrical & C
 - **Author:** João Alves (supervisor: Prof. Filipa Ferrada; industrial partner: Tecnicamente)
 - **Format:** ~20 min talk + ~1 h jury Q&A
 - **Mentor's brief:** present the core of the development work and the results.
-- **Deck = two parts:** (1) a ~23-slide main talk, (2) a backup appendix used only during Q&A.
+- **Deck = two parts:** (1) a ~24-slide main talk, (2) a backup appendix used only during Q&A.
 
 Reference material lives in `reference/` (thesis PDF, thesis figures, old February deck). Treat the thesis as the single source of truth for every number, name and claim. If something is not in the thesis, ask me. Never invent figures.
 
@@ -72,7 +72,7 @@ A small `PipelineTracker` component (Train → Refine → Plan → Scenario) app
 1. **Title**: "AI-Enhanced MRP for Food Manufacturing". Hex/circuit motif.
 2. **Pressure on food manufacturing**: ~1.3 B tons of food lost/wasted per year (Roy et al., 2023); ~70% of food-processing firms report labour shortages (Sharma, 2025); shocks: 2022 Ukraine war, 2026 Strait of Hormuz disruption (FAO, 2026). Numbers count up on click.
 3. **Why classic MRP falls short here**: static demand assumptions, fixed lead times, no perishability awareness, slow reaction to shocks → waste, stock-outs, overproduction. Split "MRP assumes" vs "food reality".
-4. **Goal + 4 objectives**: decision-support tool working *alongside* existing MRP. Objectives: (1) better demand/material prediction, (2) inventory optimization, (3) less waste, (4) resilience to disruptions. Build as a reusable `ObjectivesCard` component (reused on slide 20).
+4. **Goal + 4 objectives**: decision-support tool working *alongside* existing MRP. Objectives: (1) better demand/material prediction, (2) inventory optimization, (3) less waste, (4) resilience to disruptions. Build as a reusable `ObjectivesCard` component (reused on slide 21).
 
 ### Act 2 — Design (~4 min)
 5. **Requirements**: Req-01…09 grouped as Forecast (01–04), Human (05), Plan (06–08), Views (09). Each links back to a problem from slide 3.
@@ -90,18 +90,19 @@ A small `PipelineTracker` component (Train → Refine → Plan → Scenario) app
 13. **Prediction interval → safety stock**: $\hat y_t \pm 1.65\,\mathrm{RMSE}_t$ (90% PI); distance to the upper bound = safety stock passed to planning. Band grows on click.
 14. **Human-in-the-loop**: manager overrides model weights; short recorded clip of the real UI (`/video/weights.mp4`).
 15. **Planning: BOM explosion + FEFO**: tree expands finished product → raw materials (net requirements); lots consumed earliest-expiry first; expiring lot flagged.
+16. **Scenarios**: optional last stage, shown on ONE worked month (no formula). Timeline 2021 | 2022 with "war starts · Feb 2022" → April year before vs year of the event (indexed bars, ×0.68) → applied to Apr 2025 forecast (8,035 → 5,469 kg) + lead time ×3 → 12 real monthly multipliers; no data → ×0.00 + Information warning. What-if, not a prediction (`ScenarioFlow`, data in `scenario2.reference`).
 
 ### Act 4 — Results (~5 min)
-16. **Scenario 1 — 2025 baseline**: trained to Jan 2025, forecasts the rest of 2025; actuals mostly within/near the band; clearest deviation Aug–Dec near the lower bound. Alerts: inactive items, <1 year history ("low data").
-17. **Scenario 2 — war shock**: multiplier anchored on the 2022 Ukraine outbreak (e.g. +160.8% → ×2.61); grid shows the new value with the baseline in parentheses; Critical vs Information warnings. Framed as a what-if stress test, not a prediction.
-18. **Scenario 3 — live 2026, unsupervised**: only Chronos, Granite and XGBoost completed; the system did not crash; weights renormalized over the survivors; the plan was still produced. Animate three models dropping out. Honest finding: only two full months of 2026 sales (DB copied mid-March), so no accuracy conclusion; the finding is resilience.
-19. **Partner feedback**: gains = automated purchase quantities, explicit purchase-timing windows, less manual analysis; figures considered operationally credible; requested next = planned-vs-spent comparison, linking re-coded items. Labelled as the industrial partner's view.
-20. **Objectives scorecard**: reuse `ObjectivesCard` with a status per objective: Implemented ✓ / Demonstrated ✓ / Measured ✗ (Obj. 1 closest, since per-model error was measured).
+17. **Scenario 1 — 2025 baseline**: trained to Jan 2025, forecasts the rest of 2025; actuals mostly within/near the band; clearest deviation Aug–Dec near the lower bound. Alerts: inactive items, <1 year history ("low data").
+18. **Scenario 2 — war shock**: multiplier anchored on the 2022 Ukraine outbreak (e.g. +160.8% → ×2.61); grid shows the new value with the baseline in parentheses; Critical vs Information warnings. Framed as a what-if stress test, not a prediction.
+19. **Scenario 3 — live 2026, unsupervised**: only Chronos, Granite and XGBoost completed; the system did not crash; weights renormalized over the survivors; the plan was still produced. Animate three models dropping out. Honest finding: only two full months of 2026 sales (DB copied mid-March), so no accuracy conclusion; the finding is resilience.
+20. **Partner feedback**: gains = automated purchase quantities, explicit purchase-timing windows, less manual analysis; figures considered operationally credible; requested next = planned-vs-spent comparison, linking re-coded items. Labelled as the industrial partner's view.
+21. **Objectives scorecard**: reuse `ObjectivesCard` with a status per objective: Implemented ✓ / Demonstrated ✓ / Measured ✗ (Obj. 1 closest, since per-model error was measured).
 
 ### Act 5 — Close (~2 min)
-21. **What I'm proud of / what I'd do differently**: content comes from me later; leave placeholders.
-22. **Future work, prioritized**: (1) catalog-wide error of the combined forecast, (2) Item-ID history bridge, (3) planned-vs-spent tracking, (4) weekly granularity + Croston / two-stage model for intermittent demand, (5) real-time progress streaming, capacity and cost constraints.
-23. **Thank you**: mirrors the title slide.
+22. **What I'm proud of / what I'd do differently**: content comes from me later; leave placeholders.
+23. **Future work, prioritized**: (1) catalog-wide error of the combined forecast, (2) Item-ID history bridge, (3) planned-vs-spent tracking, (4) weekly granularity + Croston / two-stage model for intermittent demand, (5) real-time progress streaming, capacity and cost constraints.
+24. **Thank you**: mirrors the title slide.
 
 ## 8. Backup appendix (Q&A support)
 
@@ -120,7 +121,7 @@ Slide B0 = clickable index of all backups. Initial list (I'll add more):
 
 ## 9. Phases
 
-1. **Scaffold**: folder structure, headmatter, theme/styles, footer, transition, section files with placeholder slides for all 23 main slides + the backup index. Verify `npm run dev`.
+1. **Scaffold**: folder structure, headmatter, theme/styles, footer, transition, section files with placeholder slides for all 24 main slides + the backup index. Verify `npm run dev`.
 2. **Core components**: `PipelineTracker`, `ObjectivesCard`, `ForecastChart` (actual/forecast/band/scenario/model lines from JSON, click-driven reveal), `WeightBars`, `BomTree`, `FefoLots`, `WalkForward`. Use mock JSON shaped like the real data until I provide it, and mark it clearly as mock.
 3. **Content — Acts 1–2**, with speaker notes.
 4. **Content — Acts 3–4**, with speaker notes.
