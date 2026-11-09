@@ -74,6 +74,119 @@ clicks: 2
 -->
 
 ---
+---
+
+# Use of generative AI
+
+<div class="ai-stage">
+  <div class="ai-cols">
+    <section class="ai-card">
+      <h3>In the thesis</h3>
+      <p class="ai-note">declared in the document, pp. viii–ix</p>
+      <p class="ai-tools"><b>Tools:</b> ChatGPT, Gemini, Claude, DeepL, Paperpal</p>
+      <p class="ai-lead">Used for:</p>
+      <ul>
+        <li>Ideas, research questions, literature search</li>
+        <li>Prototype code generation and debugging</li>
+        <li>Drafting, editing and translation</li>
+        <li>Identifying limitations</li>
+      </ul>
+    </section>
+    <section class="ai-card">
+      <h3>In this presentation</h3>
+      <p class="ai-note">this talk</p>
+      <p class="ai-tools"><b>Tool:</b> Claude (incl. Claude Code)</p>
+      <p class="ai-lead">Used for:</p>
+      <ul>
+        <li>Building the slides and charts</li>
+        <li>Reviewing the script, preparing for questions</li>
+        <li>Checking figures against the database</li>
+      </ul>
+    </section>
+  </div>
+  <p class="ai-bar">All outputs were reviewed and verified by me. The results come from the prototype and the partner's data. I take full responsibility for the content.</p>
+</div>
+
+<!-- TODO(João): review wording -->
+
+<style>
+/* Position in slide pixels (the slide is 980 × 552). */
+.ai-stage {
+  position: absolute;
+  left: var(--slide-pad-x);
+  top: 112px;
+  width: 868px;
+}
+.ai-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch; /* both cards as tall as the taller one */
+}
+.ai-card {
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-line);
+  border-radius: 12px;
+  padding: 10px 18px 12px;
+}
+.ai-card h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.ai-note {
+  margin: 0 0 8px;
+  color: var(--c-muted);
+  font-size: 16px;
+  line-height: 1.3;
+}
+.ai-tools,
+.ai-lead {
+  margin: 0 0 4px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+.ai-lead {
+  color: var(--c-muted);
+}
+.ai-tools,
+.ai-lead {
+  font-size: 17px;
+}
+.ai-card ul {
+  margin: 0;
+  padding-left: 14px;
+  font-size: 17px;
+}
+.ai-card ul li {
+  margin: 0 0 6px;
+  padding: 0;
+  line-height: 1.35;
+}
+.ai-card ul li:last-child {
+  margin-bottom: 0;
+}
+.ai-bar {
+  margin: 14px 0 0;
+  padding: 8px 18px;
+  background: var(--c-line);
+  border-radius: 10px;
+  color: var(--c-text);
+  font-size: 18px;
+  line-height: 1.35;
+}
+</style>
+
+<!--
+[0:15]
+Nota de transparência: usei IA generativa.
+Tese: declarada no documento.
+Apresentação: slides e preparação.
+Tudo revisto e verificado por mim — a responsabilidade é minha.
+-->
+
+---
 layout: cover
 variant: closing
 ---

@@ -24,7 +24,7 @@ htmlAttrs:
   lang: en
 # Footer text, read by slide-bottom.vue. Change the date here, once.
 themeConfig:
-  date: October 2026
+  date: November 2026
   shortTitle: AI-Enhanced MRP for Food Manufacturing
   footerAuthor: João Alves | Tecnicamente
   # email: joao.antonio.alves.oficial@gmail.com

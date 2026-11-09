@@ -1,5 +1,5 @@
 <!--
-Cover layout for the opening (slide 1) and closing (slide 24) slides.
+Cover layout for the opening (slide 1) and closing (slide 25) slides.
 Always dark, with the animated HeroLoop on the right.
 
 Choose the variant in the slide's frontmatter (Slidev passes frontmatter keys
