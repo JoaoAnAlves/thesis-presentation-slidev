@@ -41,18 +41,13 @@ Trained to Jan 2025, then forecasts the next 12 months.
 <!-- TODO(João): review wording. The orange caption is written by BaselineCaption.vue from the data (months inside the band; months under 80% of the forecast). Match thesis wording there. -->
 
 <!--
-Bridge in: With the pipeline explained, the first question is whether it behaves as designed on a year we can check.
-
-Key points:
-- Real data, item 101703 (data/sku.json → scenario1). Trained to Jan 2025, forecasts Feb 2025 to Jan 2026.
-- The chart shows only the twelve forecast months (Feb 2025 to Jan 2026). Orange = what was actually sold. All twelve months are inside the 90% band.
-- [click] The dots mark the months where sales were under 80% of the forecast. From the data that is four months, not three: March (6,775 vs 9,004 kg, 75%), August (72%), November (77%) and December (72%). TODO(João): your brief expected Aug, Nov and Dec only; March qualifies too under the same rule.
-- Alerts: inactive items, under 1 year of history ("low data").
-- Honesty: accuracy is assessed visually for one representative SKU, not measured across the catalog.
-
-Target time: 1:10
-
-Bridge out: That is a normal year. What does the plan look like if a shock hits during it?
+[1:00]
+Cenário 1: ano normal, 2025.
+Treino até janeiro de 2025, prevê 12 meses.
+Azul: combinada + banda. Laranja: real — o sistema não a viu.
+Os 12 meses ficam dentro da banda.
+[click] Março, agosto, novembro, dezembro: bem abaixo do previsto.
+Avaliação visual, um produto. Banda larga.
 -->
 
 ---
@@ -95,26 +90,14 @@ transition: layer
 </style>
 
 <!--
-Bridge in: Same product, same baseline forecast. Now I switch on the war scenario.
-
-Script draft (TODO(João)):
-Here is that scenario applied to our product, with the 2022 war as reference. The blue line and the band are the Scenario 1 forecast from the previous slide. There is no sales line here on purpose: this is a what-if stress test, not a prediction.
-[click] The reference is 2022, the year the war in Ukraine started.
-[click] In 2022, after the war started, sales of this product fell in spring and rose in autumn. The system replays that pattern on the 2025 forecast: about a third less from March to July, then up to 38% more in September. The dotted line is the result.
-[click] Those are the two periods that matter: between 0.68 and 0.78 times the baseline from March to July, and between 1.28 and 1.38 in September and October.
-[click] Planning is then recomputed with the scenario quantities. For this product: April, September and October, the new value in bold with the baseline in parentheses. And the war reference also stretches supplier lead times. TODO(João): "lead times ×3" is your placeholder; I found "extending supplier lead times" in the thesis but not the factor.
-
-Numbers (data/sku.json → scenario2, item 101703): lowest ×0.68 in April, highest ×1.38 in September, ×1.28 in October. TODO(João): March to July are ×0.77, ×0.68, ×0.76, ×0.75, ×0.78, about a quarter less on average; "about a third" only fits April. Check the wording.
-
-Q&A:
-- ×2.61 (+160.8%) is the thesis's illustrative example of how the multiplier is computed; it is not this product.
-- Items with no 2022 reference data get a 0.00× multiplier and an Information warning.
-- Critical vs Information warnings: items with usable reference history vs items without.
-- Why no sales line: a what-if is never scored against actual sales. It replays 2022 on the 2025 forecast; 2025 had no such shock.
-
-Target time: 1:10
-
-Bridge out: Both scenarios so far ran under controlled conditions. What happens on live data, with nobody supervising?
+[0:55]
+Cenário 2: o mesmo 2025, com uma guerra.
+[click] A previsão fica.
+[click] O cenário é uma linha nova por cima.
+[click] Março a julho: ×0,68 a ×0,78.
+Setembro: até +38 %.
+[click] Prazos ×3 → alertas mais cedo.
+Hipótese, não previsão.
 -->
 
 ---
@@ -156,32 +139,12 @@ clicks: 3
 </style>
 
 <!--
-Bridge in: Same product again, but this is live 2026 data and the run was not supervised.
-
-Script draft (TODO(João)):
-In 2026 I let the system run live, without supervision.
-[click] Three of the six models didn't complete.
-[click] It recomputed the weights over the three that did, from their own errors, and still produced the plan.
-[click] Here is the 2026 forecast. The database was copied in mid-March, so I only have two full months of sales to compare: too early to say anything about accuracy. What this scenario shows is that the system kept working when half of its models failed.
-
-What is on screen:
-- Start: the chart frame with only the actual sales: January and February 2026 as an orange line, March as a hollow point labelled "partial month" (the database was copied in mid-March). The six weights of the 2025 run on the right.
-- Click 2: the 2026 weights are 21% Chronos, 22% Granite, 57% XGBoost. The system did not crash.
-- Click 3: forecast around 7,700 to 8,000 kg a month, with its band. Never read March as a full month or as a sales decline.
-
-On-screen numbers: real, item 101703 (data/sku.json → scenario1.models, scenario3). The 2026 weights are the two-decimal values shown by the prototype; replace with the training export when available.
-
-Q&A:
-- 2025 weights renormalized over the three survivors would be about 23 / 22 / 55% (Chronos / Granite / XGBoost). The real 2026 weights are 21 / 22 / 57% because the 2026 run re-validated the survivors and computed the weights from those errors. That is why the bars go through zero on the slide.
-- The prototype's interface calls the weight "Current Adjustment Factor".
-- Thesis §5.4 / Fig 5.24 describe a downward trend in the live window; that came from the incomplete March month (DB copied mid-March). Answer: "I found this while preparing the defense and removed the claim. Scenario 3 shows resilience, not accuracy."
-- Item-ID resets remain a real data issue → future work #2.
-- The war what-if on this run (thesis Fig 5.25) → backup b16. It is a stress test, never compared with sales.
-- Why three models failed → backup b12.
-
-Target time: 1:10
-
-Bridge out: The mechanisms held up. What did the people who would use it think?
+[0:50]
+Cenário 3: 2026 — ninguém sabe a resposta.
+[click] Só 3 modelos sobreviveram: XGBoost, Chronos, Granite.
+[click] Pesos recalculados entre os sobreviventes. Plano gerado na mesma.
+[click] Dados só até meados de março → cedo demais para avaliar.
+Mostra resiliência, não exatidão.
 -->
 
 ---
@@ -228,24 +191,13 @@ routeAlias: partner
 </style>
 
 <!--
-Bridge in: The system ran on live data. But is it useful to the people who'd use it?
-
-Script draft (TODO(João)):
-I also asked the industrial partner for feedback: ten open questions, discussed in a meeting in August, answered by Tecnicamente's two managers. They're my superiors and not planners at the client, so this is the partner's view, not an independent evaluation.
-[click] They valued getting purchase quantities automatically, with an explicit window for when to buy, and less manual analysis.
-[click] They considered the figures operationally credible, and saw the re-weighting and the crisis simulation as useful in practice.
-[click] They asked for two things next: comparing planned with actually spent, and linking items that were re-coded, the same problem we saw in Scenario 3. Both are in my future work.
-
-Q&A:
-- Waste reduction (Q2) is their expectation, not measured: they linked the explicit purchase windows to less waste from buying too early or too late.
-- Q9: the tool belongs to purchasing and planning, not IT or floor operations.
-- No scores: the questions were open, and the answers are summarized from my meeting notes.
-- Evaluator bias: both respondents followed the project closely and were my superiors; an independent evaluation is future work → backup b13 (click "10 open questions").
-- "Operationally credible" is the thesis's reading of the Q3 answer (the figures "reflect the quantities actually required"), not their literal words.
-
-Target time: 0:45
-
-Bridge out: So, back to the four objectives I set at the start.
+[0:55]
+É útil?
+Dois gestores da Tecnicamente — meus superiores, não planeadores.
+[click] Valorizaram: quantidades automáticas · janela de encomenda · menos trabalho manual.
+[click] Consideraram: valores credíveis · ajuste de pesos útil · cenários úteis.
+[click] Pediram: planeado vs consumido · ligar artigos que mudam de código.
+Ambos estão no trabalho futuro.
 -->
 
 ---
@@ -272,22 +224,10 @@ clicks: 4
 </style>
 
 <!--
-Bridge in: So, back to the four objectives I set at the start.
-
-Script draft (TODO(João)):
-Back to the four objectives.
-[click] All four were implemented: the ensemble for prediction, safety stock and recipe explosion for inventory, FEFO for waste, and the scenario engine plus fault tolerance for resilience.
-[click] All four were demonstrated on real data in the three scenarios, with synthetic lots for the waste part.
-[click] What I can't claim is that they were measured in real operation. Only the first is partly measured: each model's error, but not the combined forecast across the catalog.
-[click] So, every objective has a working mechanism, and none has yet been measured in real use. That's exactly what the next phase has to do.
-
-Q&A:
-- Ch. 1 §1.3 promised a quantitative evaluation. With synthetic lots and simulated lead times only a qualitative one was possible; this is stated in Ch. 6.
-- ◐ on objective 1 = each model's walk-forward error was measured; the combined forecast was assessed visually for one representative item, not across the catalog.
-- The next step is the planned-vs-spent comparison, which is also what the partner asked for (Q7).
-- The ✗ marks are grey on purpose: not measured is a limit of scope, not a failed result. The validation is functional.
-
-Target time: 0:50
-
-Bridge out: That's where the work stands. Looking back on it…
+[0:45]
+De volta aos quatro objetivos.
+[click] Cada um tem um mecanismo a funcionar.
+[click] Demonstrados nos 3 cenários. Desperdício: com lotes simulados.
+[click] Medido: erro de cada modelo. Não medido: a previsão combinada no catálogo.
+[click] Nada medido em operação real. É aqui que começa a próxima fase.
 -->

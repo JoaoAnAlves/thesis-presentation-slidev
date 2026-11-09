@@ -46,13 +46,10 @@ Intelligent Production Planning in Food Manufacturing: Enhancing MRP System with
 <!-- TODO(João): review wording -->
 
 <!--
-Key points:
-- Name, thesis title, supervisor, industrial partner.
-- One sentence on what the talk covers: the development work and the results.
-
-Target time: 0:20
-
-Bridge out: Why does production planning in food manufacturing need help in the first place?
+[0:20]
+Bom dia. João Alves.
+Orientação: Prof.ª Filipa Ferrada.
+Parceiro: Tecnicamente.
 -->
 
 ---

@@ -13,17 +13,13 @@ clicks: 3
 <!-- TODO(João): review wording -->
 
 <!--
-Bridge in: Why does production planning in food manufacturing need help in the first place?
-
-Script draft (written by Claude from the slide plan; replace with your own):
-- [click] Around 1.3 billion tons of food are lost or wasted every year (Roy et al., 2023).
-- [click] Around 70% of food-processing firms report labour shortages (Sharma, 2025), so there are fewer people to plan and re-plan by hand.
-- [click] And the environment keeps shifting: the 2022 war in Ukraine, the 2026 Strait of Hormuz disruption (FAO, 2026).
-- Perishable product, fewer people, unstable supply: planning has little margin for error.
-
-Target time: 0:50
-
-Bridge out: Planning systems already exist in these factories. Why are they not enough?
+[0:45]
+Indústria alimentar sob pressão.
+[click] 1,3 mil milhões de toneladas desperdiçadas por ano.
+[click] 70 % das empresas: falta de mão de obra.
+[click] Crises: Ucrânia, Ormuz.
+Procura e abastecimento mudam de um dia para o outro.
+O MRP não está preparado para isto.
 -->
 
 ---
@@ -54,18 +50,14 @@ clicks: 2
 <!-- TODO(João): review wording -->
 
 <!--
-Bridge in: Planning systems already exist in these factories. Why are they not enough?
-
-Script draft (TODO(João)):
-- A classic MRP works from static assumptions: demand is taken as given, lead times are fixed, and shelf life is not part of the calculation.
-- [click] This is one real product in 2024: demand more than doubles between April and August.
-- [click] A plan that assumes stable demand will be wrong in both directions.
-
-On screen (data/sku.json, item 101703, real): lowest month April, 3,988 kg; highest August, 8,867 kg; ×2.2 within one year.
-
-Target time: 1:00
-
-Bridge out: So what should a tool do about it, without replacing the MRP the factory already runs?
+[0:50]
+MRP clássico assume quatro coisas:
+procura estável · prazos fixos · sem validade · plano só muda à força.
+[click] Produto real: abril ~4 000 kg → agosto ~8 900 kg.
+Mais do dobro no mesmo ano.
+[click] Linha plana erra duas vezes:
+excesso → desperdício · falta → rotura.
+Pergunta: como reagir a isto?
 -->
 
 ---
@@ -81,17 +73,11 @@ clicks: 4
 <!-- TODO(João): review wording -->
 
 <!--
-Bridge in: So what should a tool do about it, without replacing the MRP the factory already runs?
-
-Script draft (written by Claude from the slide plan; replace with your own):
-- The goal is a decision-support tool that works alongside the existing MRP. It does not replace it.
-- [click] Objective 1: better prediction of demand and of the materials needed.
-- [click] Objective 2: inventory optimization.
-- [click] Objective 3: less waste.
-- [click] Objective 4: resilience to disruptions.
-- I come back to these four at the end and say honestly how far each one got.
-
-Target time: 0:50
-
-Bridge out: What must the system do, and for whom?
+[0:40]
+Apoio à decisão AO LADO do MRP — não o substitui.
+[click] Prever procura e matérias-primas.
+[click] Stock: evitar excesso e rotura.
+[click] Desperdício: FEFO.
+[click] Resiliência: reagir a um choque.
+Volto a estes quatro no fim.
 -->

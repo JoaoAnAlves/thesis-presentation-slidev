@@ -37,22 +37,13 @@ clicks: 2
 </style>
 
 <!--
-Bridge in: That's where the work stands. Looking back on it…
-
-Script template (TODO(João): fill in once the four items are final):
-Looking back, two things I'm proud of.
-[click] First, [proud 1]. Second, [proud 2].
-[click] And two things I'd do differently. [differently 1, with the reason], which is why it's first on the next slide. And [differently 2, with the reason].
-
-Drafts currently on the slide (Claude's, from your brief; replace them in data/close.json):
-- Proud 1: it held up live. In Scenario 3 only Chronos, Granite and XGBoost completed, the weights were renormalized over those three, and the plan was still produced.
-- Proud 2: the pipeline runs end to end, from the raw factory database (slide 9) to an order date (slide 15). There was no recipe table, so the recipes were mined from production records.
-- Differently 1: measure the combined forecast across the catalog from day one. Reason: only per-model error was measured; it is the missing measurement on the scorecard (slide 21). …which is why it's first on the next slide.
-- Differently 2: keep test settings separate from live settings. Reason on the slide: the Scenario 1 limits broke 3 models in Scenario 3. Thesis §5.4 says "most likely" (validation gates, data-density thresholds or filters tuned to the 2025 data, never fully removed): say it as the likely cause, not a confirmed one. TODO(João): say it in your own words.
-
-Target time: 0:50
-
-Bridge out: Those lessons decide the order of what comes next.
+[0:40]
+Orgulho:
+[click] Aguentou 3 modelos em falha e gerou plano.
+Ponta a ponta: base de dados real → encomenda, sem tabela de receitas.
+[click] Faria diferente:
+Medir a previsão combinada desde o início.
+Separar configuração de teste e de produção.
 -->
 
 ---
@@ -77,23 +68,9 @@ clicks: 2
 </style>
 
 <!--
-Bridge in: Those lessons decide the order of what comes next.
-
-Script draft (TODO(João)):
-So the next steps come in two groups.
-[click] First, prove that it works. That means measuring the combined forecast across the whole catalog, the lesson from the previous slide, building a history bridge so re-coded items keep their past, and comparing what was planned with what was actually spent. That's how the effect on stock and waste can finally be measured, and the partner asked for both of the last two.
-[click] Then, extend it: weekly data and dedicated methods for products that sell irregularly, real-time progress in the interface, and factory capacity and costs in the plan.
-
-Q&A:
-- Thesis Ch. 6 also lists using credit notes and quality logs to raise return-risk warnings; it is not on the slide.
-- The grey chips say where each item comes from; the linked ones jump to that slide (21 scorecard, 19 Scenario 3, 20 partner, 15 planning).
-- Two-stage model for irregular demand (thesis Ch. 6) is no longer named on the slide; only Croston is.
-- Croston's method forecasts both when a sale happens and how much is sold; the two-stage approach first checks whether a sale is likely.
-- "Polling today" (chip on item 5): TODO(João): I could not find polling described in the thesis text; confirm this is how the interface gets job progress today.
-
-Target time: 0:45
-
-Bridge out: Thank you. I'm happy to take your questions.
+[0:40]
+[click] Provar: medir a combinada no catálogo · ligar artigos recodificados · planeado vs consumido.
+[click] Estender: semanal · modelos para vendas irregulares · progresso em tempo real · capacidade e custos.
 -->
 
 ---
@@ -110,11 +87,6 @@ variant: closing
 <!-- TODO(João): review wording -->
 
 <!--
-Bridge in: That is the work, what it showed, and what comes next.
-
-Key points:
-- Thank the jury, the supervisor and the partner.
-- Hand over to questions.
-
-Target time: 0:20
+[0:05]
+Obrigado. Estou disponível para as vossas questões.
 -->
