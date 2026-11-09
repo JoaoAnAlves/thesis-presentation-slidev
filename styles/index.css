@@ -360,3 +360,229 @@ body,
     animation: none;
   }
 }
+
+/* ---------- Backup slides (pages/99-backup.md) ----------
+   Denser than the main deck: read during Q&A. Minimum 16 px everywhere. */
+.bk-index {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 16px;
+  align-content: start;
+}
+.slidev-layout .bk-index a {
+  display: grid;
+  grid-template-columns: 2.4em 1fr;
+  grid-template-rows: auto auto;
+  align-content: start;
+  column-gap: 2px;
+  padding: 6px 10px;
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  background: var(--c-surface);
+  color: var(--c-text);
+  font-size: 17px;
+  line-height: 1.2;
+}
+.bk-index .num {
+  grid-row: 1 / 3;
+  color: var(--c-accent);
+}
+.bk-index b {
+  font-weight: 600;
+}
+.bk-index i {
+  color: var(--c-muted);
+  font-size: 16px;
+  font-style: normal;
+}
+.bk-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.bk-cards3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.bk-card {
+  padding: 14px 18px;
+  border: 1px solid var(--c-line);
+  border-radius: 10px;
+  background: var(--c-surface);
+  font-size: 18px;
+  line-height: 1.35;
+}
+.bk-card h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.bk-card p {
+  margin: 0;
+}
+.bk-card ul {
+  margin: 0;
+  padding-left: 1.1em;
+}
+.bk-card li + li {
+  margin-top: 6px;
+}
+.bk-pick {
+  border-color: var(--c-accent);
+}
+.bk-ok {
+  color: var(--c-ok);
+}
+.bk-no {
+  color: var(--c-danger);
+}
+.bk-note {
+  margin-top: 18px;
+  padding: 8px 14px;
+  border-left: 4px solid var(--c-warn);
+  background: rgba(217, 119, 6, 0.1);
+  color: var(--c-text);
+  font-size: 17px;
+  line-height: 1.35;
+}
+.bk-list {
+  margin: 12px 0 0;
+  padding-left: 1.1em;
+  font-size: 20px;
+  line-height: 1.4;
+}
+.bk-list li + li {
+  margin-top: 6px;
+}
+.bk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  line-height: 1.3;
+}
+.bk-table th,
+.bk-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--c-line);
+  text-align: left;
+}
+.bk-table th {
+  color: var(--c-muted);
+  font-weight: 600;
+}
+.bk-svg {
+  display: block;
+  max-width: 100%;
+}
+.bk-svg .t {
+  fill: var(--c-text);
+  font: 16px var(--font-body);
+}
+.bk-svg .t.b {
+  font-weight: 600;
+}
+.bk-svg .t.m {
+  fill: var(--c-muted);
+}
+.bk-svg .bars rect {
+  fill: var(--c-slate);
+  opacity: 0.55;
+}
+.bk-svg .band rect {
+  fill: var(--chart-band);
+  stroke: var(--chart-forecast);
+  stroke-width: 1;
+}
+.bk-svg .box {
+  fill: var(--c-surface);
+  stroke: var(--c-accent);
+  stroke-width: 2;
+}
+.bk-svg .arrow {
+  stroke: var(--c-muted);
+  stroke-width: 2;
+}
+.bk-svg .head {
+  fill: var(--c-muted);
+}
+.bk-svg .axis,
+.bk-svg .tick line,
+.bk-svg .solid {
+  stroke: var(--c-muted);
+  stroke-width: 2;
+}
+.bk-svg .hollow {
+  fill: var(--c-bg);
+  stroke: var(--chart-actual);
+  stroke-width: 3;
+}
+.bk-flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.bk-flow > span {
+  color: var(--c-muted);
+  font-size: 22px;
+}
+.bk-step {
+  flex: 1;
+  padding: 12px 10px;
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  background: var(--c-surface);
+  font-size: 17px;
+  line-height: 1.25;
+  text-align: center;
+}
+.bk-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.bk-chip {
+  padding: 12px 6px;
+  border: 2px solid;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+.bk-chip.on {
+  border-color: var(--c-ok);
+  color: var(--c-ok);
+}
+.bk-chip.off {
+  border-color: var(--c-line);
+  color: var(--c-muted);
+  text-decoration: line-through;
+}
+.bk-todo {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 2px dashed var(--c-warn);
+  border-radius: 8px;
+  font-size: 20px;
+}
+.bk-todo span {
+  margin-left: 10px;
+  color: var(--c-warn);
+  font-family: var(--font-mono);
+  font-size: 16px;
+}
+.bk-statement {
+  margin-top: 40px;
+  font-size: 28px;
+  line-height: 1.3;
+}
+.bk-tight th,
+.bk-tight td {
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+.bk-tight + .bk-note {
+  margin-top: 12px;
+}

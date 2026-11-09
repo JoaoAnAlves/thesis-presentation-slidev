@@ -84,6 +84,19 @@ variant: closing
 
 <p class="questions">Questions?</p>
 
+<Link to="b0" class="to-backups">backups</Link>
+
+<style>
+/* Hidden way into the backup index: bottom-right, low contrast. */
+.to-backups {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  font-size: 16px;
+  opacity: 0.18;
+}
+</style>
+
 <!-- TODO(João): review wording -->
 
 <!--

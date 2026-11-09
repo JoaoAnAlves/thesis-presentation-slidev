@@ -12,7 +12,6 @@ is recomputed.
            the new values, and the old line stays as a grey dashed ghost
   step 3   the box shows old numbers struck through and new numbers in teal;
            a caption appears
-  step 4   a clip of the prototype fades in over the chart
 
 Usage:  <WeightOverride :step="$clicks" />
         <WeightOverride :step="$clicks" boost="Prophet" :boost-weight="0.4" />
@@ -89,11 +88,6 @@ const boxOverride = computed(() => (props.step >= 3 ? toPlanning(manual, t) : nu
         </template>
       </ForecastChart>
     </div>
-
-    <PrototypeClip
-      class="wo-clip" :at="4" src="/video/weights.mp4" poster="/img/weights-poster.png"
-      label="Same action in the prototype"
-    />
   </div>
 </template>
 
@@ -172,13 +166,6 @@ const boxOverride = computed(() => (props.step >= 3 ? toPlanning(manual, t) : nu
   opacity: 0.85;
 }
 /* Over the chart: same frame, a little larger so it covers the chart fully. */
-.wo-clip {
-  position: absolute;
-  left: calc(var(--frame-left) - 8px);
-  top: calc(var(--frame-top) - 22px);
-  width: calc(var(--frame-width) + 8px);
-}
-
 @media print, (prefers-reduced-motion: reduce) {
   .wo * {
     transition: none !important;

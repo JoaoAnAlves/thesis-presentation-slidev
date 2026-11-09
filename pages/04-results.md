@@ -149,7 +149,7 @@ Mostra resiliência, não exatidão.
 
 ---
 clicks: 3
-# Backup b13 links back here (<Link to="partner">).
+# Backup b11 links back here (<Link to="partner">).
 routeAlias: partner
 ---
 
@@ -157,7 +157,7 @@ routeAlias: partner
 
 <p class="slide-sub">Industrial partner's view</p>
 
-<p class="fb-source"><Link to="b13">10 open questions</Link> · meeting, Aug 2026 · Tecnicamente's two managers · not an independent evaluation</p>
+<p class="fb-source"><Link to="b11">10 open questions</Link> · meeting, Aug 2026 · Tecnicamente's two managers · not an independent evaluation</p>
 
 <div class="fb-stage">
   <FeedbackColumns :step="$clicks" />
@@ -175,7 +175,7 @@ routeAlias: partner
   color: var(--c-muted);
   font-size: 16px;
 }
-/* The link to backup b13 looks like the text around it; underline on hover only. */
+/* The link to backup b11 looks like the text around it; underline on hover only. */
 .fb-source a {
   color: inherit;
   text-decoration: none;

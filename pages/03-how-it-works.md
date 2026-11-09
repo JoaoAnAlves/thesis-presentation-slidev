@@ -177,7 +177,7 @@ Melhoria número um.
 -->
 
 ---
-clicks: 4
+clicks: 3
 ---
 
 # Human-in-the-loop
@@ -195,9 +195,8 @@ clicks: 4
 Os pesos automáticos não são a última palavra.
 [click] Gestor sabe coisas que os dados não têm.
 [click] Sobe o Chronos → linha azul aproxima-se do Chronos.
-[click] Banda alarga: Chronos erra mais.
+Banda alarga: Chronos erra mais.
 [click] Plano muda com ela.
-Tudo isto é o protótipo real — vídeo.
 -->
 
 ---

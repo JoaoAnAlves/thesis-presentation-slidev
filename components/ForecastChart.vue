@@ -66,7 +66,7 @@ DATA (data/sku.json, real, item 101703):
   series "scenario3"   scenario3.blended (forecast, band) for 2026-01 … 2027-01;
                        actual sales = scenario1.actual for the same months, where
                        they exist; dotted line = scenario3.whatIf, and only when
-                       `scenario` is on (backup b16, never the main slide)
+                       `scenario` is on (backup b14, never the main slide)
 Both use the same y scale, so slides 17–19 can be compared by eye. Nothing
 here reads data/sku-mock.json any more. Band values (rangeUp / rangeDown)
 are read from the file, never computed here.

@@ -5,9 +5,9 @@ Backup (Q&A) slide. Applied to every slide in pages/99-backup.md from the
 <template>
   <div class="slidev-layout backup">
     <div class="backup-tag">
-      <span>Backup</span>
+      <span>Backup {{ ($frontmatter.routeAlias || '').toUpperCase().replace(/(\d)B$/, '$1b') }}</span>
       <Link v-if="$frontmatter.routeAlias !== 'b0'" to="b0">
-        ← index
+        ← índice
       </Link>
     </div>
     <slot />
@@ -18,11 +18,11 @@ Backup (Q&A) slide. Applied to every slide in pages/99-backup.md from the
 .backup-tag {
   display: flex;
   gap: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: var(--c-muted);
   font-family: var(--font-mono);
-  font-size: 14px;
-  letter-spacing: 0.14em;
+  font-size: 16px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .backup-tag :deep(a) {
@@ -32,5 +32,6 @@ Backup (Q&A) slide. Applied to every slide in pages/99-backup.md from the
 }
 .backup :deep(h1) {
   font-size: 26px;
+  margin-bottom: 14px;
 }
 </style>

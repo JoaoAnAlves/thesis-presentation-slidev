@@ -1,7 +1,7 @@
 <!--
-Backup b13: the ten questions put to the partner, with a short summary of
+Backup b11: the ten questions put to the partner, with a short summary of
 each answer. Ten questions do not fit on one slide at a readable size, so the
-backup is split in two (B13a and B13b).
+backup is split in two (B11a and B11b).
 
 Usage:  <PartnerQuestionnaire :part="1" />   groups 1–2 (Q1–Q5)
         <PartnerQuestionnaire :part="2" />   groups 3–4 (Q6–Q10)
