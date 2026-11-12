@@ -79,32 +79,26 @@ clicks: 2
 # Use of generative AI
 
 <div class="ai-stage">
+  <p class="ai-note">Generative AI tools (ChatGPT, Gemini, Claude, DeepL, Paperpal) were used as support, declared in full in the thesis, pp. viii–ix.</p>
   <div class="ai-cols">
     <section class="ai-card">
-      <h3>In the thesis</h3>
-      <p class="ai-note">declared in the document, pp. viii–ix</p>
-      <p class="ai-tools"><b>Tools:</b> ChatGPT, Gemini, Claude, DeepL, Paperpal</p>
-      <p class="ai-lead">Used for:</p>
+      <h3>AI supported</h3>
       <ul>
-        <li>Ideas, research questions, literature search</li>
-        <li>Prototype code generation and debugging</li>
-        <li>Drafting, editing and translation</li>
-        <li>Identifying limitations</li>
+        <li>Text editing and translation</li>
+        <li>Code generation and debugging</li>
+        <li>Building these slides</li>
       </ul>
     </section>
     <section class="ai-card">
-      <h3>In this presentation</h3>
-      <p class="ai-note">this talk</p>
-      <p class="ai-tools"><b>Tool:</b> Claude (incl. Claude Code)</p>
-      <p class="ai-lead">Used for:</p>
+      <h3>My responsibility</h3>
       <ul>
-        <li>Building the slides and charts</li>
-        <li>Reviewing the script, preparing for questions</li>
-        <li>Checking figures against the database</li>
+        <li>Design decisions and system architecture</li>
+        <li>Integration with the partner's system and data</li>
+        <li>Running and validating the prototype on real data</li>
+        <li>Every result and figure checked by me</li>
       </ul>
     </section>
   </div>
-  <p class="ai-bar">All outputs were reviewed and verified by me. The results come from the prototype and the partner's data. I take full responsibility for the content.</p>
 </div>
 
 <!-- TODO(João): review wording -->
